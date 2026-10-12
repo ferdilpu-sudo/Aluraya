@@ -41,7 +41,9 @@ Alternatif setelah prasyarat tersedia:
 
 Ikuti kebijakan eksekusi PowerShell perangkat; tidak perlu mengubahnya karena perintah npm di atas setara. Build awal Rust dapat mengunduh dependensi dan memerlukan waktu. Aplikasi tidak meminta `OPENAI_API_KEY`.
 
-Klik **Periksa sekarang**. Hasil yang diharapkan pada Windows: host dan sidecar terhubung; ChatGPT, Flow dan generasi **belum siap**. Itu status yang benar pada checkpoint ini. Jangan menilai provider sudah bekerja hanya dari PASS host.
+Buka tab **Koneksi**, lalu klik **Periksa sekarang**. Hasil yang diharapkan pada Windows: host dan sidecar terhubung; ChatGPT, Flow dan generasi **belum siap**. Itu status yang benar pada checkpoint ini. Jangan menilai provider sudah bekerja hanya dari PASS host.
+
+Vite mengabaikan `src-tauri` agar tidak memantau DLL/EXE/PDB yang dikunci compiler atau aplikasi Windows. Tauri tetap memantau perubahan source Rust. Setelah menarik perbaikan konfigurasi ini, tutup aplikasi dan hentikan proses dev lama dengan Ctrl+C, lalu jalankan kembali `npm.cmd run tauri dev`.
 
 Jika gagal, jalankan `npm.cmd run doctor` dan kirim error build atau output diagnostiknya. Doctor tidak membaca token, cookie, maupun profil pribadi. Deteksi browser/WebView2 hanya pemeriksaan prasyarat, bukan bukti login.
 

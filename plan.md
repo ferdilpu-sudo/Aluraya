@@ -44,13 +44,13 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 | Task | Status aktual | Bukti / pekerjaan tersisa |
 |---|---|---|
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
-| TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/14 tes/build JS PASS. Build native Windows NOT RUN. |
+| TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar dan installer belum diverifikasi. |
 | TASK-003 | NOT IMPLEMENTED / LIVE NOT RUN | OAuth, proteksi token, discovery, streaming perlu diimplementasikan dan dibuktikan. SDK contoh @siwc/local bukan dependensi npm yang tersedia pada pemeriksaan ini; gunakan sumber devkit resmi atau implementasi protokol yang diverifikasi. |
 | TASK-004–005 | NOT IMPLEMENTED / LIVE NOT RUN | Adapter Flow, credit observer, approval dan impor otomatis belum dibuat. Perlu akun/profil aktual dan persetujuan batch konkret. |
 | TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
 
-Detail bukti: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md). Langkah terkecil berikut: jalankan startup Windows sesuai [docs/WINDOWS-START.md](./docs/WINDOWS-START.md), lalu lanjutkan TASK-003 pada sumber ini. Tidak ada repository remote yang diubah atau generasi berbayar yang dilakukan.
+Detail bukti awal: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md); pembaruan startup: [evidence/WINDOWS-STARTUP-REPORT.md](./evidence/WINDOWS-STARTUP-REPORT.md). Langkah terkecil berikut: periksa round-trip melalui tab Koneksi sesuai [docs/WINDOWS-START.md](./docs/WINDOWS-START.md), lalu lanjutkan TASK-003 pada sumber ini. Source dipelihara di repository pengguna; tidak ada generasi berbayar yang dilakukan.
 
 
 ### TASK-002 — perbaikan startup Node Windows (12 Oktober 2026)
@@ -58,3 +58,7 @@ Detail bukti: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md). Langkah terk
 Laporan pengguna: `npm ci`, notices, dan build sidecar berhasil pada Node 24.19.0; persiapan berhenti karena skrip mengharuskan nama `LICENSE` persis di sebelah node.exe. Perbaikan memperluas nama file lokal dan mengambil lisensi resmi sesuai tag versi bila tidak ada, dengan cache per versi, timeout/batas ukuran dan validasi isi. Lisensi dipastikan tersedia sebelum file bundle dimutasi. Tidak memerlukan downgrade/upgrade npm atau instal ulang Node.
 
 Source dipelihara di `https://github.com/ferdilpu-sudo/Aluraya`. Tes resolusi lisensi menggunakan layout instalasi tanpa LICENSE, cache offline, versi berbeda, respons HTML, file eksplisit, dan versi invalid. Build/startup Windows perlu dijalankan ulang setelah pull; M-001 tetap in progress.
+
+### TASK-002 — startup berhasil dan perbaikan watcher (12 Oktober 2026)
+
+Log lanjutan pengguna menunjukkan lisensi/runtime siap, build debug selesai dalam 7m 55s dan `aluraya.exe` berjalan. Screenshot memperlihatkan UI studio. Vite sekarang mengabaikan `src-tauri` untuk menghindari EBUSY pada DLL/EXE/PDB yang terkunci. Git attributes menetapkan LF agar checkout Windows konsisten dengan Prettier; CI sebelumnya berhenti pada format check. Pemeriksaan lokal lengkap PASS (20 tes); watcher aktif memantau frontend dan tidak memantau `src-tauri`. Konfirmasi hilangnya EBUSY di Windows, IPC host–sidecar, installer dan integrasi provider masih terbuka.

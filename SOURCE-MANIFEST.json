@@ -4,6 +4,10 @@
   "milestone": "M-001 partial",
   "files": [
     {
+      "path": ".gitattributes",
+      "sha256": "9d52762e325ae7e7aeba8a68fff7f043108d61aee8b762812342fcd36cd591a5"
+    },
+    {
       "path": ".github/workflows/windows.yml",
       "sha256": "f424d3511ae5b9055b0e09ac7ccc1230b8e04706ec54db279ba3577ef6049c53"
     },
@@ -45,7 +49,7 @@
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "fa6c6e7d3f3a000f051af7f09f5b1681ec403dd008045421ae631c78d27eec6e"
+      "sha256": "edf639fad1023f8388f1f04932d6a918a2f86d4697ca919afa5fdc037c1a1c1a"
     },
     {
       "path": "eslint.config.js",
@@ -58,6 +62,10 @@
     {
       "path": "evidence/NODE-LICENSE-REPORT.md",
       "sha256": "3c68ae2e0d7f81d48bcb877a637d129ea6b3e1b9dcc4d61395a137ce01626946"
+    },
+    {
+      "path": "evidence/WINDOWS-STARTUP-REPORT.md",
+      "sha256": "ccd4792df84ab662419516035f316aec700249eda43cb53c5c8a7632db55d337"
     },
     {
       "path": "evidence/doctor.json",
@@ -77,7 +85,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "6cfb1678a12e56c2796f1d59fcb5d0bb308644c9dcccd05299a1360328e3fca9"
+      "sha256": "a8f5ba08d2b9b00bd33b811a018b371e70e1cd4f2a49ea463a9f63c57adb8cc4"
     },
     {
       "path": "prd.md",
@@ -273,7 +281,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "0a2abe5101f2c0b0ce9fedde6d857ad75cb0b191dbaffac1a3b690948a7fc17a"
+      "sha256": "03c711f0680d825fb66a5a534b7da1a030942421b5f65265b61d387606712b4f"
     },
     {
       "path": "tests/browser-boundary.test.ts",
@@ -297,8 +305,8 @@
     },
     {
       "path": "vite.config.ts",
-      "sha256": "9698ffe500e21d21def5fb902d8a8bfe9317239f28a8b20143c716ddf4dae0e6"
+      "sha256": "2c0b58d683675f3236cc461184d77bd2210cd628762bb5ade7594f6596757c8d"
     }
   ],
-  "checkpoint": "TASK-002 Node license resolution"
+  "checkpoint": "TASK-002 Windows startup and watcher"
 }

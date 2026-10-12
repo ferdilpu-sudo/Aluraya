@@ -69,3 +69,9 @@ Workflow `.github/workflows/windows.yml` disediakan tetapi belum dikirim/dijalan
 ### Regresi lisensi startup Windows
 
 `tests/node-license.test.mjs` memverifikasi enam kasus resolver lisensi. `npm run check` mencakupnya bersama 14 tes sebelumnya (total 20). Fetch fixture tidak dianggap live Windows test. Pemeriksaan terpisah mengambil LICENSE resmi Node v24.19.0 dari tag upstream; startup Windows masih NOT RUN setelah perbaikan.
+
+### Pembaruan startup dan watcher Windows — 12 Oktober 2026
+
+Status berikut menggantikan NOT RUN startup pada checkpoint sebelumnya: build debug dan pembukaan jendela Windows **PASS berdasarkan log/screenshot pengguna**. IPC Rust–Node belum dibuktikan oleh screenshot. `npm run check` **PASS** (20 tes) setelah perubahan watcher; inspeksi watcher Vite aktif di Linux **PASS** untuk frontend terpantau dan `src-tauri` diabaikan. Probe pertama menunggu event `ready` yang sudah lewat dan timeout; probe diperbaiki untuk membaca daftar watch aktif. Konfirmasi EBUSY hilang di Windows **NOT RUN**.
+
+CI Windows pada commit `6d9caf9` **FAIL** di Prettier (34 file); native gate terlewati. Checkout CRLF tidak cocok dengan format LF source. `.gitattributes` kini menetapkan LF untuk teks dan menjaga PNG/ICO sebagai binary. Lihat [laporan startup](./evidence/WINDOWS-STARTUP-REPORT.md); CI baru harus diperiksa terpisah dari hasil lokal.
