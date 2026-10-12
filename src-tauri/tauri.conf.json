@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Aluraya Studio",
+  "version": "0.1.0",
+  "identifier": "id.aluraya.studio",
+  "build": {
+    "beforeDevCommand": "npm run desktop:prepare && npm run dev",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeBuildCommand": "npm run build && npm run sidecar:prepare",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [{ "label": "main", "title": "Aluraya Studio", "width": 1280, "height": 800, "minWidth": 760, "minHeight": 560 }],
+    "security": {
+      "capabilities": ["main"],
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src ipc: http://ipc.localhost; object-src 'none'; frame-src 'none'; base-uri 'self'",
+      "devCsp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src ipc: http://ipc.localhost http://127.0.0.1:1420 ws://127.0.0.1:1420; object-src 'none'; frame-src 'none'; base-uri 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": ["icons/icon.ico"],
+    "externalBin": ["binaries/aluraya-node"],
+    "resources": {
+      "resources/sidecar.cjs": "sidecar/sidecar.cjs",
+      "resources/runtime.json": "sidecar/runtime.json",
+      "resources/NODE-LICENSE.txt": "licenses/NODE-LICENSE.txt",
+      "../public/THIRD-PARTY-NOTICES.txt": "licenses/THIRD-PARTY-NOTICES.txt"
+    },
+    "windows": { "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true } }
+  }
+}

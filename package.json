@@ -1,0 +1,51 @@
+{
+  "name": "aluraya",
+  "version": "0.1.0",
+  "description": "Aluraya Studio \u2014 fondasi M-001 Windows",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write src sidecar/src tests scripts/*.mjs *.json *.js *.ts index.html",
+    "format:check": "prettier --check src sidecar/src tests scripts/*.mjs *.json *.js *.ts index.html",
+    "sidecar:build": "node scripts/build-sidecar.mjs",
+    "sidecar:prepare": "node scripts/prepare-sidecar.mjs",
+    "desktop:prepare": "npm run notices && npm run sidecar:build && npm run sidecar:prepare",
+    "build": "npm run typecheck && npm run notices && vite build && npm run sidecar:build",
+    "test": "npm run sidecar:build && vitest run",
+    "doctor": "node scripts/doctor.mjs",
+    "tauri": "tauri",
+    "check": "npm run format:check && npm run lint && npm run test && npm run build",
+    "notices": "node scripts/notices.mjs"
+  },
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "@tauri-apps/api": "2.12.3",
+    "@xyflow/react": "12.12.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@tauri-apps/cli": "2.12.2",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "esbuild": "0.28.2",
+    "eslint": "10.12.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "prettier": "3.9.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.4",
+    "vitest": "5.0.3"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=24 <25"
+  }
+}

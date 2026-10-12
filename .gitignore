@@ -1,0 +1,15 @@
+node_modules/
+dist/
+sidecar/dist/
+src-tauri/target/
+src-tauri/gen/
+src-tauri/binaries/
+src-tauri/resources/
+evidence/local/
+*.log
+.env*
+!.env.example
+*.db*
+*auth.json
+*host.json
+profiles/

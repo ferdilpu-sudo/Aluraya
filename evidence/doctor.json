@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-12T01:20:26.727Z",
+  "checks": [
+    {
+      "id": "windows-x64",
+      "status": "BLOCKED",
+      "detail": "linux/x64"
+    },
+    {
+      "id": "node-24",
+      "status": "PASS",
+      "detail": "v24.19.0"
+    },
+    {
+      "id": "cargo",
+      "status": "BLOCKED",
+      "detail": "Install Rust stable and Windows C++ Build Tools."
+    },
+    {
+      "id": "rustc",
+      "status": "BLOCKED",
+      "detail": "Install Rust stable and Windows C++ Build Tools."
+    },
+    {
+      "id": "dependencies",
+      "status": "PASS",
+      "detail": "Run npm ci before building."
+    },
+    {
+      "id": "sidecar",
+      "status": "PASS",
+      "detail": "Run npm run sidecar:build."
+    }
+  ],
+  "liveGate": "NOT RUN: Windows startup, OAuth, Flow and process-tree memory need the user device."
+}
