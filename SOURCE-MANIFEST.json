@@ -45,7 +45,7 @@
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "e0a1d99d5ac2c5c7f3155486d4c35a9ba10654c6b2a6acd0f7ed210225d105b1"
+      "sha256": "fa6c6e7d3f3a000f051af7f09f5b1681ec403dd008045421ae631c78d27eec6e"
     },
     {
       "path": "eslint.config.js",
@@ -56,8 +56,8 @@
       "sha256": "bd6bed17eacc4188601abbfdbc3b0b11a6783e905ba01697fafc20c018225b65"
     },
     {
-      "path": "evidence/check.log",
-      "sha256": "42567f7148708d8bd320d538e25e0d577cf028f314e63df20594719e20dc20eb"
+      "path": "evidence/NODE-LICENSE-REPORT.md",
+      "sha256": "3c68ae2e0d7f81d48bcb877a637d129ea6b3e1b9dcc4d61395a137ce01626946"
     },
     {
       "path": "evidence/doctor.json",
@@ -77,7 +77,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "ed4d97ef494fe78d24457dd547b35a8566274fe51af0750a9fd087c39a3564ab"
+      "sha256": "6cfb1678a12e56c2796f1d59fcb5d0bb308644c9dcccd05299a1360328e3fca9"
     },
     {
       "path": "prd.md",
@@ -116,12 +116,16 @@
       "sha256": "c26b28c7dfbc4ddbec87ec2a2f9252b668ca925c4251c25ba9e5fc04ef2c0212"
     },
     {
+      "path": "scripts/node-license.mjs",
+      "sha256": "e81b51f66418340efdf2ff1f58e0b561319d4f53a132231b653e1a4cce244bbd"
+    },
+    {
       "path": "scripts/notices.mjs",
       "sha256": "1c188cbaefd2fc6372741737c6eba389fe1914cf27e00873c802ce9843ee4c55"
     },
     {
       "path": "scripts/prepare-sidecar.mjs",
-      "sha256": "f77a335d0aceb65911266e233ac4e6d9179f3d2977ccb1f1198b54334ae00326"
+      "sha256": "3c080b169de9cc94e3f9076ad70977435daf02cb3e68c24f0358b310da4e6698"
     },
     {
       "path": "sidecar/src/dispatch.ts",
@@ -138,62 +142,6 @@
     {
       "path": "sidecar/src/transport/frames.ts",
       "sha256": "7bfae373cba8cb3b126beb9163000a84072ab5aa77459410eea37bc5ee0b060b"
-    },
-    {
-      "path": "src/App.tsx",
-      "sha256": "3b114e18d167b8d1478fb298750c776cfd148cd08f1e5fbeeb0cc68aed772090"
-    },
-    {
-      "path": "src/application/diagnostics.ts",
-      "sha256": "8ad0ef25e0154c9b7b725aecb4c9f4977b58456a7de93dd9e6ee9d720ec0b3b8"
-    },
-    {
-      "path": "src/contracts/diagnostics.ts",
-      "sha256": "313eadb6bb5309910862eba81812b7a12c699af1069dac4bf91f388ead9834b2"
-    },
-    {
-      "path": "src/contracts/sidecar.ts",
-      "sha256": "18ce3f316994ba2f6cc1b0fa737fa4c1897ebd58f7a9fefc7779680bff160b04"
-    },
-    {
-      "path": "src/features/canvas/ResultNode.tsx",
-      "sha256": "dbafe444f86e85787375581d9f2a124f540cfaf6a52427cfc7f76c122fa9f617"
-    },
-    {
-      "path": "src/features/canvas/StudioCanvas.tsx",
-      "sha256": "cfd7ffb8bc12426175902672e7db4f97c3e911b7372fca295ece9ed8db42b319"
-    },
-    {
-      "path": "src/features/copilot/CopilotPanel.tsx",
-      "sha256": "fb673366d29853b14d3d0916eb80085fc488db5b1e092d96c68444bd97a88a0c"
-    },
-    {
-      "path": "src/features/diagnostics/DiagnosticsPanel.tsx",
-      "sha256": "85f981005dacee8fdcaf64e8f15cdb1561d41ae4cbbca1e72deb26553a6b6ad9"
-    },
-    {
-      "path": "src/features/diagnostics/useDiagnostics.ts",
-      "sha256": "66f2f1aee564705354e05c77b4ab487937ff8b31cddd46c631391cfa9080887b"
-    },
-    {
-      "path": "src/main.tsx",
-      "sha256": "5c0606ddc982428fc531724face2269e5a2a6cb4a2e502b79dfe9931b7b088fa"
-    },
-    {
-      "path": "src/styles/canvas.css",
-      "sha256": "09d46af8bddcf434d1b4ed09740a35147ee6a6270f1548eab05c76c1de39552f"
-    },
-    {
-      "path": "src/styles/panels.css",
-      "sha256": "b00b9dda2feb88a68484ae1d65da714336c1fddcfc4a24296de27d7a57077edf"
-    },
-    {
-      "path": "src/styles/tokens.css",
-      "sha256": "db5ffb1170dea71b2ca9bb173f9df978d4c340ffd2e63c773e080f5617c16724"
-    },
-    {
-      "path": "src/styles/workspace.css",
-      "sha256": "1843aac2429238e14f07b44b572664b44e652682ee8ace6b03c65418a63596db"
     },
     {
       "path": "src-tauri/Cargo.toml",
@@ -268,12 +216,72 @@
       "sha256": "aca7263ae766c67d0a145111b318428def88b6dce94dd494427bfdd3af1e7dd8"
     },
     {
+      "path": "src/App.tsx",
+      "sha256": "3b114e18d167b8d1478fb298750c776cfd148cd08f1e5fbeeb0cc68aed772090"
+    },
+    {
+      "path": "src/application/diagnostics.ts",
+      "sha256": "8ad0ef25e0154c9b7b725aecb4c9f4977b58456a7de93dd9e6ee9d720ec0b3b8"
+    },
+    {
+      "path": "src/contracts/diagnostics.ts",
+      "sha256": "313eadb6bb5309910862eba81812b7a12c699af1069dac4bf91f388ead9834b2"
+    },
+    {
+      "path": "src/contracts/sidecar.ts",
+      "sha256": "18ce3f316994ba2f6cc1b0fa737fa4c1897ebd58f7a9fefc7779680bff160b04"
+    },
+    {
+      "path": "src/features/canvas/ResultNode.tsx",
+      "sha256": "dbafe444f86e85787375581d9f2a124f540cfaf6a52427cfc7f76c122fa9f617"
+    },
+    {
+      "path": "src/features/canvas/StudioCanvas.tsx",
+      "sha256": "cfd7ffb8bc12426175902672e7db4f97c3e911b7372fca295ece9ed8db42b319"
+    },
+    {
+      "path": "src/features/copilot/CopilotPanel.tsx",
+      "sha256": "fb673366d29853b14d3d0916eb80085fc488db5b1e092d96c68444bd97a88a0c"
+    },
+    {
+      "path": "src/features/diagnostics/DiagnosticsPanel.tsx",
+      "sha256": "85f981005dacee8fdcaf64e8f15cdb1561d41ae4cbbca1e72deb26553a6b6ad9"
+    },
+    {
+      "path": "src/features/diagnostics/useDiagnostics.ts",
+      "sha256": "66f2f1aee564705354e05c77b4ab487937ff8b31cddd46c631391cfa9080887b"
+    },
+    {
+      "path": "src/main.tsx",
+      "sha256": "5c0606ddc982428fc531724face2269e5a2a6cb4a2e502b79dfe9931b7b088fa"
+    },
+    {
+      "path": "src/styles/canvas.css",
+      "sha256": "09d46af8bddcf434d1b4ed09740a35147ee6a6270f1548eab05c76c1de39552f"
+    },
+    {
+      "path": "src/styles/panels.css",
+      "sha256": "b00b9dda2feb88a68484ae1d65da714336c1fddcfc4a24296de27d7a57077edf"
+    },
+    {
+      "path": "src/styles/tokens.css",
+      "sha256": "db5ffb1170dea71b2ca9bb173f9df978d4c340ffd2e63c773e080f5617c16724"
+    },
+    {
+      "path": "src/styles/workspace.css",
+      "sha256": "1843aac2429238e14f07b44b572664b44e652682ee8ace6b03c65418a63596db"
+    },
+    {
       "path": "testing.md",
-      "sha256": "e5906edbcbfa8548c60ae09c4e04f27a28c71666e9d78b471131f4ca10dac7a5"
+      "sha256": "0a2abe5101f2c0b0ce9fedde6d857ad75cb0b191dbaffac1a3b690948a7fc17a"
     },
     {
       "path": "tests/browser-boundary.test.ts",
       "sha256": "02b45c59bb377ed39770f9aeb4689aaa6a3678efed29bd72b21b80204cb978d1"
+    },
+    {
+      "path": "tests/node-license.test.mjs",
+      "sha256": "3634a2c2e918c15f4627b041591fa0bf7af8f5c2091678471d91e40948dcaea8"
     },
     {
       "path": "tests/protocol.test.ts",
@@ -291,5 +299,6 @@
       "path": "vite.config.ts",
       "sha256": "9698ffe500e21d21def5fb902d8a8bfe9317239f28a8b20143c716ddf4dae0e6"
     }
-  ]
+  ],
+  "checkpoint": "TASK-002 Node license resolution"
 }

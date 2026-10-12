@@ -51,3 +51,10 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
 
 Detail bukti: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md). Langkah terkecil berikut: jalankan startup Windows sesuai [docs/WINDOWS-START.md](./docs/WINDOWS-START.md), lalu lanjutkan TASK-003 pada sumber ini. Tidak ada repository remote yang diubah atau generasi berbayar yang dilakukan.
+
+
+### TASK-002 — perbaikan startup Node Windows (12 Oktober 2026)
+
+Laporan pengguna: `npm ci`, notices, dan build sidecar berhasil pada Node 24.19.0; persiapan berhenti karena skrip mengharuskan nama `LICENSE` persis di sebelah node.exe. Perbaikan memperluas nama file lokal dan mengambil lisensi resmi sesuai tag versi bila tidak ada, dengan cache per versi, timeout/batas ukuran dan validasi isi. Lisensi dipastikan tersedia sebelum file bundle dimutasi. Tidak memerlukan downgrade/upgrade npm atau instal ulang Node.
+
+Source dipelihara di `https://github.com/ferdilpu-sudo/Aluraya`. Tes resolusi lisensi menggunakan layout instalasi tanpa LICENSE, cache offline, versi berbeda, respons HTML, file eksplisit, dan versi invalid. Build/startup Windows perlu dijalankan ulang setelah pull; M-001 tetap in progress.

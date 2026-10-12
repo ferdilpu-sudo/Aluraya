@@ -5,11 +5,24 @@ Paket ini berisi source M-001/TASK-002. Ini belum installer dan belum bisa login
 ## Prasyarat pengembangan
 
 1. Windows x64 dan Git.
-2. Node.js **24 LTS x64**. Untuk bundling, gunakan distribusi ZIP resmi dengan file `LICENSE` di sebelah `node.exe` dan tambahkan foldernya ke PATH.
+2. Node.js **24 LTS x64**, baik instalasi MSI maupun distribusi ZIP resmi. Tidak perlu menginstal ulang Node untuk memperbaiki error lisensi.
 3. Rust stable dengan target MSVC, Visual Studio Build Tools dengan workload **Desktop development with C++** dan Windows SDK.
 4. Microsoft Edge WebView2 Evergreen Runtime. Windows LTSC tidak diasumsikan sudah menyediakannya.
 
 Link vendor: [Node](https://nodejs.org/en/download), [Rust](https://www.rust-lang.org/tools/install), [prasyarat Tauri](https://v2.tauri.app/start/prerequisites/), [WebView2](https://developer.microsoft.com/en-us/microsoft-edge/webview2/).
+
+## Resolusi lisensi Node
+
+Persiapan sidecar mencari `LICENSE`, `LICENSE.txt`, `license.txt`, atau `LICENSE.md` di sebelah runtime. Jika tidak ada, skrip mengambil teks LICENSE dari repository resmi `nodejs/node` pada tag versi Node yang sedang berjalan, dengan timeout dan batas ukuran. Hasil disimpan per versi agar build berikutnya dapat memakai cache secara offline. Bundle tetap wajib menyertakan lisensi; pemeriksaan tidak dilewati.
+
+Jika komputer offline dan tidak ada lisensi/cache, sediakan LICENSE lengkap untuk versi Node yang sama melalui environment variable `ALURAYA_NODE_LICENSE_FILE`:
+
+```powershell
+$env:ALURAYA_NODE_LICENSE_FILE = 'C:\path\ke\LICENSE'
+npm.cmd run tauri dev
+```
+
+Variabel itu menunjuk file lisensi, bukan token atau credential. Metadata bundle mencatat versi, asal, serta SHA-256 teks lisensi. File cache berada dalam resources hasil build yang diabaikan git.
 
 ## Buka aplikasi
 

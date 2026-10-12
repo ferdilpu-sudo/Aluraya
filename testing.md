@@ -64,3 +64,8 @@ Fixture warning: speech budget sempit; high dynamic range dengan no HDR look; st
 - Native build, IPC Rust–Node, packaging, Windows WebView2, OAuth, Flow, proses restart dan performa: **NOT RUN**. Tes Node–Node tidak menggantikan kontrak lintas Rust–TypeScript.
 
 Workflow `.github/workflows/windows.yml` disediakan tetapi belum dikirim/dijalankan di GitHub. CI tidak memakai akun atau kredit provider.
+
+
+### Regresi lisensi startup Windows
+
+`tests/node-license.test.mjs` memverifikasi enam kasus resolver lisensi. `npm run check` mencakupnya bersama 14 tes sebelumnya (total 20). Fetch fixture tidak dianggap live Windows test. Pemeriksaan terpisah mengambil LICENSE resmi Node v24.19.0 dari tag upstream; startup Windows masih NOT RUN setelah perbaikan.
