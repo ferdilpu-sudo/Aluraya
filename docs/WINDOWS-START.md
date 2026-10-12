@@ -1,6 +1,6 @@
 # Menjalankan fondasi Aluraya di Windows
 
-Paket ini berisi source M-001/TASK-002. Ini belum installer dan belum bisa login ChatGPT atau menghasilkan media Flow.
+Paket ini berisi source M-001/TASK-002. Ini belum installer. Login/chat ChatGPT tersedia untuk diuji melalui tab Copilot; produksi Flow belum tersedia.
 
 ## Prasyarat pengembangan
 
@@ -41,7 +41,7 @@ Alternatif setelah prasyarat tersedia:
 
 Ikuti kebijakan eksekusi PowerShell perangkat; tidak perlu mengubahnya karena perintah npm di atas setara. Build awal Rust dapat mengunduh dependensi dan memerlukan waktu. Aplikasi tidak meminta `OPENAI_API_KEY`.
 
-Buka tab **Koneksi**, lalu klik **Periksa sekarang**. Hasil yang diharapkan pada Windows: host dan sidecar terhubung; ChatGPT, Flow dan generasi **belum siap**. Itu status yang benar pada checkpoint ini. Jangan menilai provider sudah bekerja hanya dari PASS host.
+Buka tab **Koneksi**, lalu klik **Periksa sekarang**. Hasil yang diharapkan pada Windows: host dan sidecar terhubung; ChatGPT belum terhubung sampai login melalui Copilot; Flow dan generasi **belum siap**. Itu status yang benar pada checkpoint ini. Jangan menilai provider sudah bekerja hanya dari PASS host.
 
 Vite mengabaikan `src-tauri` agar tidak memantau DLL/EXE/PDB yang dikunci compiler atau aplikasi Windows. Tauri tetap memantau perubahan source Rust. Setelah menarik perbaikan konfigurasi ini, tutup aplikasi dan hentikan proses dev lama dengan Ctrl+C, lalu jalankan kembali `npm.cmd run tauri dev`.
 
@@ -54,7 +54,7 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Buka `http://127.0.0.1:1420`. Preview browser sengaja melaporkan bahwa host desktop tidak tersedia. Kartu dapat dipilih, digeser dan di-zoom; layout belum disimpan setelah restart. Chat dan produksi tetap nonaktif.
+Buka `http://127.0.0.1:1420`. Preview browser sengaja melaporkan bahwa host desktop tidak tersedia. Kartu dapat dipilih, digeser dan di-zoom; layout belum disimpan setelah restart. Login/chat hanya tersedia di aplikasi Windows; produksi tetap nonaktif.
 
 ## Verifikasi dan paket native
 
@@ -81,3 +81,7 @@ Mengukur satu sampel process tree (ganti angka dengan PID Aluraya, bukan termina
 ```
 
 Ini bukan pengukuran peak atau p95 dan belum membuktikan performa RAM 8 GB.
+
+## Koneksi ChatGPT
+
+Ikuti [CHATGPT-START.md](./CHATGPT-START.md) untuk login, model dan pesan pertama. Jangan mengirim token atau URL callback ke chat dukungan.

@@ -1,6 +1,6 @@
 import { once } from 'node:events';
 import { FrameDecoder } from './transport/frames';
-import { dispatch } from './dispatch';
+import { dispatch, closeChat } from './dispatch';
 
 async function main() {
   const decoder = new FrameDecoder();
@@ -12,9 +12,11 @@ async function main() {
     }
   }
   decoder.end();
+  await closeChat();
 }
 
-main().catch(() => {
+main().catch(async () => {
+  await closeChat();
   process.stderr.write('ALURAYA_PROTOCOL_ERROR\n');
   process.exitCode = 1;
   process.stdin.destroy();

@@ -86,3 +86,7 @@ Tidak mengasumsikan Gemini/Flow menerima token `@Reference1` secara literal. Ada
 ## Status kode checkpoint M-001
 
 Sudah ada `src/features/canvas`, `copilot`, `diagnostics`, `src/application`, `src/contracts`, `src-tauri/src/application`, `src-tauri/src/infrastructure`, dan `sidecar/src/transport`. Saat ini host hanya menjalankan diagnostik read-only. Semua modul produksi pada tabel di atas tetap target arsitektur; belum ada DB, OAuth, Flow adapter, approval atau scheduler. Kontrak terbatas saat ini: [docs/IPC.md](./docs/IPC.md).
+
+## Checkpoint TASK-003
+
+Adapter `sidecar/src/chatgpt` memisahkan OAuth, token/identity, protected store, HTTP/SSE dan session coordinator. Kredensial bukan database proyek: disimpan lokal terenkripsi DPAPI, hanya sidecar yang menggunakannya, dan host memegang lock OS eksklusif. Snapshot publik melewati DTO Rust/TypeScript; tidak memuat rahasia. Percakapan sementara in-memory, satu operasi aktif, polling UI selama aktivitas. Batas sementara dan bukti live yang belum dijalankan tercatat di docs/CHATGPT-START.md. Modul produksi/SQLite masih menunggu gate M-001.

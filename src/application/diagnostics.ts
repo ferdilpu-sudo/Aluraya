@@ -29,7 +29,8 @@ export async function inspectRuntime(): Promise<Diagnostics> {
         id: 'chatgpt',
         label: 'ChatGPT',
         state: 'blocked',
-        detail: 'Adapter OAuth belum diimplementasikan. Login dan penggunaan kuota belum diuji.',
+        detail:
+          'Login tersedia di panel Copilot pada aplikasi Windows. Preview ini tidak memakai akun.',
       },
       {
         id: 'flow',

@@ -75,3 +75,7 @@ Workflow `.github/workflows/windows.yml` disediakan tetapi belum dikirim/dijalan
 Status berikut menggantikan NOT RUN startup pada checkpoint sebelumnya: build debug dan pembukaan jendela Windows **PASS berdasarkan log/screenshot pengguna**. IPC Rust–Node belum dibuktikan oleh screenshot. `npm run check` **PASS** (20 tes) setelah perubahan watcher; inspeksi watcher Vite aktif di Linux **PASS** untuk frontend terpantau dan `src-tauri` diabaikan. Probe pertama menunggu event `ready` yang sudah lewat dan timeout; probe diperbaiki untuk membaca daftar watch aktif. Konfirmasi EBUSY hilang di Windows **NOT RUN**.
 
 CI Windows pada commit `6d9caf9` **FAIL** di Prettier (34 file); native gate terlewati. Checkout CRLF tidak cocok dengan format LF source. `.gitattributes` kini menetapkan LF untuk teks dan menjaga PNG/ICO sebagai binary. Lihat [laporan startup](./evidence/WINDOWS-STARTUP-REPORT.md); CI baru harus diperiksa terpisah dari hasil lokal.
+
+### TASK-003 — ChatGPT adapter
+
+Tes tambahan memeriksa OAuth callback/PKCE, JWT, scope gate, model, request Responses, refresh, quota/cancel dan SSE parsial. Tes DPAPI Windows dijalankan hanya pada Windows. Tes Rust chat_contracts menolak field privileged dan kebocoran token dalam DTO. Snapshot Windows pengguna 18:26:55 mengonfirmasi round-trip fondasi dan CI b3ae671 sudah PASS; tidak menggantikan live OAuth yang masih NOT RUN. Lihat [laporan adapter](./evidence/CHATGPT-ADAPTER-REPORT.md).

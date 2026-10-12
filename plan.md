@@ -44,8 +44,8 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 | Task | Status aktual | Bukti / pekerjaan tersisa |
 |---|---|---|
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
-| TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar dan installer belum diverifikasi. |
-| TASK-003 | NOT IMPLEMENTED / LIVE NOT RUN | OAuth, proteksi token, discovery, streaming perlu diimplementasikan dan dibuktikan. SDK contoh @siwc/local bukan dependensi npm yang tersedia pada pemeriksaan ini; gunakan sumber devkit resmi atau implementasi protokol yang diverifikasi. |
+| TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Installer belum diverifikasi. |
+| TASK-003 | IMPLEMENTED / LIVE NOT RUN | OAuth resmi, DPAPI, akun, discovery, streaming, cancel, refresh dan logout ditulis. Fixture bukan bukti akun nyata. Ikuti docs/CHATGPT-START.md untuk login dan satu respons. |
 | TASK-004–005 | NOT IMPLEMENTED / LIVE NOT RUN | Adapter Flow, credit observer, approval dan impor otomatis belum dibuat. Perlu akun/profil aktual dan persetujuan batch konkret. |
 | TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
@@ -62,3 +62,7 @@ Source dipelihara di `https://github.com/ferdilpu-sudo/Aluraya`. Tes resolusi li
 ### TASK-002 — startup berhasil dan perbaikan watcher (12 Oktober 2026)
 
 Log lanjutan pengguna menunjukkan lisensi/runtime siap, build debug selesai dalam 7m 55s dan `aluraya.exe` berjalan. Screenshot memperlihatkan UI studio. Vite sekarang mengabaikan `src-tauri` untuk menghindari EBUSY pada DLL/EXE/PDB yang terkunci. Git attributes menetapkan LF agar checkout Windows konsisten dengan Prettier; CI sebelumnya berhenti pada format check. Pemeriksaan lokal lengkap PASS (20 tes); watcher aktif memantau frontend dan tidak memantau `src-tauri`. Konfirmasi hilangnya EBUSY di Windows, IPC host–sidecar, installer dan integrasi provider masih terbuka.
+
+### TASK-003 — adapter dan panel chat (12 Oktober 2026)
+
+Implementasi memakai protokol publik resmi secara langsung dan jose untuk validasi identitas. Tidak ada API key fallback, tool eksekusi atau Flow. Scope/identity, model discovery dan respons selesai merupakan status terpisah. Rincian perubahan, pemeriksaan dan batas: [evidence/CHATGPT-ADAPTER-REPORT.md](./evidence/CHATGPT-ADAPTER-REPORT.md). Langkah terkecil berikut adalah login dari tab Copilot pada Windows pengguna, lalu satu respons singkat. TASK-003 tetap belum lulus live; M-001 belum lulus.

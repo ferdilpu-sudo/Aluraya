@@ -19,3 +19,11 @@ Status `host` baru menjadi PASS setelah host menerima respons tervalidasi. PASS 
 Variabel `NODE_OPTIONS` dan `NODE_PATH` dihapus pada child agar tidak dapat menginjeksi modul. Tidak ada port HTTP kontrol sidecar. Vite dev server hanya bind loopback dan hanya dipakai selama development.
 
 Kontrak ini khusus diagnostik instalasi, sehingga tidak memakai `projectId`/`expectedRevision`. Command proyek pada schema utama tetap rencana milestone berikutnya. Batas approval/recovery produksi belum dianggap teruji oleh tes transport.
+
+## Perluasan TASK-003 — 12 Oktober 2026
+
+Bagian diagnostik di atas adalah checkpoint awal. Host sekarang juga mengizinkan command `chat_action` hanya dari window lokal `main`, diteruskan sebagai `type: chat.action`. Payload memakai discriminator `action`: inspect, login (addAccount), cancel, logout, usage, models, confirm_plan, clear, accounts (page), select (accountId), send (model, text). Field tambahan dan command lain ditolak. DTO: `src/contracts/chat.ts` dan `src-tauri/src/chat_contracts.rs`.
+
+OAuth/fetch berjalan asinkron di sidecar; command segera mengembalikan snapshot publik. UI membaca snapshot tiap 500 ms selama operasi aktif. Snapshot berisi akun ringkas, model, status izin dan teks respons terakhir, tanpa token, kode OAuth, URL otorisasi, subject atau client ID. Rust memvalidasi struktur, batas dan UUID sebelum diteruskan; React memvalidasi ulang dengan Zod. Mutex host dan antrean UI mencegah pencampuran respons. Hanya satu operasi provider berjalan; cancel tidak menjalankan ulang request.
+
+Callback OAuth memakai listener sementara 127.0.0.1 dengan state, nonce dan PKCE baru. Listener hanya menerima callback yang terikat percobaan, lalu ditutup. Ini bukan port kontrol aplikasi. URL browser berasal dari allowlist internal, bukan URL dari React atau model. Token tetap di sidecar dan penyimpanan DPAPI lokal. Database produksi masih belum dibuat; host tetap pemilik database saat diterapkan.

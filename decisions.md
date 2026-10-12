@@ -67,3 +67,7 @@ Lingkungan implementasi Linux/Node 24.19.0 tidak memiliki cargo/rustc. Cargo.tom
 Pemeriksaan `npm view @siwc/local version license --json` mengembalikan E404. Ini hanya bukti package tersebut tidak tersedia lewat registry yang diakses, **bukan** bukti OAuth resmi tidak bisa dibuat. Source devkit yang ditautkan cookbook perlu diperiksa sebelum memilih reuse atau implementasi langsung. Pekerjaan adapter belum selesai.
 
 Batas berhenti: AGENTS.md/plan.md menuntut live ChatGPT dan Flow sebelum ekspansi studio; akun pengguna/desktop Windows dan persetujuan biaya batch belum tersedia di lingkungan ini. Tidak mengganti gate dengan mock.
+
+## ADR-012 — adapter ChatGPT TASK-003 (12 Oktober 2026; implemented, live pending)
+
+Gunakan protokol OAuth public client yang didokumentasikan SIWC langsung, dengan jose 6.2.12/MIT untuk validasi JWT. Tidak memakai package contoh yang tidak tersedia atau menyalin endpoint privat. Model berasal dari discovery. Kredensial akun disimpan terenkripsi DPAPI CurrentUser via Windows PowerShell bawaan (skrip tetap, data stdin); tidak mengubah execution policy. Native host memegang lock file Windows eksklusif. Database produksi belum ada. Percakapan in-memory dan snapshot polling dipilih untuk thin slice tanpa memperbesar protokol ke event multiplexer; Responses tetap diterima streaming. Live login/entitlement/inference wajib dibuktikan di Windows sebelum TASK-003 lulus.

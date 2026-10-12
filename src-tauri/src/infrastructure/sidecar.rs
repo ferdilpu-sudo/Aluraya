@@ -2,11 +2,13 @@ use std::io::{BufReader, Write};
 use std::process::{Child, ChildStdin, Command, Stdio};
 use std::sync::mpsc::{self, Receiver};
 use std::time::Duration;
-use super::{frame_reader::read_frame, sidecar_paths};
+use super::{frame_reader::read_frame, sidecar_paths, credential_lock};
+use crate::chat_contracts::{ChatAction, ChatSnapshot, ChatResponse};
 use crate::contracts::{Diagnostics, Response};
 
 pub struct Sidecar {
     child: Child,
+    _credential_lock: std::fs::File,
     stdin: ChildStdin,
     messages: Receiver<Result<String, String>>,
 }
@@ -14,7 +16,9 @@ pub struct Sidecar {
 impl Sidecar {
     pub fn spawn(app: &tauri::AppHandle) -> Result<Self, String> {
         let (runtime, script) = sidecar_paths::resolve(app)?;
+        let (auth_directory, credential_lock) = credential_lock::acquire(app)?;
         let mut command = Command::new(runtime);
+        command.env("ALURAYA_AUTH_DIR", auth_directory);
         command.arg(script).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         // Inherited NODE_OPTIONS could inject code before the trusted sidecar starts.
         command.env_remove("NODE_OPTIONS").env_remove("NODE_PATH");
@@ -43,18 +47,36 @@ impl Sidecar {
                 }
             }
         });
-        Ok(Self { child, stdin, messages })
+        Ok(Self { child, stdin, messages, _credential_lock: credential_lock })
     }
 
-    pub fn inspect(&mut self) -> Result<Diagnostics, String> {
+    fn request(&mut self, kind: &str, payload: serde_json::Value) -> Result<(String, String), String> {
         let request_id = uuid::Uuid::new_v4().to_string();
         let request = serde_json::json!({
-            "schemaVersion": 1, "requestId": request_id, "type": "health.inspect", "payload": {}
+            "schemaVersion": 1, "requestId": request_id, "type": kind, "payload": payload
         });
-        writeln!(self.stdin, "{}", request).map_err(|_| "SIDECAR_WRITE_FAILED")?;
+        let encoded = request.to_string();
+        if encoded.len() > 65_536 { return Err("FRAME_TOO_LARGE".into()); }
+        writeln!(self.stdin, "{}", encoded).map_err(|_| "SIDECAR_WRITE_FAILED")?;
         self.stdin.flush().map_err(|_| "SIDECAR_WRITE_FAILED")?;
         let frame = self.messages.recv_timeout(Duration::from_secs(8))
             .map_err(|_| "SIDECAR_TIMEOUT")??;
+        Ok((request_id, frame))
+    }
+
+    pub fn chat(&mut self, action: ChatAction) -> Result<ChatSnapshot, String> {
+        let payload = serde_json::to_value(action).map_err(|_| "INVALID_CHAT_ACTION")?;
+        let (request_id, frame) = self.request("chat.action", payload)?;
+        let response: ChatResponse = serde_json::from_str(&frame).map_err(|_| "SIDECAR_PROTOCOL_ERROR")?;
+        if response.schema_version != 1 || response.request_id != request_id || !response.ok {
+            return Err("SIDECAR_PROTOCOL_ERROR".into());
+        }
+        response.payload.validate()?;
+        Ok(response.payload)
+    }
+
+    pub fn inspect(&mut self) -> Result<Diagnostics, String> {
+        let (request_id, frame) = self.request("health.inspect", serde_json::json!({}))?;
         let response: Response = serde_json::from_str(&frame).map_err(|_| "SIDECAR_PROTOCOL_ERROR")?;
         response.validate(&request_id)?;
         let mut report = response.payload;

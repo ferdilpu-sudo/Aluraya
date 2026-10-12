@@ -1,7 +1,7 @@
 {
   "name": "aluraya",
   "version": "0.1.0",
-  "description": "Aluraya Studio \u2014 fondasi M-001 Windows",
+  "description": "Aluraya Studio — fondasi M-001 Windows",
   "scripts": {
     "dev": "vite",
     "preview": "vite preview --host 127.0.0.1",
@@ -24,6 +24,7 @@
   "dependencies": {
     "@tauri-apps/api": "2.12.3",
     "@xyflow/react": "12.12.0",
+    "jose": "6.2.12",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "zod": "4.6.5"

@@ -29,31 +29,39 @@
     },
     {
       "path": "README.md",
-      "sha256": "aa5cf5b0ae898946b1d0307298e5212580f42de2e854e8d67a369b4b5178d165"
+      "sha256": "be829114391e62364a088da7dffd75fada9c8824939d36aa7d866b8d1ed9d710"
     },
     {
       "path": "architecture.md",
-      "sha256": "cdc11a17b69f48f6b3e3ddfcf354e707000ca4fbda6917f98f141064ea1f9eef"
+      "sha256": "0e81318b1b2d4465c44f430eef5afb8daa46862e9ab87a8fd3a9bbf5fae9d96b"
     },
     {
       "path": "decisions.md",
-      "sha256": "5ffba270ed4b48deea6f1109257787fad0300bfd84b6c08590b72558b1134cf8"
+      "sha256": "76fbf510cd82ab063de7d38af5a331cc4a6e5e4cce7d93758547f940bcb206cc"
     },
     {
       "path": "design.md",
       "sha256": "ea045fb2f4a25d3edc0ba438a7e7c3486d348859383b69294eea7ddeadaa9059"
     },
     {
+      "path": "docs/CHATGPT-START.md",
+      "sha256": "149a90052ac50e697ea8b6768ea04f15ffb82cb8231437a07a362a05bfa50bb7"
+    },
+    {
       "path": "docs/IPC.md",
-      "sha256": "8ca20ace76d12b058d6062d4dc69ee44d57cd763998dc0fd0612655caede4957"
+      "sha256": "282b1572324192670bf485abc82dcaf044cdd51d9476238799a422b5505f9254"
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "edf639fad1023f8388f1f04932d6a918a2f86d4697ca919afa5fdc037c1a1c1a"
+      "sha256": "cbe3224398586e9af785a29021fd91acae7cd71f27f16d1c1497960751606cd9"
     },
     {
       "path": "eslint.config.js",
       "sha256": "4fac204ebe304111d12269d9822df4dcdfbf0ecbd071f944e16f93b31e08f447"
+    },
+    {
+      "path": "evidence/CHATGPT-ADAPTER-REPORT.md",
+      "sha256": "52969679a8a8bc1641afe4ae7aa38b516724a06c2ff00603751705c14a78c3fe"
     },
     {
       "path": "evidence/M001-REPORT.md",
@@ -77,15 +85,15 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "1bca7a6c98f3165c0196b35e21189bec646fda2a3aad99fb4691b006d00a1c03"
+      "sha256": "767cfae74765fc548439d2d0de4f12c84af1c89d10b8ac3e44c4123b9f70a3eb"
     },
     {
       "path": "package.json",
-      "sha256": "cdb395de122ab6ddc929e6789b09038242d9fbf33870ef8c20db34f807e1ed8d"
+      "sha256": "e4987499e2f78aef01a6e088f85412f406a3e6dac2e0379fcb7e85bf3246a603"
     },
     {
       "path": "plan.md",
-      "sha256": "a8f5ba08d2b9b00bd33b811a018b371e70e1cd4f2a49ea463a9f63c57adb8cc4"
+      "sha256": "6393601fe62fe3ff1fea8b879c3adc2586988de540924d4e19f90aec5515aa38"
     },
     {
       "path": "prd.md",
@@ -93,7 +101,7 @@
     },
     {
       "path": "public/THIRD-PARTY-NOTICES.txt",
-      "sha256": "0dd0374ce52d137604685b487cc2cdf19825780c8f61c9d673c2e20a65da90e0"
+      "sha256": "8808540294c6600429ae315cacf00a1052d3264c4f3588684adf6854a1269169"
     },
     {
       "path": "public/icon.svg",
@@ -136,8 +144,44 @@
       "sha256": "3c080b169de9cc94e3f9076ad70977435daf02cb3e68c24f0358b310da4e6698"
     },
     {
+      "path": "sidecar/src/chatgpt/errors.ts",
+      "sha256": "af499077f772f01e0f872b02d6e7104ccb8dc4960ffd41180206dcbbf349f875"
+    },
+    {
+      "path": "sidecar/src/chatgpt/http.ts",
+      "sha256": "b1dafa15c79609a1ee4819a3c5dec6e93c933c660f29456d527ebd5a62e15e81"
+    },
+    {
+      "path": "sidecar/src/chatgpt/identity.ts",
+      "sha256": "d419a21364201e0844b0538f8e816e47977bee52da4bc1140d6a24fa1736b2d4"
+    },
+    {
+      "path": "sidecar/src/chatgpt/inference.ts",
+      "sha256": "012f26f24094ba457005c668b679700c3bbf0d88f3ae9a894e7e439b923eb8e0"
+    },
+    {
+      "path": "sidecar/src/chatgpt/oauth.ts",
+      "sha256": "d7debd8b2af5b798cc148de4127856c6bda1ef286b5809dbf2bce5d0fe7ae1d4"
+    },
+    {
+      "path": "sidecar/src/chatgpt/session.ts",
+      "sha256": "752caa192240ff6a76ed54c05b3a73c2d0fd7613efb50f9f885b6751154fcd05"
+    },
+    {
+      "path": "sidecar/src/chatgpt/store.ts",
+      "sha256": "15e2bb75d5e8b765a2cdc84b3ae3a2907d614d303d4eb4aed44ea0397cc76b0a"
+    },
+    {
+      "path": "sidecar/src/chatgpt/tokens.ts",
+      "sha256": "239ef3bfae601deb434e8918cece93919a1e4ca6ac69ceee247329e9cb68ba50"
+    },
+    {
+      "path": "sidecar/src/chatgpt/windows.ts",
+      "sha256": "28f12ba8e6d86e1c189da26f7b22e0def4931ceab2576b7aafd26d4955579ee5"
+    },
+    {
       "path": "sidecar/src/dispatch.ts",
-      "sha256": "60e6fa9ce4125dcd36c4c613800d87204e1fc95c9e7e318c094393ec8be45b8c"
+      "sha256": "1ca971c1193d827ff990a29841d93ebb930f567a13690871efa648b030f767b7"
     },
     {
       "path": "sidecar/src/health.ts",
@@ -145,7 +189,7 @@
     },
     {
       "path": "sidecar/src/main.ts",
-      "sha256": "072a493d410d5b123a8bf47a4d45ec0e542c338366141046a24a6c7c429c56c8"
+      "sha256": "3e452713451d87c177bdac0c116d2b88b3bec43dacd91ada2712874981ee0a01"
     },
     {
       "path": "sidecar/src/transport/frames.ts",
@@ -157,11 +201,11 @@
     },
     {
       "path": "src-tauri/build.rs",
-      "sha256": "59011b614b0b553f3ac8a79acee6759bc619c87408a7d5770dd1bd50e2cde560"
+      "sha256": "c7127e2d88dce3b44554103eac4cd830b71dc537ef3bdef6838501d0a9901da5"
     },
     {
       "path": "src-tauri/capabilities/main.json",
-      "sha256": "448162be2b9730a85725ef75985b2b5be0f647406896f72221e3888232516a76"
+      "sha256": "98f1b38207a6fe10be05c5e58017955c004e5cf6e6a16434e0c91a623c1ebfce"
     },
     {
       "path": "src-tauri/icons/128x128.png",
@@ -184,16 +228,28 @@
       "sha256": "19dd97f2ee4aeb5eaf6e2ddbbf89d62bf8decd23f18173635fc47aedac27e38a"
     },
     {
+      "path": "src-tauri/src/application/chat.rs",
+      "sha256": "38cd9a2471aa6fd5c2badb40a4821200a5471ad1bb081a7632ccd4bf787a93c7"
+    },
+    {
       "path": "src-tauri/src/application/diagnostics.rs",
       "sha256": "803e63ede246aea51b3968534eb541430f6574db7cd0686d6bc90763702e2e82"
     },
     {
       "path": "src-tauri/src/application/mod.rs",
-      "sha256": "0d840fe36ef7fa0276bf991a4b733fcd46815b95ce8b51ce74e65feaa4a68605"
+      "sha256": "4764e2c81d772b7c5ce614f78c5a46f4a4fd667caac68cfc6b90354b9fec586e"
+    },
+    {
+      "path": "src-tauri/src/chat_contracts.rs",
+      "sha256": "317cd634e7e9fb62ff43070aeb37ad2823a4dbb160f969706c664c8220b3999e"
     },
     {
       "path": "src-tauri/src/contracts.rs",
       "sha256": "c2b48fcd524f0014cd8e1772a68df03ce38f841f110cd8e57c98c7a223289079"
+    },
+    {
+      "path": "src-tauri/src/infrastructure/credential_lock.rs",
+      "sha256": "2e34db273c97552e33406c956e4f0aabcacc9c49fac1c725963b39bef3cf531f"
     },
     {
       "path": "src-tauri/src/infrastructure/frame_reader.rs",
@@ -201,11 +257,11 @@
     },
     {
       "path": "src-tauri/src/infrastructure/mod.rs",
-      "sha256": "b1ca065f6376d2b7de723fd1d8c4d41a5d9834c4646faea83d8bdc8550767182"
+      "sha256": "587e2bb8364baefd8747926304d2ac677c670f87f715dd97ec91edad7e9d8f43"
     },
     {
       "path": "src-tauri/src/infrastructure/sidecar.rs",
-      "sha256": "9e69ec04b482f196efe526ddf5f7da8ba3500e4778d702eae827e895bb52cac2"
+      "sha256": "71550f125646217667a821112dcd89f14080054562602c0559132baa267a197b"
     },
     {
       "path": "src-tauri/src/infrastructure/sidecar_paths.rs",
@@ -213,11 +269,15 @@
     },
     {
       "path": "src-tauri/src/main.rs",
-      "sha256": "eea7ccba6e1ae3b9d4c357f833b6c7d637e4c2aac1180778ee64c9a3048e795c"
+      "sha256": "0eeb8c665fd421ff1706386c83bc7a14dd34e9f30a5837bad59f1b5086e40d32"
     },
     {
       "path": "src-tauri/tauri.conf.json",
       "sha256": "2507937f295fc22fce042020ccf00a2aaeb07cd3bbf41be2413eb98abef7df19"
+    },
+    {
+      "path": "src-tauri/tests/chat_contracts.rs",
+      "sha256": "961ecebb344a097eed36f47e1c85e6c6e5d22ac3b7870385aa0a8748ef0d52bd"
     },
     {
       "path": "src-tauri/tests/frame_reader.rs",
@@ -225,11 +285,19 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "3b114e18d167b8d1478fb298750c776cfd148cd08f1e5fbeeb0cc68aed772090"
+      "sha256": "7469325f0396786d77c2fa3047680351de1f5ff4aad8cc7314bf6dbffec8b4a2"
+    },
+    {
+      "path": "src/application/chat.ts",
+      "sha256": "4d1479101a32fef78275b3b3410e530b9ed68e3730d0d59c08506e23e40f75e2"
     },
     {
       "path": "src/application/diagnostics.ts",
-      "sha256": "8ad0ef25e0154c9b7b725aecb4c9f4977b58456a7de93dd9e6ee9d720ec0b3b8"
+      "sha256": "ea8d07ee501a0f022ce45c45d6fdedc96dccc99d86f78b6a5730ecf7764c3bf1"
+    },
+    {
+      "path": "src/contracts/chat.ts",
+      "sha256": "81f8e517c8deb6ba202a390273711579652225dc84539e3bc5e5540233cc02dc"
     },
     {
       "path": "src/contracts/diagnostics.ts",
@@ -237,7 +305,7 @@
     },
     {
       "path": "src/contracts/sidecar.ts",
-      "sha256": "18ce3f316994ba2f6cc1b0fa737fa4c1897ebd58f7a9fefc7779680bff160b04"
+      "sha256": "7136fdfea7c9e531df8efc70cc2f1f5e4193af2b36aae5eef111eacd85a6bf6b"
     },
     {
       "path": "src/features/canvas/ResultNode.tsx",
@@ -248,8 +316,20 @@
       "sha256": "cfd7ffb8bc12426175902672e7db4f97c3e911b7372fca295ece9ed8db42b319"
     },
     {
+      "path": "src/features/copilot/ChatConnection.tsx",
+      "sha256": "50a716c0211dd2df6090c05d5614d970f22acaf1c5389d667dd9c22d85ae02f5"
+    },
+    {
       "path": "src/features/copilot/CopilotPanel.tsx",
-      "sha256": "fb673366d29853b14d3d0916eb80085fc488db5b1e092d96c68444bd97a88a0c"
+      "sha256": "cee6d5ff3bf72f7ca96951c9d0b4910d7ab4e3184ab713b210d591c6f63f31d7"
+    },
+    {
+      "path": "src/features/copilot/chatErrors.ts",
+      "sha256": "751c65f47a1ab8774285955a24646af6ca49abe7b8d1e7bdcd2ea6c21b38d733"
+    },
+    {
+      "path": "src/features/copilot/useChat.ts",
+      "sha256": "4e09a178d7dc92dddaeff22b7a5a9105226fde5f21709aff7522d05145b0fcfe"
     },
     {
       "path": "src/features/diagnostics/DiagnosticsPanel.tsx",
@@ -269,7 +349,7 @@
     },
     {
       "path": "src/styles/panels.css",
-      "sha256": "b00b9dda2feb88a68484ae1d65da714336c1fddcfc4a24296de27d7a57077edf"
+      "sha256": "8f9c2b490f45a2fa5da86c258df22e631d6591ba5b4c9d42ab7ba5323fe21c3f"
     },
     {
       "path": "src/styles/tokens.css",
@@ -281,11 +361,23 @@
     },
     {
       "path": "testing.md",
-      "sha256": "03c711f0680d825fb66a5a534b7da1a030942421b5f65265b61d387606712b4f"
+      "sha256": "e1bc6a83c7f7bf2bcfb368ae61734b39bd5beb197576e61d7ddf2d948eb8b488"
     },
     {
       "path": "tests/browser-boundary.test.ts",
       "sha256": "02b45c59bb377ed39770f9aeb4689aaa6a3678efed29bd72b21b80204cb978d1"
+    },
+    {
+      "path": "tests/chatgpt-http.test.ts",
+      "sha256": "7341a0e88572fe82d0b3d28669681d3380fcd936374fec4dd086288fe55fd7b5"
+    },
+    {
+      "path": "tests/chatgpt-security.test.ts",
+      "sha256": "0a67ba323b49355fca3cd06c48cc0a80c21d05a848984c28b4463b29210dad5e"
+    },
+    {
+      "path": "tests/chatgpt-session.test.ts",
+      "sha256": "cf285ca7d21b6b51bfb019350df862d2dd1764957dbf6cd004679e1b6877a62e"
     },
     {
       "path": "tests/node-license.test.mjs",
@@ -308,5 +400,5 @@
       "sha256": "2c0b58d683675f3236cc461184d77bd2210cd628762bb5ade7594f6596757c8d"
     }
   ],
-  "checkpoint": "TASK-002 Windows startup and watcher"
+  "checkpoint": "TASK-003 ChatGPT OAuth and streaming, live pending"
 }

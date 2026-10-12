@@ -2,9 +2,9 @@
 
 **Dari naskah menjadi adegan.** Fondasi Windows pribadi, source v0.1.0 berdasarkan spesifikasi v1.1. Checkpoint 12 Oktober 2026: **M-001 in progress, integrasi belum lulus**.
 
-Sudah ditulis: canvas satu kartu yang dapat dipilih/drag/zoom, panel copilot, diagnostik host/sidecar, host Tauri dengan command terbatas dan sidecar Node melalui stdio. Format, lint, typecheck, 14 tes dan build frontend/sidecar lulus pada Linux. Startup dan build native Windows belum diuji.
+Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Adapter ChatGPT perlu pembuktian login/respons nyata dengan akun pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
 
-**Belum tersedia:** login atau chat ChatGPT, adapter Flow, generasi, penyimpanan proyek, media import, approval produksi, scheduler, dan installer tervalidasi. Tombol chat/generasi sengaja nonaktif. Tidak ada hasil AI sintetis yang dilabeli sebagai hasil provider. Posisi kartu hanya bertahan pada sesi UI.
+**Belum tersedia:** adapter Flow, generasi, penyimpanan proyek, media import, approval produksi, scheduler, dan installer tervalidasi. Chat aktif setelah akun, izin paket, model dan konfirmasi penggunaan tersedia. Tidak ada hasil AI sintetis yang dilabeli sebagai hasil provider. Posisi kartu dan riwayat chat hanya bertahan pada sesi aplikasi.
 
 ## Jalankan
 
@@ -44,7 +44,7 @@ npm run build
 | src/application/ | Bridge typed antara UI dan host |
 | src/contracts/ | DTO Zod untuk input/output |
 | src-tauri/ | Host native, proses sidecar, capability lokal |
-| sidecar/src/ | Dispatcher diagnostik dan framing terbatas |
+| sidecar/src/ | Diagnostik, adapter ChatGPT dan framing terbatas |
 | scripts/ | Build, packaging, prasyarat, sampel RAM |
 | tests/ | Batas protokol dan proses sidecar nyata |
 | docs/ | Menjalankan Windows dan protokol IPC |

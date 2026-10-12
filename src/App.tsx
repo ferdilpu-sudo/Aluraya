@@ -75,11 +75,12 @@ export default function App() {
               Copilot
             </button>
           </nav>
-          {tab === 'connections' ? (
+          <div hidden={tab !== 'connections'}>
             <DiagnosticsPanel {...diagnostics} onRefresh={() => void diagnostics.refresh()} />
-          ) : (
+          </div>
+          <div hidden={tab !== 'copilot'}>
             <CopilotPanel />
-          )}
+          </div>
           <div className="production-footer">
             <span className="eyebrow">LANGKAH BERIKUTNYA</span>
             <p>Buktikan login ChatGPT dan satu hasil Flow.</p>
