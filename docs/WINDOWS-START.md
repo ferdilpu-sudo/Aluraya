@@ -1,6 +1,6 @@
 # Menjalankan fondasi Aluraya di Windows
 
-Paket ini berisi source M-001/TASK-002. Ini belum installer. Login/chat ChatGPT tersedia untuk diuji melalui tab Copilot; produksi Flow belum tersedia.
+Paket ini berisi source M-001. ChatGPT sudah menghasilkan respons nyata; produksi Flow masih terblokir pada login. CI kini membangun installer NSIS dan memeriksa runtime hasil instalasi. Status bukti terakhir ada di [laporan installer](../evidence/WINDOWS-INSTALLER-REPORT.md).
 
 ## Prasyarat pengembangan
 
@@ -65,7 +65,11 @@ cargo test --manifest-path src-tauri/Cargo.toml
 npm.cmd run tauri build
 ```
 
-Build native/installer **belum dijalankan dalam lingkungan pembuat paket ini**. `Cargo.lock` harus dibuat dan disertakan setelah resolusi native pertama berhasil; jangan menyebut dependensi Rust sudah terkunci sebelum itu. NSIS memerlukan akses internet untuk WebView2 bootstrapper. Bundle membawa runtime Node dan sidecar; pengguna akhir tidak semestinya perlu memasang Node/Rust setelah installer tervalidasi.
+Build executable Windows sudah lulus CI pada commit 0f163ae; build dan pemeriksaan installer memiliki gate terpisah. Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
+
+Pada run GitHub Actions yang lulus, unduh artifact **aluraya-native-lock-and-executable**. Artifact berisi `*-setup.exe`, executable hasil build dan Cargo.lock. Untuk menjalankan aplikasi terpasang gunakan installer, bukan hanya menyalin aluraya.exe yang memerlukan resource pendamping. Artifact **aluraya-installer-check** berisi JSON dengan source commit, hash/ukuran installer dan hasil pemeriksaan.
+
+Pemeriksaan CI memasang installer ke folder sementara dengan spasi, mencocokkan aplikasi/Node/sidecar/lisensi dan seluruh runtime Playwright, menjalankan round-trip diagnostik dari Node terpasang, lalu uninstall. Ini tidak membuktikan GUI, login, upgrade dari versi sebelumnya atau performa laptop pengguna. Skrip `check-windows-installer.mjs` hanya untuk runner Windows CI sementara; jangan menjalankannya pada instalasi pribadi. Tidak ada penandatanganan installer yang dikonfigurasi.
 
 ## Langkah pembuktian berikutnya
 

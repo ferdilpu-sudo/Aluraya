@@ -9,7 +9,7 @@
     },
     {
       "path": ".github/workflows/windows.yml",
-      "sha256": "f424d3511ae5b9055b0e09ac7ccc1230b8e04706ec54db279ba3577ef6049c53"
+      "sha256": "f26e3ffe22e37023d29087877585666f86ebbe06f156ef07d9a798c9f5946d33"
     },
     {
       "path": ".gitignore",
@@ -61,7 +61,7 @@
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "cbe3224398586e9af785a29021fd91acae7cd71f27f16d1c1497960751606cd9"
+      "sha256": "c138b8c2be0841af8a08aedb6977f319cd8068d83f4b044e1fbc33a1a72085a1"
     },
     {
       "path": "eslint.config.js",
@@ -82,6 +82,10 @@
     {
       "path": "evidence/NODE-LICENSE-REPORT.md",
       "sha256": "3c68ae2e0d7f81d48bcb877a637d129ea6b3e1b9dcc4d61395a137ce01626946"
+    },
+    {
+      "path": "evidence/WINDOWS-INSTALLER-REPORT.md",
+      "sha256": "2170bdc2aabeeb459e78234852e39ce6717baa24575b81c6ffc8db864fe72b46"
     },
     {
       "path": "evidence/WINDOWS-STARTUP-REPORT.md",
@@ -105,7 +109,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "20ec1e78bd1b07a2b7524e11a47bb3c58897746c6c3d06fc62dda3a27ece938f"
+      "sha256": "5015e7cbda61874506bc95c6e396c3a2933d965ac4fea394b5da5d910e06c4e0"
     },
     {
       "path": "prd.md",
@@ -138,6 +142,10 @@
     {
       "path": "scripts/build-sidecar.mjs",
       "sha256": "785aa22ff46471719bbf051d55102c5ae88d1fcfc532d0ade80c2fb820bfef6d"
+    },
+    {
+      "path": "scripts/check-windows-installer.mjs",
+      "sha256": "44a1e26dcb2581e753550eb3e08006c523cea11a97463d58be1e8d7955644790"
     },
     {
       "path": "scripts/doctor.mjs",

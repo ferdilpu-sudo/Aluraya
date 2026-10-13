@@ -109,3 +109,8 @@ Riset primer menemukan Flow Agent/Tools yang memakai kredit Flow di proyek Flow,
 ### Keputusan pengguna — pilihan A (13 Oktober 2026, 19:21 WIB)
 
 Pengguna memilih mempertahankan spesifikasi awal. REQ-007/AC-007 tetap: Flow otomatis memakai akun/kredit Flow dan hasil langsung masuk canvas Aluraya. Mode pendamping manual dan adapter API berbayar tidak dipilih. TASK-004 tetap BLOCKED oleh akses login provider; M-001 belum lulus. Kelanjutan modul memerlukan bukti jalur akses yang didukung dan bekerja, kemudian capability/biaya serta approval batch konkret. Rincian keputusan ada di docs/FLOW-INTEGRATION-DECISION.md. Ini pembaruan dokumentasi, bukan keberhasilan integrasi atau izin pengeluaran.
+
+
+### TASK-006 — installer Windows independen dari login Flow (13 Oktober 2026)
+
+Pilihan A tetap berlaku dan TASK-004 tetap BLOCKED. Pekerjaan M-001 dilanjutkan pada packaging: workflow membangun NSIS, memasang pada runner Windows sementara, membandingkan resource/runtime, menguji IPC sidecar terpasang tanpa akun, lalu uninstall. Hasil di evidence/WINDOWS-INSTALLER-REPORT.md dan artifact installer-check.json. Ini bukan ekspansi studio atau bukti login/generasi berhasil. GUI, upgrade, recovery dan RAM masih menunggu bukti tersendiri.

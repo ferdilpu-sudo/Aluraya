@@ -24,15 +24,25 @@ jobs:
         run: |
           npm run desktop:prepare
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Native tests and build
+      - name: Native tests and installer build
         run: |
           cargo test --manifest-path src-tauri/Cargo.toml
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          npm run tauri build -- --no-bundle
+          npm run tauri build -- --bundles nsis
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verify installed runtime and uninstall
+        timeout-minutes: 6
+        run: node scripts/check-windows-installer.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: aluraya-installer-check
+          path: evidence/local/installer-check.json
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         with:
           name: aluraya-native-lock-and-executable
           path: |
             src-tauri/Cargo.lock
             src-tauri/target/release/aluraya.exe
+            src-tauri/target/release/bundle/nsis/*-setup.exe
