@@ -61,7 +61,7 @@
     },
     {
       "path": "evidence/CHATGPT-ADAPTER-REPORT.md",
-      "sha256": "52969679a8a8bc1641afe4ae7aa38b516724a06c2ff00603751705c14a78c3fe"
+      "sha256": "9c7f869250d3e25cde32bf15581952f808a554feae65add29c4b77f4c0137a82"
     },
     {
       "path": "evidence/M001-REPORT.md",
@@ -93,7 +93,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "6393601fe62fe3ff1fea8b879c3adc2586988de540924d4e19f90aec5515aa38"
+      "sha256": "e64a39a5f5b4a4c9605152c6b7d2662f1f120214e519689294541cded9a1ac1c"
     },
     {
       "path": "prd.md",
@@ -321,7 +321,7 @@
     },
     {
       "path": "src/features/copilot/CopilotPanel.tsx",
-      "sha256": "cee6d5ff3bf72f7ca96951c9d0b4910d7ab4e3184ab713b210d591c6f63f31d7"
+      "sha256": "c960e92dc53be876fc7fd9bd5d6ae22b2cd1ffe6e916e0e305ed3e15ba869432"
     },
     {
       "path": "src/features/copilot/chatErrors.ts",

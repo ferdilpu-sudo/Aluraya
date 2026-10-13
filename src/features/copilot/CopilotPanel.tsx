@@ -24,7 +24,7 @@ function Conversation({
   async function send() {
     const text = draft.trim();
     const result = await execute({ action: 'send', text, model: selected });
-    if (result?.reply?.state === 'streaming' && result.activity === 'reply') {
+    if (!result?.error && result?.reply?.state === 'streaming' && result.activity === 'reply') {
       const id = result.reply.id;
       setMessages((previous) => [
         ...previous.map((message) =>

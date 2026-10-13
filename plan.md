@@ -39,18 +39,18 @@ Update status milestone hanya dengan bukti. Pisahkan Verified (kode dan hasil di
 TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan PromptValidation beserta migrasi. TASK-009: implementasikan compiler pure empat tipe dan mapping upload provider; setiap template diberi versi. TASK-010: implementasikan lint formal dan warnings semantik dengan fixture TEST-016. TASK-011: bangun Prompt Inspector dan hash approval yang mengikat teks edit/ref/capability. Exit M-003 juga mensyaratkan TEST-016 lulus; live output tanpa grid diperiksa pada M-005 bersama TEST-009. Tidak menambah milestone terpisah atau generasi live otomatis.
 
 
-## Checkpoint implementasi — 12 Oktober 2026
+## Checkpoint implementasi — 13 Oktober 2026
 
 | Task | Status aktual | Bukti / pekerjaan tersisa |
 |---|---|---|
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
 | TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Installer belum diverifikasi. |
-| TASK-003 | IMPLEMENTED / LIVE NOT RUN | OAuth resmi, DPAPI, akun, discovery, streaming, cancel, refresh dan logout ditulis. Fixture bukan bukti akun nyata. Ikuti docs/CHATGPT-START.md untuk login dan satu respons. |
+| TASK-003 | IMPLEMENTED / LIVE NOT RUN | OAuth resmi, DPAPI, akun, discovery, streaming, cancel, refresh dan logout ditulis. CI f29c4bf PASS: 45 tes JS, 4 tes Rust dan build release Windows. Fixture bukan bukti akun nyata. Ikuti docs/CHATGPT-START.md untuk login dan satu respons. |
 | TASK-004–005 | NOT IMPLEMENTED / LIVE NOT RUN | Adapter Flow, credit observer, approval dan impor otomatis belum dibuat. Perlu akun/profil aktual dan persetujuan batch konkret. |
 | TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
 
-Detail bukti awal: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md); pembaruan startup: [evidence/WINDOWS-STARTUP-REPORT.md](./evidence/WINDOWS-STARTUP-REPORT.md). Langkah terkecil berikut: periksa round-trip melalui tab Koneksi sesuai [docs/WINDOWS-START.md](./docs/WINDOWS-START.md), lalu lanjutkan TASK-003 pada sumber ini. Source dipelihara di repository pengguna; tidak ada generasi berbayar yang dilakukan.
+Detail bukti awal: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md); pembaruan startup: [evidence/WINDOWS-STARTUP-REPORT.md](./evidence/WINDOWS-STARTUP-REPORT.md). Round-trip host–sidecar sudah terbukti. Langkah terkecil berikut: login dan satu respons nyata dari tab Copilot sesuai [docs/CHATGPT-START.md](./docs/CHATGPT-START.md). Source dipelihara di repository pengguna; tidak ada generasi berbayar yang dilakukan.
 
 
 ### TASK-002 — perbaikan startup Node Windows (12 Oktober 2026)
