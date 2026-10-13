@@ -94,3 +94,8 @@ Tab Flow menambah daftar profil UUID persisten, pembukaan Chrome/Edge milik apli
 Google menampilkan “Couldn't sign you in / This browser or app may not be secure” dan Chrome memperingatkan `--no-sandbox`. Penyebab penolakan tidak dapat disimpulkan hanya dari screenshot. Patch mengaktifkan `chromiumSandbox: true`, mengenali path sign-in rejected tanpa query/DOM login, memprioritaskan popup penolakan dan menampilkan arahan berhenti. Tidak ada retry dengan proteksi lebih lemah. CI setup sebelumnya gagal pada penolakan field asing di enum Rust tanpa payload; variant diganti menjadi empty struct agar `deny_unknown_fields` berlaku, dengan tes seluruh action tanpa payload.
 
 TASK-004 tetap BLOCKED sesuai kondisi berhenti AGENTS.md. Langkah berikutnya adalah memastikan jalur akses yang didukung provider; tidak melanjutkan submit/generasi atau ekspansi studio. Tidak menyalin sesi harian, menyamarkan automation, atau mengganti kredit Flow dengan API berbayar. Instruksi login pada checkpoint lama adalah riwayat, bukan permintaan mengulang login yang ditolak.
+
+
+### TASK-004 — konfirmasi blocker (13 Oktober 2026, 14:43 WIB)
+
+Screenshot kedua tetap menunjukkan penolakan Google; peringatan no-sandbox tidak terlihat. Profil aktif/browser terbuka bukan login sukses, dan status jenis halaman diperbarui lewat tombol Periksa halaman Flow. TASK-004 tetap BLOCKED. CI commit 0f163ae SUCCESS: 72 tes JS Windows, 8 tes Rust, release executable dibangun; installer serta akses Flow tetap belum terbukti. Bukti lengkap: evidence/FLOW-SETUP-REPORT.md. Langkah terkecil: simpan status penolakan lalu tutup browser milik aplikasi; pastikan jalur akses yang didukung sebelum mengembangkan submit.

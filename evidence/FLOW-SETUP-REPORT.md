@@ -30,4 +30,15 @@ Patch TASK-004 / REQ-007/REQ-008/REQ-014:
 - Klasifikasikan login_rejected dari origin/path; utamakan popup penolakan di atas tab Flow lama. Tidak membaca DOM login atau mengekspor query. UI menampilkan hambatan dan arahan berhenti.
 - Perbaiki enum Rust action tanpa payload menjadi empty struct agar deny_unknown_fields diterapkan; validasi inspect/observe/close normal dan dengan field asing, serta snapshot login_rejected.
 
-Pemeriksaan patch: npm run check — PASS format/lint/typecheck/build, 71 tes PASS + 1 tes DPAPI Windows skipped di Linux. Warning bundle 513.68 kB tetap ada; bukan hasil benchmark. Native Windows patch — menunggu CI. Login setelah patch, peringatan sandbox hilang pada Windows, dan penerimaan Google — NOT RUN. Fixture tidak membuktikan login berhasil. M-001 tetap belum lulus; aturan berhenti AGENTS.md berlaku pada modul Flow.
+Pemeriksaan patch: npm run check — PASS format/lint/typecheck/build, 71 tes PASS + 1 tes DPAPI Windows skipped di Linux. Warning bundle 513.68 kB tetap ada; bukan hasil benchmark. Native Windows commit 0f163ae — PASS, run 38363659426: 72 tes JS termasuk DPAPI, 8 tes Rust, persiapan sidecar dan build release aluraya.exe. Installer dan login berhasil tetap belum terbukti. Fixture tidak membuktikan login berhasil. M-001 tetap belum lulus; aturan berhenti AGENTS.md berlaku pada modul Flow.
+
+
+## Pembaruan pengguna — 13 Oktober 2026, 14:43 WIB
+
+Screenshot terbaru menunjukkan Profil 2 Chrome aktif dan penolakan Google yang sama. Infobar `--no-sandbox` tidak terlihat. Ini bukti visual bahwa penolakan tetap terjadi tanpa peringatan tersebut; bukan pemeriksaan sandbox OS atau bukti hash executable. SHA-256 gambar: `6fa06296dc6dce1a72afe41c37d53a10b92f11476576c3b763b55316d82fa49f`. Gambar/query login tidak dipublikasikan.
+
+Panel hanya menyatakan browser terbuka, tanpa hasil observasi. Implementasi saat ini memperbarui jenis halaman ketika pengguna menekan **Periksa halaman Flow**, bukan secara otomatis ketika Google berpindah halaman. Tombol itu hanya memeriksa status; tidak mengulangi login. Status browser terbuka/Profil aktif tidak berarti autentikasi berhasil.
+
+Google Account Help menyebut browser yang dikendalikan software automation sebagai salah satu kategori login yang dapat ditolak: https://support.google.com/accounts/answer/7675428?hl=en (diperiksa 13 Oktober 2026). Ini konsisten dengan kasus yang terlihat, tetapi tidak mengungkap keputusan internal Google untuk akun ini. TASK-004 tetap BLOCKED. Jangan membuat profil berulang atau menganggap sandbox fix sebagai perbaikan akses provider. AGENTS.md mensyaratkan penghentian modul terkait ketika akses ditolak; kelanjutan memerlukan jalur akses yang didukung.
+
+Bukti CI untuk kode patch: https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38363659426 — SUCCESS. Tidak perlu mengulangi tes rutin untuk pembaruan dokumentasi ini.
