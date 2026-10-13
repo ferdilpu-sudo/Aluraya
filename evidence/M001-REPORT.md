@@ -1,5 +1,8 @@
 # M-001 — laporan checkpoint source 0.1.0
 
+> Pembaruan 13 Oktober 2026: laporan fondasi di bawah merupakan riwayat. ChatGPT thin slice live kini PASS berdasarkan screenshot pengguna 09:18 (jawaban GPT-6.1-Sol, status Selesai); lihat [laporan adapter](./CHATGPT-ADAPTER-REPORT.md). Flow, installer dan gate M-001 lainnya tetap belum lulus.
+
+
 Tanggal: 12 Oktober 2026. Lingkungan: Linux x64, Node 24.19.0, npm 11.9.0. Tidak ada repository remote/commit; identitas paket dicatat oleh SHA-256 pada manifest source. **Status milestone: IN PROGRESS, exit gate BLOCKED.**
 
 ## Perubahan

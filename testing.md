@@ -1,6 +1,6 @@
 # Rencana verifikasi — Aluraya
 
-Tes penerimaan TEST-001–016 tetap **NOT RUN**. Checkpoint 12 Oktober 2026 menambahkan tes fondasi, bukan bukti penerimaan integrasi atau MVP.
+Pembaruan 13 Oktober 2026: TEST-002 thin slice chat live PASS berdasarkan screenshot pengguna; quota pause/no fallback PASS dengan fixture. Tes penerimaan lainnya belum lulus. Catatan 12 Oktober di bawah adalah checkpoint historis, bukan status terbaru.
 
 ## Strategi
 Unit untuk approval/scheduler/dependency; integrasi untuk transaksi, restart dan media; contract test untuk schema lintas Rust/TS dan respons provider; UI smoke untuk canvas. Live Flow hanya sesudah pengguna menyetujui model/biaya batch. Jangan memakai akun/kredit nyata di CI.
@@ -15,7 +15,7 @@ Unit untuk approval/scheduler/dependency; integrasi untuk transaksi, restart dan
 | Test | Requirement | Acceptance | Level | Langkah dan hasil yang diharapkan | Status |
 |---|---|---|---|---|---|
 | TEST-001 | REQ-001 | AC-001 | integration | Ide dan naskah Fountain/teks dapat menjadi proyek; sumber asli tetap tersimpan. Mode adaptasi harus dipilih sebelum memendekkan atau menambah cerita. | NOT RUN |
-| TEST-002 | REQ-002 | AC-002 | integration | Login resmi dengan izin penggunaan paket berhasil dan respons tampil dalam aplikasi. Saat kuota habis pekerjaan berhenti; tidak ada fallback berbayar atau pembelian otomatis. | NOT RUN |
+| TEST-002 | REQ-002 | AC-002 | integration | Login resmi dengan izin penggunaan paket berhasil dan respons tampil dalam aplikasi. Saat kuota habis pekerjaan berhenti; tidak ada fallback berbayar atau pembelian otomatis. | PASS thin slice live + quota fixture; lihat bukti |
 | TEST-003 | REQ-003 | AC-003 | UI | Pengguna dapat pan/zoom, pilih banyak node, kelompokkan, atur otomatis, dan membuka detail. Posisi serta hubungan pulih setelah restart. | NOT RUN |
 | TEST-004 | REQ-004 | AC-004 | integration | Gambar unggahan atau hasil Flow dapat dipilih sebagai versi referensi karakter/lokasi/prop. Impor tidak mengubah berkas sumber pengguna. | NOT RUN |
 | TEST-005 | REQ-005 | AC-005 | contract | Naskah menghasilkan daftar adegan/shot dengan dialog, SFX, kamera, durasi estimasi, referensi dan kontinuitas. Kekurangan sumber ditandai; tidak diklaim sebagai naskah lengkap. | NOT RUN |
@@ -79,3 +79,7 @@ CI Windows pada commit `6d9caf9` **FAIL** di Prettier (34 file); native gate ter
 ### TASK-003 — ChatGPT adapter
 
 Tes tambahan memeriksa OAuth callback/PKCE, JWT, scope gate, model, request Responses, refresh, quota/cancel dan SSE parsial. Tes DPAPI Windows dijalankan hanya pada Windows. Tes Rust chat_contracts menolak field privileged dan kebocoran token dalam DTO. Snapshot Windows pengguna 18:26:55 mengonfirmasi round-trip fondasi dan CI b3ae671 sudah PASS; tidak menggantikan live OAuth yang masih NOT RUN. Lihat [laporan adapter](./evidence/CHATGPT-ADAPTER-REPORT.md).
+
+### TASK-003 — bukti live 13 Oktober 2026
+
+Screenshot pengguna 09:18 memperlihatkan GPT-6.1-Sol menjawab `tes` dengan label Selesai. Login/izin, discovery dan respons dalam aplikasi PASS pada thin slice; kuota/pause/no fallback diverifikasi fixture, bukan sengaja menghabiskan kuota akun. Tidak meminta pengulangan tes yang sama. Logout/restart/multiakun live dan kontrol billing aktual tidak terverifikasi oleh gambar. Detail dan keterbatasan ada pada [laporan adapter](./evidence/CHATGPT-ADAPTER-REPORT.md).

@@ -61,11 +61,11 @@
     },
     {
       "path": "evidence/CHATGPT-ADAPTER-REPORT.md",
-      "sha256": "49ac0cef0edd25b584bfe0cec34bc4dd14ad38ac3907c66daed81afc51d4686c"
+      "sha256": "b4acf6c0fa17d875632a0c8c2cc5d3b0f06d74f24e5ea3f87bc66c97b5f150fe"
     },
     {
       "path": "evidence/M001-REPORT.md",
-      "sha256": "bd6bed17eacc4188601abbfdbc3b0b11a6783e905ba01697fafc20c018225b65"
+      "sha256": "52f953830e58418c1cdb56c72790da8705e7802d4c720a4e67ac6937018a6d08"
     },
     {
       "path": "evidence/NODE-LICENSE-REPORT.md",
@@ -93,7 +93,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "d87f86d4fad982337d300cca13ec3dbe3fd4143264a895298f5f578817767771"
+      "sha256": "ae11d83b53ae37d3317678ab616cb1b1387e8b516922d840c12502cbeb0512d1"
     },
     {
       "path": "prd.md",
@@ -377,7 +377,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "e1bc6a83c7f7bf2bcfb368ae61734b39bd5beb197576e61d7ddf2d948eb8b488"
+      "sha256": "ca396353217c11d1b4e2f0116ab886e308dc36c6ba2a678b4b5ab353175df709"
     },
     {
       "path": "tests/browser-boundary.test.ts",

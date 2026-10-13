@@ -1,6 +1,6 @@
 # Rencana implementasi — Aluraya
 
-Strategi: buktikan integrasi mahal/berisiko terlebih dahulu, baru perluas studio. **M-001 In progress: fondasi TASK-002 tersedia, gate integrasi belum lulus. M-002–M-006 Not started.** Kode frontend dan sidecar tersedia; belum ada integrasi provider atau installer yang terbukti. Stack rekomendasi Tauri dapat ditinjau jika M-001 membuktikan hambatan signifikan.
+Strategi: buktikan integrasi mahal/berisiko terlebih dahulu, baru perluas studio. **M-001 In progress: fondasi TASK-002 tersedia, gate integrasi belum lulus. M-002–M-006 Not started.** ChatGPT sudah menghasilkan respons nyata di aplikasi Windows; integrasi Flow dan installer belum terbukti. Stack rekomendasi Tauri dapat ditinjau jika M-001 membuktikan hambatan signifikan.
 
 | ID | Sasaran | Dependensi | Deliverable | Requirement | Exit gate |
 |---|---|---|---|---|---|
@@ -45,12 +45,12 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 |---|---|---|
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
 | TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Installer belum diverifikasi. |
-| TASK-003 | IMPLEMENTED / LIVE CHAT FAILED | OAuth resmi, DPAPI, akun, discovery, streaming, cancel, refresh dan logout ditulis. CI f29c4bf PASS: 45 tes JS, 4 tes Rust dan build release Windows. Screenshot 13 Oktober menunjukkan model GPT-6.1-Sol dan izin paket, tetapi pesan tes gagal tanpa jawaban. Diagnostik aman ditambahkan; penyebab provider belum diketahui. Ikuti docs/CHATGPT-START.md. |
+| TASK-003 | PASS — THIN SLICE LIVE | Screenshot 13 Oktober 09:18 memperlihatkan GPT-6.1-Sol menjawab pesan tes dan status Selesai. Simulasi kuota/pause tanpa fallback PASS pada fixture. Bukti dan batas: evidence/CHATGPT-ADAPTER-REPORT.md. Logout/restart/multiakun live belum dinilai. |
 | TASK-004–005 | NOT IMPLEMENTED / LIVE NOT RUN | Adapter Flow, credit observer, approval dan impor otomatis belum dibuat. Perlu akun/profil aktual dan persetujuan batch konkret. |
 | TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
 
-Detail bukti awal: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md); pembaruan startup: [evidence/WINDOWS-STARTUP-REPORT.md](./evidence/WINDOWS-STARTUP-REPORT.md). Round-trip host–sidecar sudah terbukti. Langkah terkecil berikut: login dan satu respons nyata dari tab Copilot sesuai [docs/CHATGPT-START.md](./docs/CHATGPT-START.md). Source dipelihara di repository pengguna; tidak ada generasi berbayar yang dilakukan.
+Detail bukti awal: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md); pembaruan startup: [evidence/WINDOWS-STARTUP-REPORT.md](./evidence/WINDOWS-STARTUP-REPORT.md). Round-trip host–sidecar sudah terbukti. ChatGPT thin slice live sudah lulus. Langkah terkecil berikut: TASK-004, siapkan profil Flow khusus dan pembacaan capability/biaya sebelum batch gambar disetujui. Source dipelihara di repository pengguna; tidak ada generasi berbayar yang dilakukan.
 
 
 ### TASK-002 — perbaikan startup Node Windows (12 Oktober 2026)
@@ -76,3 +76,8 @@ Screenshot pengguna pukul 08:59 menampilkan GPT-6.1-Sol, Using ChatGPT plan, pes
 ### TASK-003 — perbaikan pembacaan stream (13 Oktober 2026)
 
 Rincian pengguna mempersempit kegagalan ke guard sebelum body dibaca: HTTP 200/protocol/other. Adapter sekarang meminta SSE melalui Accept dan memeriksa format isi terbatas sebelum memilih parser; tidak langsung menolak stream valid hanya berdasarkan Content-Type. Error JSON/HTML/kosong tetap gagal dan rincian menampilkan media type. Pemeriksaan lokal PASS (61 tes, 1 Windows-only dilewati). Langkah berikut: satu pesan setelah restart build terbaru, lalu periksa jawaban selesai atau rincian aktual. Root cause isi layanan dan keberhasilan live belum terbukti.
+
+
+### TASK-003 — respons live berhasil (13 Oktober 2026, 09:18 WIB)
+
+Screenshot terbaru pengguna memperlihatkan model GPT-6.1-Sol, input `tes`, jawaban bahasa Indonesia yang utuh dan label Selesai. Thin slice login/izin, discovery dan satu inference dalam aplikasi dinyatakan PASS berdasarkan bukti pengguna; pause kuota tanpa fallback sudah diuji dengan fixture. Commit kandidat setelah perbaikan parser: 9775641; screenshot tidak memuat SHA executable sehingga tidak menjadi verifikasi hash build. Tidak mengulang tes chat rutin. Lanjut TASK-004: profil Flow khusus, capability/biaya, approval satu gambar, lalu impor otomatis. M-001 tetap in progress sampai gambar/video Flow dan gate terkait terbukti.

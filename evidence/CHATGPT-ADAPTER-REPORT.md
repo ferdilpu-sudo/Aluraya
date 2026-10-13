@@ -2,6 +2,16 @@
 
 Tanggal: 12 Oktober 2026; verifikasi CI diperbarui 13 Oktober 2026. REQ-002 / TEST-002; M-001 tetap in progress.
 
+## Status terbaru — LIVE PASS pada thin slice
+
+Screenshot `image(3).png` dari pengguna, 13 Oktober 2026 pukul 09:18 WIB, menampilkan GPT-6.1-Sol, input `tes`, jawaban “Halo! Saya siap membantu mengembangkan cerita di Aluraya Studio. Mau mulai dari ide, karakter, atau alur?” dan label **Selesai**, serta Using ChatGPT plan. Dengan implementasi saat ini, Selesai hanya ditetapkan setelah response.completed. Satu respons nyata dalam panel Copilot **PASS berdasarkan bukti pengguna**. Snapshot statis tidak membuktikan kelancaran animasi token per token.
+
+SHA-256 screenshot: `6a8545d40ab2938bd38b67346eede2e63a4b338db3160e22e77b04d741271fb9`. Gambar tidak dimasukkan ke repo karena turut menampilkan bagian desktop lain. Kandidat source terakhir yang dibagikan: `97756415b949524b91c574f531e28f99b66d9dab`; screenshot tidak menunjukkan commit/hash executable. Hasil ini menggantikan status gagal pada catatan historis di bawah. Tidak ada bukti Content-Type aktual dari respons sukses sehingga peran header Accept versus pemeriksaan isi tidak dapat dipisahkan.
+
+CI [9775641](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38336116077): TypeScript checks dan persiapan sidecar Windows PASS; native tests/build masih berjalan saat pemeriksaan. Lokal sebelumnya: 61 tes PASS, 1 Windows-only dilewati, format/lint/typecheck/build PASS.
+
+Logout/restart/multiakun live, observasi billing/kredit tambahan, keyboard QA penuh, installer dan Flow belum terbukti oleh screenshot ini. Tidak menyatakan M-001 selesai. Langkah berikut: TASK-004 profil Flow dan observasi capability/biaya, sebelum submit batch konkret yang disetujui.
+
 ## Bukti sebelum adapter
 
 Screenshot pengguna 18:26:55 pada Windows/Node v24.19.0 menunjukkan host dan sidecar Terhubung. [CI b3ae671](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38241262298) PASS termasuk native tests/build. Ini membuktikan fondasi TASK-002, belum login provider.
@@ -26,7 +36,7 @@ Perbaikan lanjutan tombol Kirim menolak snapshot error/BUSY sebagai pesan baru a
 
 ## Batas dan tindak lanjut
 
-Riwayat chat masih in-memory; batas konteks sementara didokumentasikan di panduan. Pengaturan kredit tambahan dikelola pengguna di ChatGPT; checkbox adalah konfirmasi pengguna, bukan observasi billing API. Flow belum diimplementasikan. Langkah berikut: ikuti [CHATGPT-START](../docs/CHATGPT-START.md), lalu laporkan hasil sign-in/model/respons tanpa rahasia. Jangan memperluas studio sebelum integrasi utama terbukti.
+Riwayat chat masih in-memory; batas konteks sementara didokumentasikan di panduan. Pengaturan kredit tambahan dikelola pengguna di ChatGPT; checkbox adalah konfirmasi pengguna, bukan observasi billing API. Flow belum diimplementasikan. Panduan penggunaan: [CHATGPT-START](../docs/CHATGPT-START.md). Respons pertama sudah lulus; lanjutkan pembuktian Flow. Jangan memperluas studio sebelum integrasi utama terbukti.
 
 
 ## Diagnostik respons pertama — 13 Oktober 2026
