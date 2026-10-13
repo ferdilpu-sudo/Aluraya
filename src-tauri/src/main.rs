@@ -3,16 +3,18 @@
 mod application;
 mod contracts;
 mod chat_contracts;
+mod flow_contracts;
 mod infrastructure;
 
 use application::diagnostics::{inspect_runtime, RuntimeState};
 use tauri::Manager;
 use application::chat::chat_action;
+use application::flow::flow_action;
 
 fn main() {
     let app = tauri::Builder::default()
         .manage(RuntimeState::default())
-        .invoke_handler(tauri::generate_handler![inspect_runtime, chat_action])
+        .invoke_handler(tauri::generate_handler![inspect_runtime, chat_action, flow_action])
         .build(tauri::generate_context!())
         .expect("Unable to initialize Aluraya Studio");
     app.run(|handle, event| {

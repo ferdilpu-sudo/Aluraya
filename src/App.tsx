@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { FlowPanel } from './features/flow/FlowPanel';
 import { StudioCanvas } from './features/canvas/StudioCanvas';
 import { CopilotPanel } from './features/copilot/CopilotPanel';
 import { DiagnosticsPanel } from './features/diagnostics/DiagnosticsPanel';
 import { useDiagnostics } from './features/diagnostics/useDiagnostics';
 
 export default function App() {
-  const [tab, setTab] = useState<'connections' | 'copilot'>('connections');
+  const [tab, setTab] = useState<'connections' | 'copilot' | 'flow'>('connections');
   const diagnostics = useDiagnostics();
   return (
     <div className="app-shell">
@@ -74,6 +75,9 @@ export default function App() {
             <button aria-pressed={tab === 'copilot'} onClick={() => setTab('copilot')}>
               Copilot
             </button>
+            <button aria-pressed={tab === 'flow'} onClick={() => setTab('flow')}>
+              Flow
+            </button>
           </nav>
           <div hidden={tab !== 'connections'}>
             <DiagnosticsPanel {...diagnostics} onRefresh={() => void diagnostics.refresh()} />
@@ -81,9 +85,10 @@ export default function App() {
           <div hidden={tab !== 'copilot'}>
             <CopilotPanel />
           </div>
+          {tab === 'flow' && <FlowPanel />}
           <div className="production-footer">
             <span className="eyebrow">LANGKAH BERIKUTNYA</span>
-            <p>Buktikan login ChatGPT dan satu hasil Flow.</p>
+            <p>Hubungkan profil Flow, lalu periksa kemampuan dan biaya sebelum produksi.</p>
             <button className="button primary" disabled aria-describedby="production-help">
               Mulai produksi
             </button>

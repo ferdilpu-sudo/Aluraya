@@ -4,6 +4,7 @@ await build({
   entryPoints: ['sidecar/src/main.ts'],
   outfile: 'sidecar/dist/main.cjs',
   bundle: true,
+  external: ['playwright-core'],
   platform: 'node',
   target: 'node24',
   format: 'cjs',

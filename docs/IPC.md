@@ -34,3 +34,8 @@ Callback OAuth memakai listener sementara 127.0.0.1 dengan state, nonce dan PKCE
 Snapshot menambahkan `diagnostic` nullable: `stage` (http/stream/protocol), status HTTP aktual, `shape` (error/detail/other/non_json/empty/event), serta `code`, `param`, `requestId` nullable dengan format dan panjang terbatas. Hanya field mesin yang lolos validasi diteruskan. Pesan/detail mentah, body, prompt dan header autentikasi tidak disalin. Event gagal setelah HTTP 200 tetap melaporkan 200; klasifikasi kuota memakai kode event. Rincian hilang pada operasi baru atau clear dan tidak ditulis ke disk. Native host dan Zod menolak field tambahan/ukuran berlebih.
 
 `diagnostic.contentType` opsional/nullable berisi media type tanpa parameter, maksimal 100 karakter dengan format ASCII yang divalidasi; nilai header mentah tidak diteruskan. Ini membedakan respons HTML/JSON dan header yang hilang ketika server mengembalikan HTTP 200.
+
+
+## Perluasan TASK-004 — flow.action
+
+Host menyediakan flow_action lokal dengan action inspect/create(browser chrome|msedge)/open(profileId UUID)/observe/close/profiles(page). Tidak tersedia URL/path/JavaScript/shell/upload/submit dari UI. Snapshot strict TypeScript/Rust memuat state, halaman profil berukuran 10, activeProfileId, browserOpen dan observation nullable. Observation berisi waktu, page kind, editorVisible, modelLabels <=12 dan creditLabels <=6 (100 karakter per label), serta costVerified=false. generationReady selalu false. Banyak profil tersimpan tidak membuka banyak browser. Halaman Google login tidak diinspeksi. Operasi browser async; polling snapshot tidak memanggil provider.

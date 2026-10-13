@@ -10,6 +10,11 @@ for (const [directory, entry] of Object.entries(lock.packages)) {
   if (!license) throw new Error(`License file missing for ${directory}`);
   const text = await readFile(join(directory, license), 'utf8');
   sections.push(`${directory.replace('node_modules/', '')} ${entry.version}\n${text}`);
+  for (const notice of files.filter((name) => /^NOTICE(?:\..*)?$/i.test(name)))
+    sections.push(await readFile(join(directory, notice), 'utf8'));
 }
-await writeFile('public/THIRD-PARTY-NOTICES.txt', sections.join('\n\n--------------------\n\n'));
+await writeFile(
+  'public/THIRD-PARTY-NOTICES.txt',
+  sections.join('\n\n--------------------\n\n').replace(/\r\n/g, '\n'),
+);
 console.log('Runtime JavaScript license notices collected.');

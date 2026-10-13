@@ -71,3 +71,10 @@ Batas berhenti: AGENTS.md/plan.md menuntut live ChatGPT dan Flow sebelum ekspans
 ## ADR-012 — adapter ChatGPT TASK-003 (12 Oktober 2026; implemented, live pending)
 
 Gunakan protokol OAuth public client yang didokumentasikan SIWC langsung, dengan jose 6.2.12/MIT untuk validasi JWT. Tidak memakai package contoh yang tidak tersedia atau menyalin endpoint privat. Model berasal dari discovery. Kredensial akun disimpan terenkripsi DPAPI CurrentUser via Windows PowerShell bawaan (skrip tetap, data stdin); tidak mengubah execution policy. Native host memegang lock file Windows eksklusif. Database produksi belum ada. Percakapan in-memory dan snapshot polling dipilih untuk thin slice tanpa memperbesar protokol ke event multiplexer; Responses tetap diterima streaming. Live login/entitlement/inference wajib dibuktikan di Windows sebelum TASK-003 lulus.
+
+
+## ADR-011 — Flow setup sebelum submit (13 Oktober 2026)
+
+Gunakan playwright-core 1.64.0 (Apache-2.0) dengan channel Chrome/Edge pengguna dan persistent profile khusus aplikasi, tanpa mengunduh browser otomatis. Package runtime disalin utuh dan LICENSE/NOTICE disertakan. Google login dilakukan pengguna; tidak melewati penolakan login/captcha. Fase awal hanya launch dan read-only label candidates. Dukungan otomasi akun, biaya dan selector submit belum terbukti, sehingga tidak ada command generate pada kontrak.
+
+Dokumentasi primer yang diperiksa: https://support.google.com/flow/answer/16353333?hl=en (desktop Chromium), https://support.google.com/flow/answer/16526234?hl=en (saldo di menu akun, biaya terbaru di pengaturan prompt, biaya per generation dan kemungkinan beberapa hasil), https://playwright.dev/docs/api/class-browsertype (persistent context/profile khusus), https://flow.google/ (origin Flow). Dokumentasi ini bukan bukti live automation. Harga tidak dihardcode dari tabel dokumentasi.

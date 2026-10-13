@@ -1,4 +1,4 @@
-import { copyFile, mkdir, writeFile, readFile } from 'node:fs/promises';
+import { copyFile, mkdir, writeFile, readFile, cp, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 import { resolveNodeLicense } from './node-license.mjs';
@@ -22,6 +22,10 @@ await mkdir('src-tauri/binaries', { recursive: true });
 await mkdir('src-tauri/resources', { recursive: true });
 await copyFile(process.execPath, join('src-tauri/binaries', runtimeName));
 await copyFile('sidecar/dist/main.cjs', 'src-tauri/resources/sidecar.cjs');
+await rm('src-tauri/resources/node_modules/playwright-core', { recursive: true, force: true });
+await cp('node_modules/playwright-core', 'src-tauri/resources/node_modules/playwright-core', {
+  recursive: true,
+});
 await writeFile('src-tauri/resources/NODE-LICENSE.txt', license.text, 'utf8');
 const bytes = await readFile(process.execPath);
 await writeFile(

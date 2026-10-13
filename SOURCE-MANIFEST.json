@@ -29,15 +29,15 @@
     },
     {
       "path": "README.md",
-      "sha256": "be829114391e62364a088da7dffd75fada9c8824939d36aa7d866b8d1ed9d710"
+      "sha256": "741d97b4731da298c6b645900acd7b3e20f0c55ddba1295e7b06a9f5d82d6b10"
     },
     {
       "path": "architecture.md",
-      "sha256": "0e81318b1b2d4465c44f430eef5afb8daa46862e9ab87a8fd3a9bbf5fae9d96b"
+      "sha256": "1b9e60241e19f0f2fc854e6defda916cceadba479270fd638fef23e0c5df13cb"
     },
     {
       "path": "decisions.md",
-      "sha256": "76fbf510cd82ab063de7d38af5a331cc4a6e5e4cce7d93758547f940bcb206cc"
+      "sha256": "493b3568b544b904a0c91fbbade6fd7ff86cd019eb2b5a1e40c72b4be16f1644"
     },
     {
       "path": "design.md",
@@ -48,8 +48,12 @@
       "sha256": "f38e4d3f20ef84a7e4c52a7dfa2a3828d15f4bcf17cbeeed7f23ca555eea3bae"
     },
     {
+      "path": "docs/FLOW-START.md",
+      "sha256": "1dd0d9b6e64f5897336c0dce00d37fc449702772a71e646a02eaf8d9d44901b9"
+    },
+    {
       "path": "docs/IPC.md",
-      "sha256": "2e4676659e0423567678c31daccfc2242226fccb42908fee9fed92a6a7efa8f6"
+      "sha256": "bdd8e46ba5008ff70bde0677b5e8e3d973a250cec7c43659dd2107cf2c3c522c"
     },
     {
       "path": "docs/WINDOWS-START.md",
@@ -62,6 +66,10 @@
     {
       "path": "evidence/CHATGPT-ADAPTER-REPORT.md",
       "sha256": "b4acf6c0fa17d875632a0c8c2cc5d3b0f06d74f24e5ea3f87bc66c97b5f150fe"
+    },
+    {
+      "path": "evidence/FLOW-SETUP-REPORT.md",
+      "sha256": "c3b4185187abcd950e3464b45416dde7fe286b9a360e4f30effc844a2cca46e8"
     },
     {
       "path": "evidence/M001-REPORT.md",
@@ -85,15 +93,15 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "767cfae74765fc548439d2d0de4f12c84af1c89d10b8ac3e44c4123b9f70a3eb"
+      "sha256": "0f0b6709a8e85706d5e656b45aefa59ed8ff04ed525852b0f842dac7cd2c7ed2"
     },
     {
       "path": "package.json",
-      "sha256": "e4987499e2f78aef01a6e088f85412f406a3e6dac2e0379fcb7e85bf3246a603"
+      "sha256": "40c2d666ddedb80f6aecf233405c2656c7e2bc215c7fbd918edd105abac1a8cf"
     },
     {
       "path": "plan.md",
-      "sha256": "ae11d83b53ae37d3317678ab616cb1b1387e8b516922d840c12502cbeb0512d1"
+      "sha256": "90da493f6606f485d82278ea025d2fb35a5d4bec3771267139ea77d1478958b2"
     },
     {
       "path": "prd.md",
@@ -101,7 +109,7 @@
     },
     {
       "path": "public/THIRD-PARTY-NOTICES.txt",
-      "sha256": "8808540294c6600429ae315cacf00a1052d3264c4f3588684adf6854a1269169"
+      "sha256": "816bbbb062de35c5cae1caec4ffa6b7ed97065cd7f3cdbe2392bd84c8fa08de8"
     },
     {
       "path": "public/icon.svg",
@@ -125,7 +133,7 @@
     },
     {
       "path": "scripts/build-sidecar.mjs",
-      "sha256": "399abadf683d669a8fd87e4c3eddfa0604d990ed5eeb35f729560f1e181d0e30"
+      "sha256": "785aa22ff46471719bbf051d55102c5ae88d1fcfc532d0ade80c2fb820bfef6d"
     },
     {
       "path": "scripts/doctor.mjs",
@@ -137,11 +145,11 @@
     },
     {
       "path": "scripts/notices.mjs",
-      "sha256": "1c188cbaefd2fc6372741737c6eba389fe1914cf27e00873c802ce9843ee4c55"
+      "sha256": "13ab23d84db7dd379feffd8b4cd79d9fce7796ce7b5e13cb522fac666c5466ff"
     },
     {
       "path": "scripts/prepare-sidecar.mjs",
-      "sha256": "3c080b169de9cc94e3f9076ad70977435daf02cb3e68c24f0358b310da4e6698"
+      "sha256": "407178ccb20d7c945b7c0c4b0bbcad24b01671a6d02e1321a1f377d286bacbe9"
     },
     {
       "path": "sidecar/src/chatgpt/diagnostics.ts",
@@ -189,7 +197,23 @@
     },
     {
       "path": "sidecar/src/dispatch.ts",
-      "sha256": "1ca971c1193d827ff990a29841d93ebb930f567a13690871efa648b030f767b7"
+      "sha256": "282c5531cdc443c613f270424d7f00af97c3190ffae6e6f8af209f298c86d741"
+    },
+    {
+      "path": "sidecar/src/flow/browser.ts",
+      "sha256": "c619f24b41af0ac471e1af707187829921544c9210344d6d897e08a0419d26f2"
+    },
+    {
+      "path": "sidecar/src/flow/observation.ts",
+      "sha256": "4649929d062d0391c11550981ec727eff85be6b03021d6553dfc73bda57d46f4"
+    },
+    {
+      "path": "sidecar/src/flow/profiles.ts",
+      "sha256": "24120fa6b7fc63691588701f307582ff764e72f7a13e449e31e2d538a81e05e6"
+    },
+    {
+      "path": "sidecar/src/flow/session.ts",
+      "sha256": "626c9f57216e9f161ee06533cbb85bbcb320d0c41c3fe2e42c1c883014168be2"
     },
     {
       "path": "sidecar/src/health.ts",
@@ -209,11 +233,11 @@
     },
     {
       "path": "src-tauri/build.rs",
-      "sha256": "c7127e2d88dce3b44554103eac4cd830b71dc537ef3bdef6838501d0a9901da5"
+      "sha256": "3bbbe86e7bfbe680306b73d202be247837891dd612a18eb4be0d9d5daed81fb4"
     },
     {
       "path": "src-tauri/capabilities/main.json",
-      "sha256": "98f1b38207a6fe10be05c5e58017955c004e5cf6e6a16434e0c91a623c1ebfce"
+      "sha256": "b536a2f5453b3edc2156309e10f8205f012e003440d69eafc78c663cf40be0dc"
     },
     {
       "path": "src-tauri/icons/128x128.png",
@@ -244,8 +268,12 @@
       "sha256": "803e63ede246aea51b3968534eb541430f6574db7cd0686d6bc90763702e2e82"
     },
     {
+      "path": "src-tauri/src/application/flow.rs",
+      "sha256": "f77b8791d63057e7ffd970e92ab4d6c9eb4fbbd45e317227eee4460b5f629233"
+    },
+    {
       "path": "src-tauri/src/application/mod.rs",
-      "sha256": "4764e2c81d772b7c5ce614f78c5a46f4a4fd667caac68cfc6b90354b9fec586e"
+      "sha256": "2865a59050e38f73f25cccd794316acf979b3c4f70ac92c2f20ef475d995d84c"
     },
     {
       "path": "src-tauri/src/chat_contracts.rs",
@@ -254,6 +282,10 @@
     {
       "path": "src-tauri/src/contracts.rs",
       "sha256": "c2b48fcd524f0014cd8e1772a68df03ce38f841f110cd8e57c98c7a223289079"
+    },
+    {
+      "path": "src-tauri/src/flow_contracts.rs",
+      "sha256": "bf846bfc63f4d46c90e440f9f0e66d5bd8ee419d893998b859c36d1a4dc1fc7c"
     },
     {
       "path": "src-tauri/src/infrastructure/credential_lock.rs",
@@ -269,7 +301,7 @@
     },
     {
       "path": "src-tauri/src/infrastructure/sidecar.rs",
-      "sha256": "71550f125646217667a821112dcd89f14080054562602c0559132baa267a197b"
+      "sha256": "d5bbef5d2157bf7c26e479690a163b0c807e7afc6d2ece505a4bf50bce43e974"
     },
     {
       "path": "src-tauri/src/infrastructure/sidecar_paths.rs",
@@ -277,15 +309,19 @@
     },
     {
       "path": "src-tauri/src/main.rs",
-      "sha256": "0eeb8c665fd421ff1706386c83bc7a14dd34e9f30a5837bad59f1b5086e40d32"
+      "sha256": "c911dc29b6f1e1bf77f4a3c308eed189b1054b8a8bdc85cc8138bd3a7365f334"
     },
     {
       "path": "src-tauri/tauri.conf.json",
-      "sha256": "2507937f295fc22fce042020ccf00a2aaeb07cd3bbf41be2413eb98abef7df19"
+      "sha256": "839c5045bd3a531329f360a2b26cd6cb184a768bc82fe8f79614256f85a77d8f"
     },
     {
       "path": "src-tauri/tests/chat_contracts.rs",
       "sha256": "d13a3b5f306c440521ebd6bba13f34fce93513d3571c54fd4598b5ef2e52de4a"
+    },
+    {
+      "path": "src-tauri/tests/flow_contracts.rs",
+      "sha256": "abdd2a1b26d3a3c01108c0929892a4614de78c2d93a2a1bd2f6dd9ae73681fc0"
     },
     {
       "path": "src-tauri/tests/frame_reader.rs",
@@ -293,7 +329,7 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "7469325f0396786d77c2fa3047680351de1f5ff4aad8cc7314bf6dbffec8b4a2"
+      "sha256": "68a150ab3ea13acaff991a11fd923a132045e49ac82421f6197fd5de236c22f7"
     },
     {
       "path": "src/application/chat.ts",
@@ -302,6 +338,10 @@
     {
       "path": "src/application/diagnostics.ts",
       "sha256": "ea8d07ee501a0f022ce45c45d6fdedc96dccc99d86f78b6a5730ecf7764c3bf1"
+    },
+    {
+      "path": "src/application/flow.ts",
+      "sha256": "e36858faf43c4b661f6ccb9d96de304d48fce6d51e1db091b26089db0ba6ddaf"
     },
     {
       "path": "src/contracts/chat.ts",
@@ -316,8 +356,12 @@
       "sha256": "313eadb6bb5309910862eba81812b7a12c699af1069dac4bf91f388ead9834b2"
     },
     {
+      "path": "src/contracts/flow.ts",
+      "sha256": "55746a4709f8c3e520dd82eac18ded4a558e9f1ca581930e35e71e6bf8d7672b"
+    },
+    {
       "path": "src/contracts/sidecar.ts",
-      "sha256": "7136fdfea7c9e531df8efc70cc2f1f5e4193af2b36aae5eef111eacd85a6bf6b"
+      "sha256": "9e9be492e0e1d369ba88006e93bd599cd291ce4e402c506a9c709cb454fc3567"
     },
     {
       "path": "src/features/canvas/ResultNode.tsx",
@@ -356,6 +400,14 @@
       "sha256": "66f2f1aee564705354e05c77b4ab487937ff8b31cddd46c631391cfa9080887b"
     },
     {
+      "path": "src/features/flow/FlowPanel.tsx",
+      "sha256": "1109c000f83735158416a5fea9138e52a8f35ea6c6d9faea927570350fd9318d"
+    },
+    {
+      "path": "src/features/flow/useFlow.ts",
+      "sha256": "c36a0ef06c53a3f5d2f268b6fdf8d19b857ba9b3fad466b90ee70061cf70d4b2"
+    },
+    {
       "path": "src/main.tsx",
       "sha256": "5c0606ddc982428fc531724face2269e5a2a6cb4a2e502b79dfe9931b7b088fa"
     },
@@ -377,7 +429,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "ca396353217c11d1b4e2f0116ab886e308dc36c6ba2a678b4b5ab353175df709"
+      "sha256": "3ae15c1ff13525e05ccd5b6d6752a4b4c8e4b8e5d5b239996756437f4b599e33"
     },
     {
       "path": "tests/browser-boundary.test.ts",
@@ -402,6 +454,14 @@
     {
       "path": "tests/chatgpt-stream-format.test.ts",
       "sha256": "4108b742244b1e45f55c7a627db1efb26b56305fcbf9053291dc2f7bdf2e9ad8"
+    },
+    {
+      "path": "tests/flow-observation.test.ts",
+      "sha256": "b8a456ca5324a712b04e38e74ea460d4358eaccb55928fe05af60222cf41d1e7"
+    },
+    {
+      "path": "tests/flow-session.test.ts",
+      "sha256": "a99d0cb201591012a8f4acbe2eef971d5fce72f50826b68fb80389862ac2c4a3"
     },
     {
       "path": "tests/node-license.test.mjs",

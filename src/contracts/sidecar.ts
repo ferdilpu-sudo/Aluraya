@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { diagnosticsSchema } from './diagnostics';
 import { chatActionSchema } from './chat';
+import { flowActionSchema } from './flow';
 
 export const MAX_FRAME_BYTES = 65_536;
 const healthRequestSchema = z
@@ -14,6 +15,14 @@ const healthRequestSchema = z
 
 export const requestSchema = z.union([
   healthRequestSchema,
+  z
+    .object({
+      schemaVersion: z.literal(1),
+      requestId: z.uuid(),
+      type: z.literal('flow.action'),
+      payload: flowActionSchema,
+    })
+    .strict(),
   z
     .object({
       schemaVersion: z.literal(1),

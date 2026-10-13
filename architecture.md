@@ -90,3 +90,10 @@ Sudah ada `src/features/canvas`, `copilot`, `diagnostics`, `src/application`, `s
 ## Checkpoint TASK-003
 
 Adapter `sidecar/src/chatgpt` memisahkan OAuth, token/identity, protected store, HTTP/SSE dan session coordinator. Kredensial bukan database proyek: disimpan lokal terenkripsi DPAPI, hanya sidecar yang menggunakannya, dan host memegang lock OS eksklusif. Snapshot publik melewati DTO Rust/TypeScript; tidak memuat rahasia. Percakapan sementara in-memory, satu operasi aktif, polling UI selama aktivitas. Batas sementara dan bukti live yang belum dijalankan tercatat di docs/CHATGPT-START.md. Modul produksi/SQLite masih menunggu gate M-001.
+
+
+## Checkpoint TASK-004 — profil Flow
+
+`sidecar/src/flow` memisahkan daftar profil lokal, browser, pembacaan label dan coordinator. Host mengirim root app-local/flow melalui environment tepercaya; React hanya boleh mengirim UUID profil dan pilihan chrome/msedge. Satu persistent browser context aktif, pipe Playwright standar, tanpa port kontrol TCP, tanpa default profile import, stealth atau endpoint Google privat. Registry profil merupakan metadata koneksi di sidecar, bukan database proyek. Browser melindungi sesi profil menurut fasilitas OS; profil tidak diekspor.
+
+Observasi hanya pada origin/path Flow yang diizinkan, tidak pada Google login; URL query dan isi kredensial tidak diteruskan. Teks model/kredit hanya kandidat dengan batas ukuran, tidak pernah otorisasi produksi. Penutupan host memberi EOF dan menunggu sampai dua detik sebelum fallback kill sidecar; penutupan browser Windows aktual setelah crash tetap perlu bukti. Playwright disertakan utuh sebagai dependensi eksternal agar file runtime dinamis tersedia.

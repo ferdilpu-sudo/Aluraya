@@ -5,11 +5,12 @@ use std::time::Duration;
 use super::{frame_reader::read_frame, sidecar_paths, credential_lock};
 use crate::chat_contracts::{ChatAction, ChatSnapshot, ChatResponse};
 use crate::contracts::{Diagnostics, Response};
+use crate::flow_contracts::{FlowAction, FlowSnapshot, FlowResponse};
 
 pub struct Sidecar {
     child: Child,
     _credential_lock: std::fs::File,
-    stdin: ChildStdin,
+    stdin: Option<ChildStdin>,
     messages: Receiver<Result<String, String>>,
 }
 
@@ -18,7 +19,9 @@ impl Sidecar {
         let (runtime, script) = sidecar_paths::resolve(app)?;
         let (auth_directory, credential_lock) = credential_lock::acquire(app)?;
         let mut command = Command::new(runtime);
+        let flow_directory = auth_directory.parent().ok_or("FLOW_PATH_ERROR")?.join("flow");
         command.env("ALURAYA_AUTH_DIR", auth_directory);
+        command.env("ALURAYA_FLOW_DIR", flow_directory);
         command.arg(script).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         // Inherited NODE_OPTIONS could inject code before the trusted sidecar starts.
         command.env_remove("NODE_OPTIONS").env_remove("NODE_PATH");
@@ -47,7 +50,7 @@ impl Sidecar {
                 }
             }
         });
-        Ok(Self { child, stdin, messages, _credential_lock: credential_lock })
+        Ok(Self { child, stdin: Some(stdin), messages, _credential_lock: credential_lock })
     }
 
     fn request(&mut self, kind: &str, payload: serde_json::Value) -> Result<(String, String), String> {
@@ -57,8 +60,9 @@ impl Sidecar {
         });
         let encoded = request.to_string();
         if encoded.len() > 65_536 { return Err("FRAME_TOO_LARGE".into()); }
-        writeln!(self.stdin, "{}", encoded).map_err(|_| "SIDECAR_WRITE_FAILED")?;
-        self.stdin.flush().map_err(|_| "SIDECAR_WRITE_FAILED")?;
+        let stdin = self.stdin.as_mut().ok_or("SIDECAR_PIPE_CLOSED")?;
+        writeln!(stdin, "{}", encoded).map_err(|_| "SIDECAR_WRITE_FAILED")?;
+        stdin.flush().map_err(|_| "SIDECAR_WRITE_FAILED")?;
         let frame = self.messages.recv_timeout(Duration::from_secs(8))
             .map_err(|_| "SIDECAR_TIMEOUT")??;
         Ok((request_id, frame))
@@ -71,6 +75,15 @@ impl Sidecar {
         if response.schema_version != 1 || response.request_id != request_id || !response.ok {
             return Err("SIDECAR_PROTOCOL_ERROR".into());
         }
+        response.payload.validate()?;
+        Ok(response.payload)
+    }
+
+    pub fn flow(&mut self, action: FlowAction) -> Result<FlowSnapshot, String> {
+        let payload = serde_json::to_value(action).map_err(|_| "INVALID_FLOW_ACTION")?;
+        let (request_id, frame) = self.request("flow.action", payload)?;
+        let response: FlowResponse = serde_json::from_str(&frame).map_err(|_| "SIDECAR_PROTOCOL_ERROR")?;
+        if response.schema_version != 1 || response.request_id != request_id || !response.ok { return Err("SIDECAR_PROTOCOL_ERROR".into()); }
         response.payload.validate()?;
         Ok(response.payload)
     }
@@ -90,6 +103,12 @@ impl Sidecar {
 
 impl Drop for Sidecar {
     fn drop(&mut self) {
+        // EOF lets the sidecar close its owned browser and flush profile data.
+        drop(self.stdin.take());
+        for _ in 0..20 {
+            if matches!(self.child.try_wait(), Ok(Some(_))) { return; }
+            std::thread::sleep(Duration::from_millis(100));
+        }
         let _ = self.child.kill();
         let _ = self.child.wait();
     }

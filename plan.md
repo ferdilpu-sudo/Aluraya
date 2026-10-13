@@ -46,7 +46,8 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
 | TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Installer belum diverifikasi. |
 | TASK-003 | PASS — THIN SLICE LIVE | Screenshot 13 Oktober 09:18 memperlihatkan GPT-6.1-Sol menjawab pesan tes dan status Selesai. Simulasi kuota/pause tanpa fallback PASS pada fixture. Bukti dan batas: evidence/CHATGPT-ADAPTER-REPORT.md. Logout/restart/multiakun live belum dinilai. |
-| TASK-004–005 | NOT IMPLEMENTED / LIVE NOT RUN | Adapter Flow, credit observer, approval dan impor otomatis belum dibuat. Perlu akun/profil aktual dan persetujuan batch konkret. |
+| TASK-004 | PROFILE SETUP IMPLEMENTED / LIVE NOT RUN | Tab Flow membuka profil Chrome/Edge khusus dan membaca kandidat label. Biaya/capability belum terverifikasi; upload/submit/impor otomatis belum dibuat. Ikuti docs/FLOW-START.md. |
+| TASK-005 | NOT IMPLEMENTED / LIVE NOT RUN | Video Flow dan impor otomatis belum dibuat; menunggu gambar pertama dan batch konkret. |
 | TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
 
@@ -81,3 +82,8 @@ Rincian pengguna mempersempit kegagalan ke guard sebelum body dibaca: HTTP 200/p
 ### TASK-003 — respons live berhasil (13 Oktober 2026, 09:18 WIB)
 
 Screenshot terbaru pengguna memperlihatkan model GPT-6.1-Sol, input `tes`, jawaban bahasa Indonesia yang utuh dan label Selesai. Thin slice login/izin, discovery dan satu inference dalam aplikasi dinyatakan PASS berdasarkan bukti pengguna; pause kuota tanpa fallback sudah diuji dengan fixture. Commit kandidat setelah perbaikan parser: 9775641; screenshot tidak memuat SHA executable sehingga tidak menjadi verifikasi hash build. Tidak mengulang tes chat rutin. Lanjut TASK-004: profil Flow khusus, capability/biaya, approval satu gambar, lalu impor otomatis. M-001 tetap in progress sampai gambar/video Flow dan gate terkait terbukti.
+
+
+### TASK-004 — profil Flow dan observasi awal (13 Oktober 2026)
+
+Tab Flow menambah daftar profil UUID persisten, pembukaan Chrome/Edge milik aplikasi, pemeriksaan read-only dan penutupan browser. Tidak memakai profil browser harian. Playwright Core 1.64.0 disertakan sebagai runtime eksternal; browser menggunakan instalasi pengguna. Snapshot hanya kandidat label model/kredit, bukan harga atau izin generasi. costVerified/generationReady selalu false dan IPC tidak memiliki command submit. Langkah terkecil: buka profil, login sendiri, buka proyek Flow, lalu Periksa halaman Flow; lihat docs/FLOW-START.md. Pengujian otomatis dan batas ada di evidence/FLOW-SETUP-REPORT.md.

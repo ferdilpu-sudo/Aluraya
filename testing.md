@@ -83,3 +83,8 @@ Tes tambahan memeriksa OAuth callback/PKCE, JWT, scope gate, model, request Resp
 ### TASK-003 — bukti live 13 Oktober 2026
 
 Screenshot pengguna 09:18 memperlihatkan GPT-6.1-Sol menjawab `tes` dengan label Selesai. Login/izin, discovery dan respons dalam aplikasi PASS pada thin slice; kuota/pause/no fallback diverifikasi fixture, bukan sengaja menghabiskan kuota akun. Tidak meminta pengulangan tes yang sama. Logout/restart/multiakun live dan kontrol billing aktual tidak terverifikasi oleh gambar. Detail dan keterbatasan ada pada [laporan adapter](./evidence/CHATGPT-ADAPTER-REPORT.md).
+
+
+### TASK-004 — setup Flow
+
+`flow-session` memeriksa single browser, busy lock, banyak profil/pagination, failure registry tanpa overwrite, error redaction, shutdown saat launch pending dan penolakan command submit/path/URL. `flow-observation` memeriksa origin spoofing dan ekstraksi label terbatas tanpa price/credit authority. `flow_contracts` Rust menolak input/path/privilege asing dan generationReady=true. Lokal: npm run check PASS 69 tes + 1 Windows-only skipped. Pemanggilan playwright-core dari salinan runtime terisolasi PASS. Login/capability/biaya/submit/unduh Flow tetap NOT RUN; ini bukan TEST-007 PASS.

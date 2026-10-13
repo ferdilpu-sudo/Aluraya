@@ -10,24 +10,47 @@
     "frontendDist": "../dist"
   },
   "app": {
-    "windows": [{ "label": "main", "title": "Aluraya Studio", "width": 1280, "height": 800, "minWidth": 760, "minHeight": 560 }],
+    "windows": [
+      {
+        "label": "main",
+        "title": "Aluraya Studio",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 760,
+        "minHeight": 560
+      }
+    ],
     "security": {
-      "capabilities": ["main"],
+      "capabilities": [
+        "main"
+      ],
       "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src ipc: http://ipc.localhost; object-src 'none'; frame-src 'none'; base-uri 'self'",
       "devCsp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src ipc: http://ipc.localhost http://127.0.0.1:1420 ws://127.0.0.1:1420; object-src 'none'; frame-src 'none'; base-uri 'self'"
     }
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
-    "icon": ["icons/icon.ico"],
-    "externalBin": ["binaries/aluraya-node"],
+    "targets": [
+      "nsis"
+    ],
+    "icon": [
+      "icons/icon.ico"
+    ],
+    "externalBin": [
+      "binaries/aluraya-node"
+    ],
     "resources": {
       "resources/sidecar.cjs": "sidecar/sidecar.cjs",
       "resources/runtime.json": "sidecar/runtime.json",
       "resources/NODE-LICENSE.txt": "licenses/NODE-LICENSE.txt",
-      "../public/THIRD-PARTY-NOTICES.txt": "licenses/THIRD-PARTY-NOTICES.txt"
+      "../public/THIRD-PARTY-NOTICES.txt": "licenses/THIRD-PARTY-NOTICES.txt",
+      "resources/node_modules/playwright-core/": "sidecar/node_modules/playwright-core/"
     },
-    "windows": { "webviewInstallMode": { "type": "downloadBootstrapper", "silent": true } }
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      }
+    }
   }
 }
