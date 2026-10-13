@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ChatError, providerError } from './errors';
 import { diagnostic } from './diagnostics';
+import { openEventStream } from './response-stream';
 import { requestJson, readJson, RESOURCE } from './http';
 
 export type Message = { role: 'user' | 'assistant'; content: string };
@@ -37,9 +38,7 @@ export async function consumeStream(
     await readJson(response);
     return;
   }
-  if (!response.body || !response.headers.get('content-type')?.includes('text/event-stream'))
-    throw new ChatError('PROVIDER_ERROR', diagnostic(response, null, 'protocol'));
-  const reader = response.body.getReader();
+  const reader = (await openEventStream(response)).getReader();
   const decoder = new TextDecoder('utf-8', { fatal: true });
   let buffer = '',
     total = 0,
@@ -124,7 +123,11 @@ export async function streamReply(
     method: 'POST',
     redirect: 'error',
     signal: AbortSignal.any([signal, AbortSignal.timeout(180000)]),
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      Accept: 'text/event-stream',
+    },
     body: JSON.stringify({
       model,
       input,

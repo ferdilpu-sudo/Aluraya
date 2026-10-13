@@ -23,6 +23,7 @@ it('uses the supported OAuth Responses route without a paid key or unsupported r
   expect(call[1].headers).toEqual({
     Authorization: 'Bearer oauth-fixture',
     'Content-Type': 'application/json',
+    Accept: 'text/event-stream',
   });
   const body = JSON.parse(call[1].body as string);
   expect(body).toMatchObject({

@@ -11,12 +11,16 @@ export function diagnostic(
   const value = body && typeof body === 'object' ? (body as Record<string, unknown>) : {};
   const error =
     value.error && typeof value.error === 'object' ? (value.error as Record<string, unknown>) : {};
-  const safe = (field: 'code' | 'param' | 'requestId', value: unknown) => {
+  const safe = (field: 'code' | 'param' | 'requestId' | 'contentType', value: unknown) => {
     const result = chatDiagnosticSchema.shape[field].safeParse(value);
-    return result.success ? result.data : null;
+    return result.success ? (result.data ?? null) : null;
   };
   return {
     stage,
+    contentType: safe(
+      'contentType',
+      response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase() ?? null,
+    ),
     status: response.status,
     shape: shape ?? ('error' in value ? 'error' : 'detail' in value ? 'detail' : 'other'),
     code: safe('code', error.code ?? (typeof value.error === 'string' ? value.error : null)),

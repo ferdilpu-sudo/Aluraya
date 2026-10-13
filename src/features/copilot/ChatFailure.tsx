@@ -15,6 +15,7 @@ export function ChatFailure({ state }: { state: ChatSnapshot }) {
             {[
               `Tahap: ${info.stage}`,
               `HTTP: ${info.status}`,
+              `Content-Type: ${info.contentType ?? 'tidak tersedia'}`,
               `Bentuk: ${info.shape}`,
               `Kode: ${info.code ?? state.error}`,
               `Parameter: ${info.param ?? '-'}`,

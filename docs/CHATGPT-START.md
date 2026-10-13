@@ -14,7 +14,7 @@ Kirim screenshot status/hasil, bukan token atau URL callback login. CI dan fixtu
 
 ## Jika daftar model muncul tetapi pesan gagal
 
-Buka **Rincian kegagalan** pada kotak error, lalu kirim screenshot yang memuat tahap, HTTP, kode, parameter dan Request ID. Rincian tidak memuat body layanan mentah atau kredensial. Jangan hapus akun atau mengulang login hanya karena error umum. Jangan mengirim berkali-kali sebelum penyebabnya diperiksa. Bila kotak lama belum menyediakan rincian, tutup aplikasi, pull source terbaru dan jalankan kembali; satu percobaan manual diperlukan untuk merekam error baru.
+Buka **Rincian kegagalan** pada kotak error, lalu kirim screenshot yang memuat tahap, HTTP, Content-Type, kode, parameter dan Request ID. Rincian tidak memuat body layanan mentah atau kredensial. Jangan hapus akun atau mengulang login hanya karena error umum. Jangan mengirim berkali-kali sebelum penyebabnya diperiksa. Bila kotak lama belum menyediakan rincian, tutup aplikasi, pull source terbaru dan jalankan kembali; satu percobaan manual diperlukan untuk merekam error baru.
 
 ## Perilaku sesi
 

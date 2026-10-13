@@ -32,3 +32,5 @@ Callback OAuth memakai listener sementara 127.0.0.1 dengan state, nonce dan PKCE
 ### Diagnostik kegagalan ChatGPT — 13 Oktober 2026
 
 Snapshot menambahkan `diagnostic` nullable: `stage` (http/stream/protocol), status HTTP aktual, `shape` (error/detail/other/non_json/empty/event), serta `code`, `param`, `requestId` nullable dengan format dan panjang terbatas. Hanya field mesin yang lolos validasi diteruskan. Pesan/detail mentah, body, prompt dan header autentikasi tidak disalin. Event gagal setelah HTTP 200 tetap melaporkan 200; klasifikasi kuota memakai kode event. Rincian hilang pada operasi baru atau clear dan tidak ditulis ke disk. Native host dan Zod menolak field tambahan/ukuran berlebih.
+
+`diagnostic.contentType` opsional/nullable berisi media type tanpa parameter, maksimal 100 karakter dengan format ASCII yang divalidasi; nilai header mentah tidak diteruskan. Ini membedakan respons HTML/JSON dan header yang hilang ketika server mengembalikan HTTP 200.

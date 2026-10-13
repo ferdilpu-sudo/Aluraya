@@ -34,3 +34,12 @@ Riwayat chat masih in-memory; batas konteks sementara didokumentasikan di pandua
 Patch menambahkan diagnostic terstruktur di adapter HTTP/SSE, kontrak IPC TypeScript/Rust, state sesi dan panel Rincian kegagalan. Field hanya status, tahap, bentuk body, kode/parameter terbatas dan Request ID tervalidasi. Body/pesan detail mentah tidak diekspor; data diagnostik hanya di memori. UI tidak lagi menyebut jawaban kosong sebagai respons parsial. Tidak ada retry otomatis atau perubahan jalur billing.
 
 Regresi mencakup HTTP 400 terstruktur, admission detail 403, HTML 502, kegagalan SSE dengan HTTP 200, format stream salah, penolakan field/identifier tidak aman, serta propagasi/pembersihan rincian tanpa menghapus kredensial. `npm run check` lokal PASS: format, lint, typecheck, build UI/sidecar dan 50 tes; 1 DPAPI Windows dilewati di Linux. Bundle UI 506 kB memberi peringatan ukuran yang sama. Hasil fixture bukan bukti perbaikan kegagalan live. CI native patch ini perlu diperiksa terpisah.
+
+
+## Respons HTTP 200 ditolak sebelum dibaca — 13 Oktober 2026
+
+Laporan pengguna berikutnya: `protocol / HTTP 200 / other / PROVIDER_ERROR`, Request ID tidak tersedia, pesan `hai` tanpa jawaban. Pada commit 7e48776, kombinasi ini berasal dari guard awal `consumeStream`: body tidak tersedia atau Content-Type bukan text/event-stream. Tidak membuktikan isi sebenarnya adalah SSE; kode lama belum membaca body pada jalur itu.
+
+Patch menambahkan Accept: text/event-stream dan pemeriksaan awal isi dengan batas ukuran. SSE valid diproses meskipun media type hilang/berbeda; JSON error dengan HTTP 200 dipetakan menurut kode, sedangkan HTML, body kosong dan JSON non-stream tidak dianggap sukses. Tetap membutuhkan response.completed, tanpa retry otomatis. Content-Type media type yang dibatasi format ditambahkan pada rincian.
+
+`npm run check` PASS: format/lint/typecheck/build dan 61 tes, 1 DPAPI Windows dilewati pada Linux. Regresi meliputi header hilang/salah kapitalisasi/text/plain, prefix terfragmentasi, pembatalan reader, JSON error HTTP 200, HTML/kosong/JSON non-stream, stream terputus dan batas baca. CI native patch dan hasil live **NOT RUN** pada saat pencatatan. Tidak menyatakan masalah akun telah selesai.

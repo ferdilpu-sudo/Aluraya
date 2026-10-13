@@ -71,3 +71,8 @@ Implementasi memakai protokol publik resmi secara langsung dan jose untuk valida
 ### TASK-003 — kegagalan respons pertama (13 Oktober 2026)
 
 Screenshot pengguna pukul 08:59 menampilkan GPT-6.1-Sol, Using ChatGPT plan, pesan `tes`, error umum dan jawaban kosong berlabel parsial. Ini bukti discovery/izin terlihat pada UI, bukan keberhasilan inference. Pemeriksaan sumber menemukan status HTTP/kode/parameter/Request ID dibuang saat error. Patch menambahkan rincian aman, mempertahankan status HTTP asli pada kegagalan SSE, dan membedakan jawaban kosong dari parsial. Request tetap mengikuti dokumentasi resmi; tidak mengganti model/endpoint berdasarkan tebakan. Perlu satu percobaan manual setelah pembaruan untuk mengetahui penyebab sebenarnya. M-001 tetap belum lulus.
+
+
+### TASK-003 — perbaikan pembacaan stream (13 Oktober 2026)
+
+Rincian pengguna mempersempit kegagalan ke guard sebelum body dibaca: HTTP 200/protocol/other. Adapter sekarang meminta SSE melalui Accept dan memeriksa format isi terbatas sebelum memilih parser; tidak langsung menolak stream valid hanya berdasarkan Content-Type. Error JSON/HTML/kosong tetap gagal dan rincian menampilkan media type. Pemeriksaan lokal PASS (61 tes, 1 Windows-only dilewati). Langkah berikut: satu pesan setelah restart build terbaru, lalu periksa jawaban selesai atau rincian aktual. Root cause isi layanan dan keberhasilan live belum terbukti.

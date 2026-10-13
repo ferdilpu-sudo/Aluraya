@@ -3,6 +3,12 @@ import { z } from 'zod';
 export const chatDiagnosticSchema = z
   .object({
     stage: z.enum(['http', 'stream', 'protocol']),
+    contentType: z
+      .string()
+      .max(100)
+      .regex(/^[a-z0-9!#$&^_.+-]+\/[a-z0-9!#$&^_.+-]+$/)
+      .nullable()
+      .optional(),
     status: z.number().int().min(100).max(599),
     shape: z.enum(['error', 'detail', 'other', 'non_json', 'empty', 'event']),
     code: z
