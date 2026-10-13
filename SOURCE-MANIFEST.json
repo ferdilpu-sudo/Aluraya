@@ -85,7 +85,7 @@
     },
     {
       "path": "evidence/WINDOWS-INSTALLER-REPORT.md",
-      "sha256": "2170bdc2aabeeb459e78234852e39ce6717baa24575b81c6ffc8db864fe72b46"
+      "sha256": "39ccd4169508cecd2c659d194022363c055339690174782ee76badc0039151b6"
     },
     {
       "path": "evidence/WINDOWS-STARTUP-REPORT.md",
@@ -145,7 +145,7 @@
     },
     {
       "path": "scripts/check-windows-installer.mjs",
-      "sha256": "44a1e26dcb2581e753550eb3e08006c523cea11a97463d58be1e8d7955644790"
+      "sha256": "fd572b5cc3cb703459eb57ed5796797ade9e57fdd0689c4e5e34e4fa8c2e6ead"
     },
     {
       "path": "scripts/doctor.mjs",
@@ -158,6 +158,10 @@
     {
       "path": "scripts/notices.mjs",
       "sha256": "13ab23d84db7dd379feffd8b4cd79d9fce7796ce7b5e13cb522fac666c5466ff"
+    },
+    {
+      "path": "scripts/nsis-integrity.mjs",
+      "sha256": "108b8266c3ed732e0170d2948e483b5e8977d05e3f1e26464fa2d57557b050eb"
     },
     {
       "path": "scripts/prepare-sidecar.mjs",
@@ -482,6 +486,10 @@
     {
       "path": "tests/node-license.test.mjs",
       "sha256": "3634a2c2e918c15f4627b041591fa0bf7af8f5c2091678471d91e40948dcaea8"
+    },
+    {
+      "path": "tests/nsis-integrity.test.js",
+      "sha256": "a81783102bc51eb858c10d35c52346a3216f0624dac3f174ab843db755e84742"
     },
     {
       "path": "tests/protocol.test.ts",

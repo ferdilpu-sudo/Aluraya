@@ -3,6 +3,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { access, mkdir, mkdtemp, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
+import { verifyNsisExecutable } from './nsis-integrity.mjs';
 
 // This installs/uninstalls only in a disposable hosted Windows CI runner.
 if (process.platform !== 'win32' || process.env.GITHUB_ACTIONS !== 'true') {
@@ -88,8 +89,14 @@ try {
   };
   await run(installer, ['/S', `/D=${installDirectory}`], { nsis: true, timeout: 180000 });
   report.checks.push('silent_install');
+  const app = join(installDirectory, 'aluraya.exe');
+  verifyNsisExecutable(
+    await readFile(join(root, 'src-tauri/target/release/aluraya.exe')),
+    await readFile(app),
+  );
+  report.installedAppSha256 = await hash(app);
+  report.checks.push('installed_executable_matches_nsis_patch');
   const mappings = [
-    ['src-tauri/target/release/aluraya.exe', 'aluraya.exe'],
     ['src-tauri/binaries/aluraya-node-x86_64-pc-windows-msvc.exe', 'aluraya-node.exe'],
     ['src-tauri/resources/sidecar.cjs', 'sidecar/sidecar.cjs'],
     ['src-tauri/resources/runtime.json', 'sidecar/runtime.json'],
