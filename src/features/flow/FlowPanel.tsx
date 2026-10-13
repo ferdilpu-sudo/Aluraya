@@ -19,6 +19,7 @@ const errors: Record<NonNullable<FlowSnapshot['error']>, string> = {
 const pageNames = {
   flow: 'Halaman Flow',
   login: 'Halaman login Google',
+  login_rejected: 'Login ditolak Google',
   other: 'Halaman belum dikenali',
   closed: 'Tidak ada halaman',
 };
@@ -26,6 +27,7 @@ export function FlowPanel() {
   const { state, error, pending, execute } = useFlow();
   const [browser, setBrowser] = useState<'chrome' | 'msedge'>('chrome');
   const busy = pending || !state || state.activity !== 'idle';
+  const loginRejected = state?.observation?.page === 'login_rejected';
   return (
     <section className="copilot" aria-labelledby="flow-title">
       <div className="section-heading">
@@ -117,9 +119,11 @@ export function FlowPanel() {
           <p className="runtime-note" role="status">
             {busy
               ? 'Sedang memproses…'
-              : state.browserOpen
-                ? 'Browser terbuka. Login dan buka proyek Flow untuk diperiksa.'
-                : 'Browser belum terbuka.'}
+              : loginRejected
+                ? 'Koneksi Flow terhenti: Google menolak login browser ini.'
+                : state.browserOpen
+                  ? 'Browser terbuka. Login dan buka proyek Flow untuk diperiksa.'
+                  : 'Browser belum terbuka.'}
           </p>
           <div className="chat-actions">
             <button
@@ -140,21 +144,33 @@ export function FlowPanel() {
           {state.observation && (
             <div className="connection-note">
               <strong>{pageNames[state.observation.page]}</strong>
-              <p>
-                Kolom input terlihat: {state.observation.editorVisible ? 'Ya' : 'Belum'}. Ini belum
-                membuktikan izin generasi.
-              </p>
-              <p>
-                Label model terlihat: {state.observation.modelLabels.join(', ') || 'Belum terbaca'}
-              </p>
-              <p>
-                Teks kredit terlihat:{' '}
-                {state.observation.creditLabels.join(' · ') || 'Belum terbaca'}
-              </p>
-              <p>
-                Diperiksa: {new Date(state.observation.observedAt).toLocaleTimeString('id-ID')}.
-                Buka menu akun untuk saldo atau pengaturan prompt untuk model, lalu periksa lagi.
-              </p>
+              {loginRejected ? (
+                <p role="alert">
+                  Google menolak login browser ini. Tutup browser Flow dan simpan pesan
+                  penolakannya. Integrasi menunggu jalur akses yang didukung; jangan ulangi login
+                  otomatis atau pindahkan cookie dari browser lain.
+                </p>
+              ) : (
+                <>
+                  <p>
+                    Kolom input terlihat: {state.observation.editorVisible ? 'Ya' : 'Belum'}. Ini
+                    belum membuktikan izin generasi.
+                  </p>
+                  <p>
+                    Label model terlihat:{' '}
+                    {state.observation.modelLabels.join(', ') || 'Belum terbaca'}
+                  </p>
+                  <p>
+                    Teks kredit terlihat:{' '}
+                    {state.observation.creditLabels.join(' · ') || 'Belum terbaca'}
+                  </p>
+                  <p>
+                    Diperiksa: {new Date(state.observation.observedAt).toLocaleTimeString('id-ID')}.
+                    Buka menu akun untuk saldo atau pengaturan prompt untuk model, lalu periksa
+                    lagi.
+                  </p>
+                </>
+              )}
             </div>
           )}
         </>

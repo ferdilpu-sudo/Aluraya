@@ -46,7 +46,7 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
 | TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Installer belum diverifikasi. |
 | TASK-003 | PASS — THIN SLICE LIVE | Screenshot 13 Oktober 09:18 memperlihatkan GPT-6.1-Sol menjawab pesan tes dan status Selesai. Simulasi kuota/pause tanpa fallback PASS pada fixture. Bukti dan batas: evidence/CHATGPT-ADAPTER-REPORT.md. Logout/restart/multiakun live belum dinilai. |
-| TASK-004 | PROFILE SETUP IMPLEMENTED / LIVE NOT RUN | Tab Flow membuka profil Chrome/Edge khusus dan membaca kandidat label. Biaya/capability belum terverifikasi; upload/submit/impor otomatis belum dibuat. Ikuti docs/FLOW-START.md. |
+| TASK-004 | BLOCKED — GOOGLE LOGIN REJECTED | Screenshot pengguna 13 Oktober 14:26 membuktikan browser terbuka tetapi Google menolak login. Sandbox diperbaiki dan status penolakan dikenali. Biaya/capability, upload/submit/impor belum terbukti. Lihat evidence/FLOW-SETUP-REPORT.md. |
 | TASK-005 | NOT IMPLEMENTED / LIVE NOT RUN | Video Flow dan impor otomatis belum dibuat; menunggu gambar pertama dan batch konkret. |
 | TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
@@ -87,3 +87,10 @@ Screenshot terbaru pengguna memperlihatkan model GPT-6.1-Sol, input `tes`, jawab
 ### TASK-004 — profil Flow dan observasi awal (13 Oktober 2026)
 
 Tab Flow menambah daftar profil UUID persisten, pembukaan Chrome/Edge milik aplikasi, pemeriksaan read-only dan penutupan browser. Tidak memakai profil browser harian. Playwright Core 1.64.0 disertakan sebagai runtime eksternal; browser menggunakan instalasi pengguna. Snapshot hanya kandidat label model/kredit, bukan harga atau izin generasi. costVerified/generationReady selalu false dan IPC tidak memiliki command submit. Langkah terkecil: buka profil, login sendiri, buka proyek Flow, lalu Periksa halaman Flow; lihat docs/FLOW-START.md. Pengujian otomatis dan batas ada di evidence/FLOW-SETUP-REPORT.md.
+
+
+### TASK-004 — penolakan login dan sandbox (13 Oktober 2026, 14:26 WIB)
+
+Google menampilkan “Couldn't sign you in / This browser or app may not be secure” dan Chrome memperingatkan `--no-sandbox`. Penyebab penolakan tidak dapat disimpulkan hanya dari screenshot. Patch mengaktifkan `chromiumSandbox: true`, mengenali path sign-in rejected tanpa query/DOM login, memprioritaskan popup penolakan dan menampilkan arahan berhenti. Tidak ada retry dengan proteksi lebih lemah. CI setup sebelumnya gagal pada penolakan field asing di enum Rust tanpa payload; variant diganti menjadi empty struct agar `deny_unknown_fields` berlaku, dengan tes seluruh action tanpa payload.
+
+TASK-004 tetap BLOCKED sesuai kondisi berhenti AGENTS.md. Langkah berikutnya adalah memastikan jalur akses yang didukung provider; tidak melanjutkan submit/generasi atau ekspansi studio. Tidak menyalin sesi harian, menyamarkan automation, atau mengganti kredit Flow dengan API berbayar. Instruksi login pada checkpoint lama adalah riwayat, bukan permintaan mengulang login yang ditolak.

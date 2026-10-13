@@ -11,7 +11,7 @@ export const flowActionSchema = z.discriminatedUnion('action', [
 export const flowObservationSchema = z
   .object({
     observedAt: z.iso.datetime(),
-    page: z.enum(['flow', 'login', 'other', 'closed']),
+    page: z.enum(['flow', 'login', 'login_rejected', 'other', 'closed']),
     editorVisible: z.boolean(),
     modelLabels: z.array(z.string().max(100)).max(12),
     creditLabels: z.array(z.string().max(100)).max(6),

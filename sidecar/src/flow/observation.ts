@@ -5,7 +5,8 @@ export function pageKind(address: string): FlowObservation['page'] {
   try {
     const url = new URL(address);
     if (url.protocol !== 'https:' || url.port || url.username || url.password) return 'other';
-    if (url.hostname === 'accounts.google.com') return 'login';
+    if (url.hostname === 'accounts.google.com')
+      return /^\/(?:v\d+\/)?signin\/rejected\/?$/.test(url.pathname) ? 'login_rejected' : 'login';
     if (
       url.hostname === 'flow.google' ||
       (url.hostname === 'labs.google' &&

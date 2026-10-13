@@ -3,6 +3,11 @@ import { pageKind, observedLabels } from '../sidecar/src/flow/observation';
 it('classifies only exact provider origins and never exposes query strings', () => {
   expect(pageKind('https://labs.google/fx/tools/flow/project/123?token=secret')).toBe('flow');
   expect(pageKind('https://flow.google/')).toBe('flow');
+  expect(pageKind('https://accounts.google.com/v3/signin/rejected?secret=fixture')).toBe(
+    'login_rejected',
+  );
+  expect(pageKind('https://accounts.google.com/signin?continue=/v3/signin/rejected')).toBe('login');
+  expect(pageKind('https://accounts.google.com.evil.test/v3/signin/rejected')).toBe('other');
   expect(pageKind('https://accounts.google.com/signin?secret=fixture')).toBe('login');
   for (const url of [
     'http://flow.google/',

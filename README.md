@@ -4,7 +4,7 @@
 
 Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
 
-**Koneksi Flow awal:** profil Chrome/Edge khusus dan pemeriksaan halaman read-only tersedia melalui tab Flow; lihat [panduan Flow](./docs/FLOW-START.md). Login dan label akun aktual belum diverifikasi.
+**Koneksi Flow awal:** profil Chrome/Edge khusus dan pemeriksaan halaman read-only tersedia melalui tab Flow; lihat [panduan Flow](./docs/FLOW-START.md). Percobaan login pengguna ditolak Google pada 13 Oktober 2026; TASK-004 BLOCKED. Patch mengaktifkan sandbox browser dan mengenali halaman penolakan; keberhasilan login belum terbukti.
 
 **Belum tersedia:** generasi Flow otomatis, penyimpanan proyek, media import, approval produksi, scheduler, dan installer tervalidasi. Chat aktif setelah akun, izin paket, model dan konfirmasi penggunaan tersedia. Tidak ada hasil AI sintetis yang dilabeli sebagai hasil provider. Posisi kartu dan riwayat chat hanya bertahan pada sesi aplikasi.
 

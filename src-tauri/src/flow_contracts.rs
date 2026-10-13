@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Deserialize, Serialize)]
 #[serde(tag = "action", rename_all = "snake_case", deny_unknown_fields)]
 pub enum FlowAction {
-    Inspect, Create { browser: String }, Open { #[serde(rename = "profileId")] profile_id: String },
-    Observe, Close, Profiles { page: u32 },
+    Inspect {}, Create { browser: String }, Open { #[serde(rename = "profileId")] profile_id: String },
+    Observe {}, Close {}, Profiles { page: u32 },
 }
 impl FlowAction {
     pub fn validate(&self) -> Result<(), String> {
@@ -41,7 +41,7 @@ impl FlowSnapshot {
             && self.active_profile_id.as_ref().map_or(true, |id| uuid::Uuid::parse_str(id).is_ok())
             && self.observation.as_ref().map_or(true, |o| !o.cost_verified
                 && o.observed_at.len() <= 40 && o.observed_at.ends_with('Z')
-                && ["flow", "login", "other", "closed"].contains(&o.page.as_str())
+                && ["flow", "login", "login_rejected", "other", "closed"].contains(&o.page.as_str())
                 && o.model_labels.len() <= 12 && o.credit_labels.len() <= 6
                 && o.model_labels.iter().chain(o.credit_labels.iter()).all(|s| s.len() <= 400))
             && self.error.as_ref().map_or(true, |s| ["WINDOWS_REQUIRED", "STORAGE_ERROR", "BROWSER_OPEN_FAILED", "NAVIGATION_FAILED", "BROWSER_CLOSED", "PROFILE_ACTIVE", "PROFILE_NOT_FOUND", "OBSERVATION_FAILED", "BUSY"].contains(&s.as_str()));

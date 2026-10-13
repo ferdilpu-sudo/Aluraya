@@ -15,6 +15,7 @@ export async function launchFlow(
   // imported default profile, stealth flags or script injection at sign-in.
   const context: BrowserContext = await chromium.launchPersistentContext(directory, {
     channel,
+    chromiumSandbox: true,
     headless: false,
     viewport: null,
     acceptDownloads: false,
@@ -32,7 +33,10 @@ export async function launchFlow(
     onClose: (callback) => context.on('close', callback),
     async observe() {
       const pages = context.pages().filter((page) => !page.isClosed());
-      const page = pages.find((page) => pageKind(page.url()) === 'flow') ?? pages.at(-1);
+      const page =
+        pages.find((page) => pageKind(page.url()) === 'login_rejected') ??
+        pages.find((page) => pageKind(page.url()) === 'flow') ??
+        pages.at(-1);
       const kind = page ? pageKind(page.url()) : 'closed';
       const empty: FlowObservation = {
         observedAt: new Date().toISOString(),
@@ -87,7 +91,9 @@ export async function launchFlow(
           timer = setTimeout(() => reject(new Error('OBSERVATION_FAILED')), 10000);
         }),
       ]).finally(() => clearTimeout(timer));
-      if (!visible || pageKind(page.url()) !== 'flow') return { ...empty, page: 'other' };
+      const currentKind = pageKind(page.url());
+      if (!visible || currentKind !== 'flow')
+        return { ...empty, page: currentKind === 'flow' ? 'other' : currentKind };
       return { ...empty, editorVisible: visible.editorVisible, ...observedLabels(visible.lines) };
     },
   };

@@ -1,6 +1,18 @@
 # Flow di Aluraya — koneksi awal TASK-004
 
-ChatGPT sudah menjawab di aplikasi. Tahap berikut ini membuka profil Flow khusus dan membaca label yang terlihat; upload, Generate dan impor otomatis belum aktif.
+**Status terbaru: login Flow BLOCKED.** Percobaan 13 Oktober 2026 ditolak Google. ChatGPT sudah menjawab di aplikasi. Upload, Generate dan impor Flow otomatis belum aktif.
+
+Patch terbaru mengaktifkan sandbox Chrome/Edge dan menampilkan status penolakan ketika **Periksa halaman Flow** mengenali halaman sign-in rejected. Ini perbaikan keamanan/diagnostik, bukan jaminan Google menerima login. Tutup browser Flow dan Aluraya lama sebelum memperbarui source:
+
+```powershell
+git pull --ff-only origin main
+npm.cmd ci
+npm.cmd run tauri dev
+```
+
+Jangan mengulang login otomatis yang sudah ditolak. Integrasi menunggu jalur akses yang didukung. Prosedur di bawah hanya berlaku setelah hambatan akses terselesaikan; jangan membuat profil baru atau mengganti browser untuk menghindari penolakan.
+
+## Prosedur pemeriksaan setelah akses tersedia
 
 1. Tutup Aluraya/dev lama. Jalankan `git pull --ff-only origin main`, `npm.cmd ci`, lalu `npm.cmd run tauri dev`.
 2. Buka tab **Flow**. Pilih **Google Chrome** atau **Microsoft Edge** yang sudah terpasang, lalu **Tambah profil Flow**.

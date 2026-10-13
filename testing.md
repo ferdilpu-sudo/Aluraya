@@ -88,3 +88,8 @@ Screenshot pengguna 09:18 memperlihatkan GPT-6.1-Sol menjawab `tes` dengan label
 ### TASK-004 — setup Flow
 
 `flow-session` memeriksa single browser, busy lock, banyak profil/pagination, failure registry tanpa overwrite, error redaction, shutdown saat launch pending dan penolakan command submit/path/URL. `flow-observation` memeriksa origin spoofing dan ekstraksi label terbatas tanpa price/credit authority. `flow_contracts` Rust menolak input/path/privilege asing dan generationReady=true. Lokal: npm run check PASS 69 tes + 1 Windows-only skipped. Pemanggilan playwright-core dari salinan runtime terisolasi PASS. Login/capability/biaya/submit/unduh Flow tetap NOT RUN; ini bukan TEST-007 PASS.
+
+
+### TASK-004 — regression sandbox/login ditolak
+
+CI 2c4b5dc gagal pada input inspect dengan field tambahan (Rust unit variant). Patch mengganti action tanpa payload menjadi empty struct dan menguji inspect/observe/close. flow-browser memeriksa sandbox aktif tanpa retry melemahkan proteksi, serta popup rejected diprioritaskan tanpa DOM/query login. flow-observation memeriksa path rejected dan origin spoofing. Status live Flow: BLOCKED berdasarkan screenshot pengguna 13 Oktober 14:26; bukan TEST-007 PASS. Hasil pemeriksaan patch ada di evidence/FLOW-SETUP-REPORT.md.

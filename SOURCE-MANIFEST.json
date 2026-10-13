@@ -29,7 +29,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "741d97b4731da298c6b645900acd7b3e20f0c55ddba1295e7b06a9f5d82d6b10"
+      "sha256": "30c6380b6f389fe7a70f4540c85b822734ba748f8750d10ae9c2da790e4b127b"
     },
     {
       "path": "architecture.md",
@@ -37,7 +37,7 @@
     },
     {
       "path": "decisions.md",
-      "sha256": "493b3568b544b904a0c91fbbade6fd7ff86cd019eb2b5a1e40c72b4be16f1644"
+      "sha256": "6bb8745056663840e63d908cb05c543c1e127a6a6f6f2e847381abb735f7769d"
     },
     {
       "path": "design.md",
@@ -49,7 +49,7 @@
     },
     {
       "path": "docs/FLOW-START.md",
-      "sha256": "1dd0d9b6e64f5897336c0dce00d37fc449702772a71e646a02eaf8d9d44901b9"
+      "sha256": "7e779172f8e671f3f986483796c1fd12030237be5bf9e818a87cb298531d2327"
     },
     {
       "path": "docs/IPC.md",
@@ -69,7 +69,7 @@
     },
     {
       "path": "evidence/FLOW-SETUP-REPORT.md",
-      "sha256": "c3b4185187abcd950e3464b45416dde7fe286b9a360e4f30effc844a2cca46e8"
+      "sha256": "c02145ef9bfc334fa1cdb01104c5b686d4e3186050cc1869c3dd327f35d15589"
     },
     {
       "path": "evidence/M001-REPORT.md",
@@ -101,7 +101,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "90da493f6606f485d82278ea025d2fb35a5d4bec3771267139ea77d1478958b2"
+      "sha256": "c48ba9fbedd64c77aa9ef3a890984afa921b9177acbd3adab01858bff62b6e1e"
     },
     {
       "path": "prd.md",
@@ -201,11 +201,11 @@
     },
     {
       "path": "sidecar/src/flow/browser.ts",
-      "sha256": "c619f24b41af0ac471e1af707187829921544c9210344d6d897e08a0419d26f2"
+      "sha256": "9f55afd87a0f3220a2b6b04db39966e0a1b7668231ef67b4c8714a8fbacf21e2"
     },
     {
       "path": "sidecar/src/flow/observation.ts",
-      "sha256": "4649929d062d0391c11550981ec727eff85be6b03021d6553dfc73bda57d46f4"
+      "sha256": "2afe1f6c83d18f96ecc86a4e9a8db644abb34c13935686db7b962401f1ab94a3"
     },
     {
       "path": "sidecar/src/flow/profiles.ts",
@@ -285,7 +285,7 @@
     },
     {
       "path": "src-tauri/src/flow_contracts.rs",
-      "sha256": "bf846bfc63f4d46c90e440f9f0e66d5bd8ee419d893998b859c36d1a4dc1fc7c"
+      "sha256": "a208fd968223194c116f2f8ed8ce710beaa7dc4984bbff0afde402894bfddbdb"
     },
     {
       "path": "src-tauri/src/infrastructure/credential_lock.rs",
@@ -321,7 +321,7 @@
     },
     {
       "path": "src-tauri/tests/flow_contracts.rs",
-      "sha256": "abdd2a1b26d3a3c01108c0929892a4614de78c2d93a2a1bd2f6dd9ae73681fc0"
+      "sha256": "70c9435371e5d9406a46c27024b8ff0067656ba85f9316b2883e6edad1a1ccbc"
     },
     {
       "path": "src-tauri/tests/frame_reader.rs",
@@ -357,7 +357,7 @@
     },
     {
       "path": "src/contracts/flow.ts",
-      "sha256": "55746a4709f8c3e520dd82eac18ded4a558e9f1ca581930e35e71e6bf8d7672b"
+      "sha256": "84bfdf366ced7fb045c34c5150c33838c8123a96d31992228b9a93072192700f"
     },
     {
       "path": "src/contracts/sidecar.ts",
@@ -401,7 +401,7 @@
     },
     {
       "path": "src/features/flow/FlowPanel.tsx",
-      "sha256": "1109c000f83735158416a5fea9138e52a8f35ea6c6d9faea927570350fd9318d"
+      "sha256": "716f18bee95af73a2bb5b668abf74d85a05eeedd55d9944cc55b7276fc3bcf20"
     },
     {
       "path": "src/features/flow/useFlow.ts",
@@ -429,7 +429,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "3ae15c1ff13525e05ccd5b6d6752a4b4c8e4b8e5d5b239996756437f4b599e33"
+      "sha256": "b38fabb21f30551c9c3a4f09c975982e8b8d9089674343b6fe7c78f0bdc1e2ad"
     },
     {
       "path": "tests/browser-boundary.test.ts",
@@ -456,8 +456,12 @@
       "sha256": "4108b742244b1e45f55c7a627db1efb26b56305fcbf9053291dc2f7bdf2e9ad8"
     },
     {
+      "path": "tests/flow-browser.test.ts",
+      "sha256": "df4179fb0726782459e11277748e317a26e42b53af305e7cc5737622e10b4559"
+    },
+    {
       "path": "tests/flow-observation.test.ts",
-      "sha256": "b8a456ca5324a712b04e38e74ea460d4358eaccb55928fe05af60222cf41d1e7"
+      "sha256": "9b790eb852b6f4bc6362ffa377c900baebccd9d2334214acb6f34dca55c25b0d"
     },
     {
       "path": "tests/flow-session.test.ts",
@@ -484,5 +488,5 @@
       "sha256": "2c0b58d683675f3236cc461184d77bd2210cd628762bb5ade7594f6596757c8d"
     }
   ],
-  "checkpoint": "TASK-003 ChatGPT OAuth and streaming, live pending"
+  "checkpoint": "TASK-003 live PASS; TASK-004 Google login BLOCKED, sandbox and contract fixes"
 }

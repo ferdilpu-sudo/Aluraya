@@ -78,3 +78,10 @@ Gunakan protokol OAuth public client yang didokumentasikan SIWC langsung, dengan
 Gunakan playwright-core 1.64.0 (Apache-2.0) dengan channel Chrome/Edge pengguna dan persistent profile khusus aplikasi, tanpa mengunduh browser otomatis. Package runtime disalin utuh dan LICENSE/NOTICE disertakan. Google login dilakukan pengguna; tidak melewati penolakan login/captcha. Fase awal hanya launch dan read-only label candidates. Dukungan otomasi akun, biaya dan selector submit belum terbukti, sehingga tidak ada command generate pada kontrak.
 
 Dokumentasi primer yang diperiksa: https://support.google.com/flow/answer/16353333?hl=en (desktop Chromium), https://support.google.com/flow/answer/16526234?hl=en (saldo di menu akun, biaya terbaru di pengaturan prompt, biaya per generation dan kemungkinan beberapa hasil), https://playwright.dev/docs/api/class-browsertype (persistent context/profile khusus), https://flow.google/ (origin Flow). Dokumentasi ini bukan bukti live automation. Harga tidak dihardcode dari tabel dokumentasi.
+
+
+## ADR-012 — sandbox aktif dan penolakan login Flow (13 Oktober 2026)
+
+Sandbox Chromium diaktifkan eksplisit. Default Playwright adalah false; tidak ada fallback menonaktifkan sandbox jika launch gagal. Google menolak percobaan login pengguna; ini BLOCKED, bukan hasil login sukses atau bukti pasti bahwa flag sandbox penyebabnya. Observer mengklasifikasikan path rejected pada origin Google Accounts tanpa membaca DOM/query. Popup penolakan didahulukan dari tab Flow lama. AGENTS.md mengharuskan menghentikan modul provider ketika login/izin tidak tersedia; tahap submit tidak dilanjutkan.
+
+Sumber primer diperiksa: https://playwright.dev/docs/api/class-browsertype#browser-type-launch-persistent-context-option-chromium-sandbox dan https://support.google.com/accounts/answer/7675428. Dokumentasi tidak membuktikan akun pengguna menerima browser otomatis.
