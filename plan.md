@@ -99,3 +99,8 @@ TASK-004 tetap BLOCKED sesuai kondisi berhenti AGENTS.md. Langkah berikutnya ada
 ### TASK-004 — konfirmasi blocker (13 Oktober 2026, 14:43 WIB)
 
 Screenshot kedua tetap menunjukkan penolakan Google; peringatan no-sandbox tidak terlihat. Profil aktif/browser terbuka bukan login sukses, dan status jenis halaman diperbarui lewat tombol Periksa halaman Flow. TASK-004 tetap BLOCKED. CI commit 0f163ae SUCCESS: 72 tes JS Windows, 8 tes Rust, release executable dibangun; installer serta akses Flow tetap belum terbukti. Bukti lengkap: evidence/FLOW-SETUP-REPORT.md. Langkah terkecil: simpan status penolakan lalu tutup browser milik aplikasi; pastikan jalur akses yang didukung sebelum mengembangkan submit.
+
+
+### TASK-004 — evaluasi jalur resmi (13 Oktober 2026, 15:27 WIB)
+
+Riset primer menemukan Flow Agent/Tools yang memakai kredit Flow di proyek Flow, serta Gemini API generasi dengan billing tersendiri. Tidak ditemukan kontrak integrasi publik yang membuktikan pemakaian kredit Flow sekaligus hasil otomatis ke canvas Aluraya. Pilihan konkret, konsekuensi REQ-007/AC-007 dan slice pertama disiapkan di [docs/FLOW-INTEGRATION-DECISION.md](./docs/FLOW-INTEGRATION-DECISION.md). Status PROPOSAL; belum mengubah kebutuhan atau mengaktifkan fallback. AGENTS.md mensyaratkan keputusan pengguna untuk revisi produk besar/biaya nyata. TASK-004 tetap BLOCKED sampai jalur akses terbukti atau perubahan scope dipilih.
