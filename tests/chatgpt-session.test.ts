@@ -180,3 +180,26 @@ it('cancels a partial reply, rejects concurrent sends and excludes failed histor
   expect(deps.streamReply.mock.calls[1]?.[2]).toEqual([{ role: 'user', content: 'Baru' }]);
   await session.close();
 });
+
+it('exposes safe failure diagnostics until the next operation and preserves account credentials', async () => {
+  const { session, deps, account } = setup();
+  await ready(session);
+  const diagnostic = {
+    stage: 'http' as const,
+    status: 400,
+    shape: 'error' as const,
+    code: 'invalid_request_error',
+    param: 'input',
+    requestId: 'req_fixture',
+  };
+  deps.streamReply.mockRejectedValueOnce(new ChatError('PROVIDER_ERROR', diagnostic));
+  session.act({ action: 'send', model: 'account-model', text: 'tes' });
+  await idle(session);
+  expect(session.snapshot()).toMatchObject({ diagnostic, reply: { state: 'failed', text: '' } });
+  expect(JSON.stringify(session.snapshot())).not.toContain('secret');
+  expect(account.credentials).not.toBeNull();
+  expect(deps.streamReply).toHaveBeenCalledTimes(1);
+  session.act({ action: 'clear' });
+  expect(session.snapshot().diagnostic).toBeNull();
+  await session.close();
+});

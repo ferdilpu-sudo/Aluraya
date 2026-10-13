@@ -30,6 +30,7 @@ export class ChatSession {
     models: [],
     reply: null,
     error: null,
+    diagnostic: null,
   };
   private history: Message[] = [];
   private abort: AbortController | null = null;
@@ -83,11 +84,14 @@ export class ChatSession {
   private launch(activity: ChatSnapshot['activity'], work: (signal: AbortSignal) => Promise<void>) {
     this.state.activity = activity;
     this.state.error = null;
+    this.state.diagnostic = null;
     const abort = new AbortController();
     this.abort = abort;
     this.running = work(abort.signal)
       .catch(async (error) => {
         this.state.error = abort.signal.aborted ? 'LOGIN_CANCELLED' : safeError(error);
+        this.state.diagnostic =
+          !abort.signal.aborted && error instanceof ChatError ? error.diagnostic : null;
         if (this.state.reply?.state === 'streaming')
           this.state.reply.state = abort.signal.aborted ? 'cancelled' : 'failed';
         if (this.state.error === 'USAGE_LIMIT') this.state.usagePaused = true;
@@ -215,6 +219,7 @@ export class ChatSession {
         this.history = [];
         this.state.reply = null;
         this.state.error = null;
+        this.state.diagnostic = null;
         break;
       case 'logout':
         this.launch('logout', async () => {

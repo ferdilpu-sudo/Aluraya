@@ -6,7 +6,7 @@ export const chatErrors: Record<ChatErrorCode, string> = {
     'Penyimpanan kredensial Windows gagal. Tutup dan buka kembali aplikasi; jangan hapus data akun.',
   SESSION_IN_USE: 'Koneksi sedang dipakai jendela Aluraya lain. Tutup jendela tersebut.',
   NETWORK_ERROR: 'Koneksi terputus atau melewati batas waktu. Tidak ada pengiriman ulang otomatis.',
-  PROVIDER_ERROR: 'Respons layanan tidak dapat diproses. Coba lagi nanti.',
+  PROVIDER_ERROR: 'Respons layanan tidak dapat diproses. Buka rincian kegagalan untuk pemeriksaan.',
   LOGIN_CANCELLED: 'Operasi dibatalkan.',
   LOGIN_TIMEOUT: 'Waktu login habis. Mulai login kembali.',
   LOGIN_DENIED: 'Izin login ditolak. Anda dapat memulai kembali jika ingin menghubungkan akun.',

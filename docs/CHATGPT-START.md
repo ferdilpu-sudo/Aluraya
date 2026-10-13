@@ -12,6 +12,10 @@ Adapter sudah ditulis untuk jalur resmi proyek pribadi lokal. Login, entitlement
 
 Kirim screenshot status/hasil, bukan token atau URL callback login. CI dan fixture tidak membuktikan eligibility akun.
 
+## Jika daftar model muncul tetapi pesan gagal
+
+Buka **Rincian kegagalan** pada kotak error, lalu kirim screenshot yang memuat tahap, HTTP, kode, parameter dan Request ID. Rincian tidak memuat body layanan mentah atau kredensial. Jangan hapus akun atau mengulang login hanya karena error umum. Jangan mengirim berkali-kali sebelum penyebabnya diperiksa. Bila kotak lama belum menyediakan rincian, tutup aplikasi, pull source terbaru dan jalankan kembali; satu percobaan manual diperlukan untuk merekam error baru.
+
 ## Perilaku sesi
 
 - Akun dapat ditambah dan dipilih; satu operasi aktif pada satu waktu. Pergantian akun mengosongkan percakapan aktif. Label nomor akun membedakan registrasi dengan email sama.

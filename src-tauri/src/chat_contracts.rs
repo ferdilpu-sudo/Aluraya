@@ -37,15 +37,37 @@ pub struct Model { id: String, name: String }
 pub struct Reply { id: String, text: String, state: String }
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ChatDiagnostic {
+    stage: String, status: u16, shape: String,
+    code: Option<String>, param: Option<String>, request_id: Option<String>,
+}
+impl ChatDiagnostic {
+    fn validate(&self) -> bool {
+        let identifier = |s: &str, param: bool| !s.is_empty() && s.len() <= 100
+            && s.as_bytes()[0].is_ascii_lowercase()
+            && s.bytes().all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == b'_' || (param && b".[]".contains(&c)));
+        ["http", "stream", "protocol"].contains(&self.stage.as_str())
+            && (100..=599).contains(&self.status)
+            && ["error", "detail", "other", "non_json", "empty", "event"].contains(&self.shape.as_str())
+            && self.code.as_ref().map_or(true, |s| identifier(s, false))
+            && self.param.as_ref().map_or(true, |s| identifier(s, true))
+            && self.request_id.as_ref().map_or(true, |s| s.len() <= 100 &&
+                ((s.starts_with("req_") && s.len() > 4 && s.bytes().skip(4).all(|c| c.is_ascii_alphanumeric() || c == b'_' || c == b'-'))
+                || (s.len() == 36 && s.bytes().all(|c| c.is_ascii_hexdigit() || c == b'-'))))
+    }
+}
+#[derive(Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ChatSnapshot {
     schema_version: u8, activity: String, account_id: Option<String>, email: Option<String>,
     signed_in: bool, plan_enabled: bool, plan_confirmed: bool, welcome_pending: bool,
     usage_paused: bool, accounts: Vec<AccountSummary>, account_count: u32, account_page: u32,
-    models: Vec<Model>, reply: Option<Reply>, error: Option<String>,
+    models: Vec<Model>, reply: Option<Reply>, error: Option<String>, diagnostic: Option<ChatDiagnostic>,
 }
 impl ChatSnapshot {
     pub fn validate(&self) -> Result<(), String> {
         let valid = self.schema_version == 1
+            && self.diagnostic.as_ref().map_or(true, |d| d.validate())
             && ["idle", "loading", "login", "models", "reply", "logout"].contains(&self.activity.as_str())
             && self.account_id.as_ref().map_or(true, |id| uuid::Uuid::parse_str(id).is_ok())
             && self.email.as_ref().map_or(true, |email| email.len() <= 1280)

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useChat } from './useChat';
 import { ChatConnection } from './ChatConnection';
-import { chatErrors } from './chatErrors';
+import { ChatFailure } from './ChatFailure';
 import type { ChatAction, ChatSnapshot } from '../../contracts/chat';
 
 function Conversation({
@@ -92,7 +92,9 @@ function Conversation({
                   ? 'Selesai'
                   : (current?.state ?? message.status) === 'streaming'
                     ? 'Merespons…'
-                    : 'Respons parsial'}
+                    : (current?.text ?? message.answer)
+                      ? 'Respons parsial'
+                      : 'Belum ada jawaban; permintaan tidak selesai'}
               </small>
             </article>
           );
@@ -168,11 +170,7 @@ export function CopilotPanel() {
             busy={busy}
             execute={execute}
           />
-          {state.error && (
-            <p role="alert" className="error">
-              {chatErrors[state.error]}
-            </p>
-          )}
+          <ChatFailure state={state} />
           <Conversation
             key={`${state.accountId ?? 'new'}:${state.signedIn}`}
             state={state}

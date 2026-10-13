@@ -27,3 +27,8 @@ Bagian diagnostik di atas adalah checkpoint awal. Host sekarang juga mengizinkan
 OAuth/fetch berjalan asinkron di sidecar; command segera mengembalikan snapshot publik. UI membaca snapshot tiap 500 ms selama operasi aktif. Snapshot berisi akun ringkas, model, status izin dan teks respons terakhir, tanpa token, kode OAuth, URL otorisasi, subject atau client ID. Rust memvalidasi struktur, batas dan UUID sebelum diteruskan; React memvalidasi ulang dengan Zod. Mutex host dan antrean UI mencegah pencampuran respons. Hanya satu operasi provider berjalan; cancel tidak menjalankan ulang request.
 
 Callback OAuth memakai listener sementara 127.0.0.1 dengan state, nonce dan PKCE baru. Listener hanya menerima callback yang terikat percobaan, lalu ditutup. Ini bukan port kontrol aplikasi. URL browser berasal dari allowlist internal, bukan URL dari React atau model. Token tetap di sidecar dan penyimpanan DPAPI lokal. Database produksi masih belum dibuat; host tetap pemilik database saat diterapkan.
+
+
+### Diagnostik kegagalan ChatGPT — 13 Oktober 2026
+
+Snapshot menambahkan `diagnostic` nullable: `stage` (http/stream/protocol), status HTTP aktual, `shape` (error/detail/other/non_json/empty/event), serta `code`, `param`, `requestId` nullable dengan format dan panjang terbatas. Hanya field mesin yang lolos validasi diteruskan. Pesan/detail mentah, body, prompt dan header autentikasi tidak disalin. Event gagal setelah HTTP 200 tetap melaporkan 200; klasifikasi kuota memakai kode event. Rincian hilang pada operasi baru atau clear dan tidak ditulis ke disk. Native host dan Zod menolak field tambahan/ukuran berlebih.

@@ -18,3 +18,16 @@ fn accepts_public_snapshot_but_rejects_credentials() {
     response["payload"]["accessToken"] = serde_json::json!("fixture-secret");
     assert!(serde_json::from_value::<ChatResponse>(response).is_err());
 }
+
+#[test]
+fn validates_bounded_diagnostics_and_rejects_raw_provider_fields() {
+    let diagnostic = serde_json::json!({"stage":"http","status":400,"shape":"error","code":"invalid_request_error","param":"input[0].content","requestId":"req_fixture"});
+    let mut payload = serde_json::json!({"schemaVersion":1,"activity":"idle","accountId":null,"email":null,"signedIn":false,"planEnabled":false,"planConfirmed":false,"welcomePending":false,"usagePaused":false,"accounts":[],"accountCount":0,"accountPage":0,"models":[],"reply":null,"error":"PROVIDER_ERROR","diagnostic":diagnostic});
+    let valid: chat_contracts::ChatSnapshot = serde_json::from_value(payload.clone()).unwrap();
+    assert!(valid.validate().is_ok());
+    payload["diagnostic"]["requestId"] = serde_json::json!("Bearer secret");
+    let invalid: chat_contracts::ChatSnapshot = serde_json::from_value(payload.clone()).unwrap();
+    assert!(invalid.validate().is_err());
+    payload["diagnostic"]["message"] = serde_json::json!("raw provider text");
+    assert!(serde_json::from_value::<chat_contracts::ChatSnapshot>(payload).is_err());
+}

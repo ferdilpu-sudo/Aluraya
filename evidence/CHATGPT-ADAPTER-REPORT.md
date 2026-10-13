@@ -22,8 +22,15 @@ Screenshot pengguna 18:26:55 pada Windows/Node v24.19.0 menunjukkan host dan sid
 
 Perbaikan lanjutan tombol Kirim menolak snapshot error/BUSY sebagai pesan baru agar request kedua tidak menduplikasi reply ID yang sedang aktif. Pemeriksaan format dan typecheck lokal PASS; hasil CI di atas merujuk commit implementasi sebelum perbaikan UI kecil ini.
 
-**LIVE NOT RUN:** login akun pengguna, eligibility/izin penggunaan paket, model discovery nyata, chat streaming nyata, logout/restart akun aktual dan visual/keyboard QA Windows baru. Installer belum diverifikasi. Tidak menyatakan M-001 lulus.
+**LIVE UPDATE 13 Oktober:** screenshot pengguna 08:59 menampilkan GPT-6.1-Sol, Using ChatGPT plan dan pesan `tes`; jawaban kosong disertai PROVIDER_ERROR. Discovery/izin terlihat pada UI, inference **FAILED**, akar penyebab belum diketahui. Logout/restart akun aktual dan visual/keyboard QA lengkap **NOT RUN**. Installer belum diverifikasi. Tidak menyatakan M-001 lulus.
 
 ## Batas dan tindak lanjut
 
 Riwayat chat masih in-memory; batas konteks sementara didokumentasikan di panduan. Pengaturan kredit tambahan dikelola pengguna di ChatGPT; checkbox adalah konfirmasi pengguna, bukan observasi billing API. Flow belum diimplementasikan. Langkah berikut: ikuti [CHATGPT-START](../docs/CHATGPT-START.md), lalu laporkan hasil sign-in/model/respons tanpa rahasia. Jangan memperluas studio sebelum integrasi utama terbukti.
+
+
+## Diagnostik respons pertama — 13 Oktober 2026
+
+Patch menambahkan diagnostic terstruktur di adapter HTTP/SSE, kontrak IPC TypeScript/Rust, state sesi dan panel Rincian kegagalan. Field hanya status, tahap, bentuk body, kode/parameter terbatas dan Request ID tervalidasi. Body/pesan detail mentah tidak diekspor; data diagnostik hanya di memori. UI tidak lagi menyebut jawaban kosong sebagai respons parsial. Tidak ada retry otomatis atau perubahan jalur billing.
+
+Regresi mencakup HTTP 400 terstruktur, admission detail 403, HTML 502, kegagalan SSE dengan HTTP 200, format stream salah, penolakan field/identifier tidak aman, serta propagasi/pembersihan rincian tanpa menghapus kredensial. `npm run check` lokal PASS: format, lint, typecheck, build UI/sidecar dan 50 tes; 1 DPAPI Windows dilewati di Linux. Bundle UI 506 kB memberi peringatan ukuran yang sama. Hasil fixture bukan bukti perbaikan kegagalan live. CI native patch ini perlu diperiksa terpisah.

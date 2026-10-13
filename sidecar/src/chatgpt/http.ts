@@ -1,4 +1,5 @@
 import { ChatError, providerError } from './errors';
+import { diagnostic } from './diagnostics';
 
 export const ISSUER = 'https://auth.openai.com';
 export const RESOURCE = 'https://api.openai.com/v1';
@@ -7,7 +8,8 @@ export const SCOPES =
   'openid profile email offline_access resource.invoke chatgpt.tokens.use.direct';
 
 export async function readJson(response: Response): Promise<unknown> {
-  if (!response.body) throw new ChatError('PROVIDER_ERROR');
+  if (!response.body)
+    throw providerError(response.status, null, diagnostic(response, null, 'http', 'empty'));
   const reader = response.body.getReader();
   let size = 0;
   const parts: Uint8Array[] = [];
@@ -16,15 +18,18 @@ export async function readJson(response: Response): Promise<unknown> {
       const { done, value } = await reader.read();
       if (done) break;
       size += value.byteLength;
-      if (size > 1048576) throw new ChatError('PROVIDER_ERROR');
+      if (size > 1048576)
+        throw new ChatError('PROVIDER_ERROR', diagnostic(response, null, 'protocol'));
       parts.push(value);
     }
     const data: unknown = JSON.parse(Buffer.concat(parts).toString('utf8'));
-    if (!response.ok) throw providerError(response.status, data);
+    if (!response.ok) throw providerError(response.status, data, diagnostic(response, data));
     return data;
   } catch (error) {
     if (error instanceof ChatError) throw error;
-    throw response.ok ? new ChatError('PROVIDER_ERROR') : providerError(response.status, null);
+    throw response.ok
+      ? new ChatError('PROVIDER_ERROR', diagnostic(response, null, 'protocol', 'non_json'))
+      : providerError(response.status, null, diagnostic(response, null, 'http', 'non_json'));
   } finally {
     await reader.cancel().catch(() => {});
   }

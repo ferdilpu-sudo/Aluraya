@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ChatError, providerError } from './errors';
+import { diagnostic } from './diagnostics';
 import { requestJson, readJson, RESOURCE } from './http';
 
 export type Message = { role: 'user' | 'assistant'; content: string };
@@ -37,7 +38,7 @@ export async function consumeStream(
     return;
   }
   if (!response.body || !response.headers.get('content-type')?.includes('text/event-stream'))
-    throw new ChatError('PROVIDER_ERROR');
+    throw new ChatError('PROVIDER_ERROR', diagnostic(response, null, 'protocol'));
   const reader = response.body.getReader();
   const decoder = new TextDecoder('utf-8', { fatal: true });
   let buffer = '',
@@ -66,9 +67,10 @@ export async function consumeStream(
         const event = JSON.parse(data) as {
           type?: string;
           delta?: unknown;
-          response?: { error?: { code?: string }; status?: string };
-          error?: { code?: string };
+          response?: { error?: { code?: string; param?: string }; status?: string };
+          error?: { code?: string; param?: string };
           code?: string;
+          param?: string;
         };
         if (
           event.type === 'response.output_text.delta' ||
@@ -80,10 +82,12 @@ export async function consumeStream(
           if (output > 6000 || encodedOutput > 24000) throw new ChatError('OUTPUT_LIMIT');
           onDelta(event.delta);
         } else if (event.type === 'response.failed' || event.type === 'error') {
-          const error = event.response?.error ?? event.error ?? { code: event.code };
+          const error = event.response?.error ??
+            event.error ?? { code: event.code, param: event.param };
           throw providerError(
-            error?.code === 'subscription_sharing_usage_unavailable' ? 503 : 400,
+            response.status,
             { error },
+            diagnostic(response, { error }, 'stream', 'event'),
           );
         } else if (event.type === 'response.incomplete') throw new ChatError('RESPONSE_INCOMPLETE');
         else if (event.type === 'response.completed') {
@@ -94,6 +98,16 @@ export async function consumeStream(
       if (buffer.length > 1048576) throw new ChatError('OUTPUT_LIMIT');
     }
     if (!completed) throw new ChatError('STREAM_INTERRUPTED');
+  } catch (error) {
+    if (error instanceof ChatError) {
+      error.diagnostic ??= diagnostic(response, null, 'stream', 'event');
+      throw error;
+    }
+    if (error instanceof SyntaxError)
+      throw new ChatError('PROVIDER_ERROR', diagnostic(response, null, 'protocol', 'event'));
+    if (error instanceof TypeError)
+      throw new ChatError('NETWORK_ERROR', diagnostic(response, null, 'stream', 'event'));
+    throw error;
   } finally {
     await reader.cancel().catch(() => {});
   }

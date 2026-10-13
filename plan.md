@@ -45,7 +45,7 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 |---|---|---|
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
 | TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Installer belum diverifikasi. |
-| TASK-003 | IMPLEMENTED / LIVE NOT RUN | OAuth resmi, DPAPI, akun, discovery, streaming, cancel, refresh dan logout ditulis. CI f29c4bf PASS: 45 tes JS, 4 tes Rust dan build release Windows. Fixture bukan bukti akun nyata. Ikuti docs/CHATGPT-START.md untuk login dan satu respons. |
+| TASK-003 | IMPLEMENTED / LIVE CHAT FAILED | OAuth resmi, DPAPI, akun, discovery, streaming, cancel, refresh dan logout ditulis. CI f29c4bf PASS: 45 tes JS, 4 tes Rust dan build release Windows. Screenshot 13 Oktober menunjukkan model GPT-6.1-Sol dan izin paket, tetapi pesan tes gagal tanpa jawaban. Diagnostik aman ditambahkan; penyebab provider belum diketahui. Ikuti docs/CHATGPT-START.md. |
 | TASK-004–005 | NOT IMPLEMENTED / LIVE NOT RUN | Adapter Flow, credit observer, approval dan impor otomatis belum dibuat. Perlu akun/profil aktual dan persetujuan batch konkret. |
 | TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
@@ -66,3 +66,8 @@ Log lanjutan pengguna menunjukkan lisensi/runtime siap, build debug selesai dala
 ### TASK-003 — adapter dan panel chat (12 Oktober 2026)
 
 Implementasi memakai protokol publik resmi secara langsung dan jose untuk validasi identitas. Tidak ada API key fallback, tool eksekusi atau Flow. Scope/identity, model discovery dan respons selesai merupakan status terpisah. Rincian perubahan, pemeriksaan dan batas: [evidence/CHATGPT-ADAPTER-REPORT.md](./evidence/CHATGPT-ADAPTER-REPORT.md). Langkah terkecil berikut adalah login dari tab Copilot pada Windows pengguna, lalu satu respons singkat. TASK-003 tetap belum lulus live; M-001 belum lulus.
+
+
+### TASK-003 — kegagalan respons pertama (13 Oktober 2026)
+
+Screenshot pengguna pukul 08:59 menampilkan GPT-6.1-Sol, Using ChatGPT plan, pesan `tes`, error umum dan jawaban kosong berlabel parsial. Ini bukti discovery/izin terlihat pada UI, bukan keberhasilan inference. Pemeriksaan sumber menemukan status HTTP/kode/parameter/Request ID dibuang saat error. Patch menambahkan rincian aman, mempertahankan status HTTP asli pada kegagalan SSE, dan membedakan jawaban kosong dari parsial. Request tetap mengikuti dokumentasi resmi; tidak mengganti model/endpoint berdasarkan tebakan. Perlu satu percobaan manual setelah pembaruan untuk mengetahui penyebab sebenarnya. M-001 tetap belum lulus.

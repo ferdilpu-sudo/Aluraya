@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { chatDiagnosticSchema } from './chatDiagnostic';
 
 export const chatActionSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('inspect') }).strict(),
@@ -74,6 +75,7 @@ export const chatSnapshotSchema = z
       .strict()
       .nullable(),
     error: chatErrorSchema.nullable(),
+    diagnostic: chatDiagnosticSchema.nullable(),
   })
   .strict();
 export type ChatAction = z.infer<typeof chatActionSchema>;
