@@ -85,3 +85,8 @@ Dokumentasi primer yang diperiksa: https://support.google.com/flow/answer/163533
 Sandbox Chromium diaktifkan eksplisit. Default Playwright adalah false; tidak ada fallback menonaktifkan sandbox jika launch gagal. Google menolak percobaan login pengguna; ini BLOCKED, bukan hasil login sukses atau bukti pasti bahwa flag sandbox penyebabnya. Observer mengklasifikasikan path rejected pada origin Google Accounts tanpa membaca DOM/query. Popup penolakan didahulukan dari tab Flow lama. AGENTS.md mengharuskan menghentikan modul provider ketika login/izin tidak tersedia; tahap submit tidak dilanjutkan.
 
 Sumber primer diperiksa: https://playwright.dev/docs/api/class-browsertype#browser-type-launch-persistent-context-option-chromium-sandbox dan https://support.google.com/accounts/answer/7675428. Dokumentasi tidak membuktikan akun pengguna menerima browser otomatis.
+
+
+## Konfirmasi ADR-004 — pilihan A (Accepted, 13 Oktober 2026, 19:21 WIB)
+
+Pengguna memilih A dari docs/FLOW-INTEGRATION-DECISION.md: pertahankan Flow otomatis dengan kredit akun Flow dan hasil otomatis ke canvas. Alternatif pendamping manual maupun API dengan billing terpisah tidak dipilih. Kebutuhan asli tidak berubah; hambatan akses tetap BLOCKED dan kondisi berhenti AGENTS.md berlaku. Tidak menafsirkan keputusan produk ini sebagai bukti izin/akses provider atau persetujuan generasi berbayar.

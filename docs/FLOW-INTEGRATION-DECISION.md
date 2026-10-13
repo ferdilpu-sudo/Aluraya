@@ -1,6 +1,6 @@
 # Pilihan integrasi setelah login Flow ditolak
 
-13 Oktober 2026. TASK-004 / REQ-007 dan REQ-008. Status: PROPOSAL, belum disetujui. Kebutuhan asli tetap berlaku; M-001 belum lulus.
+13 Oktober 2026. TASK-004 / REQ-007 dan REQ-008. Status: A DIPILIH pengguna pada 13 Oktober 2026, 19:21 WIB. Kebutuhan asli tetap berlaku; M-001 belum lulus.
 
 ## Temuan yang dapat digunakan
 
@@ -17,9 +17,15 @@
 | B — Mode pendamping Flow | Aluraya menyiapkan prompt/referensi; pengguna menjalankan generasi di Flow dan mengunduh hasil; hasil diimpor/dipetakan ke shot di Aluraya | REQ-007/AC-007 dan gate M-001 harus direvisi eksplisit. Pengiriman serta pengambilan media tidak otomatis. | Setelah persetujuan perubahan scope: satu shot dengan prompt dan referensi, ekspor paket kerja, impor media dari file yang dipilih pengguna, preview. Fitur ini belum diimplementasikan. |
 | C — Adapter API resmi | Aluraya memakai API generasi Google untuk submit, memantau dan mengambil hasil | Provider/billing produksi berubah; kredit Flow tidak diasumsikan berlaku. ChatGPT tetap memakai paket pengguna. | Setelah pilihan scope: adapter dengan approval biaya dan pengujian tanpa pengeluaran; live generation hanya setelah model, jumlah output dan batas biaya konkret disetujui. |
 
-B menjaga pemakaian Flow tetapi mengurangi otomatisasi. C mempertahankan arah otomatisasi namun memperkenalkan billing API. A mempertahankan kedua syarat awal tetapi belum memiliki jalur integrasi yang terbukti. Pilihan belum diputuskan; proposal ini tidak mengubah kebutuhan yang telah disepakati.
+B menjaga pemakaian Flow tetapi mengurangi otomatisasi. C mempertahankan arah otomatisasi namun memperkenalkan billing API. A mempertahankan kedua syarat awal tetapi belum memiliki jalur integrasi yang terbukti. Pengguna memilih A. B dan C disimpan sebagai alternatif yang tidak dipilih; tidak diimplementasikan.
 
-## Implementasi setelah keputusan
+## Keputusan A dan syarat melanjutkan
+
+Kebutuhan asli REQ-007/AC-007 dipertahankan: generasi Flow memakai akun/kredit Flow, dengan pengiriman dan pengambilan hasil otomatis sampai canvas Aluraya. ChatGPT tetap memakai paket pengguna. Pilihan A tidak membuktikan akses provider atau meluluskan M-001.
+
+TASK-004 tetap BLOCKED sesuai AGENTS.md. Modul dapat dilanjutkan setelah ada bukti jalur akses integrasi yang didukung dan bekerja. Login biasa saja belum membuktikan otomatisasi. Selanjutnya capability/biaya akun harus diverifikasi, lalu satu batch konkret disetujui sebelum submit. Tidak ada pembelian, generasi, penggantian provider, atau perubahan kriteria penerimaan dari keputusan ini.
+
+## Rincian alternatif yang tidak dipilih
 
 Untuk B, slice pertama cukup satu shot, prompt siap salin, manifest referensi, pemilihan media lokal dan preview. Riwayat biaya ditandai dilaporkan pengguna, bukan saldo terverifikasi. Tidak melabeli proses manual sebagai TEST-007 lulus menurut kriteria lama.
 

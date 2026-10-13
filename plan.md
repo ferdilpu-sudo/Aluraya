@@ -104,3 +104,8 @@ Screenshot kedua tetap menunjukkan penolakan Google; peringatan no-sandbox tidak
 ### TASK-004 — evaluasi jalur resmi (13 Oktober 2026, 15:27 WIB)
 
 Riset primer menemukan Flow Agent/Tools yang memakai kredit Flow di proyek Flow, serta Gemini API generasi dengan billing tersendiri. Tidak ditemukan kontrak integrasi publik yang membuktikan pemakaian kredit Flow sekaligus hasil otomatis ke canvas Aluraya. Pilihan konkret, konsekuensi REQ-007/AC-007 dan slice pertama disiapkan di [docs/FLOW-INTEGRATION-DECISION.md](./docs/FLOW-INTEGRATION-DECISION.md). Status PROPOSAL; belum mengubah kebutuhan atau mengaktifkan fallback. AGENTS.md mensyaratkan keputusan pengguna untuk revisi produk besar/biaya nyata. TASK-004 tetap BLOCKED sampai jalur akses terbukti atau perubahan scope dipilih.
+
+
+### Keputusan pengguna — pilihan A (13 Oktober 2026, 19:21 WIB)
+
+Pengguna memilih mempertahankan spesifikasi awal. REQ-007/AC-007 tetap: Flow otomatis memakai akun/kredit Flow dan hasil langsung masuk canvas Aluraya. Mode pendamping manual dan adapter API berbayar tidak dipilih. TASK-004 tetap BLOCKED oleh akses login provider; M-001 belum lulus. Kelanjutan modul memerlukan bukti jalur akses yang didukung dan bekerja, kemudian capability/biaya serta approval batch konkret. Rincian keputusan ada di docs/FLOW-INTEGRATION-DECISION.md. Ini pembaruan dokumentasi, bukan keberhasilan integrasi atau izin pengeluaran.
