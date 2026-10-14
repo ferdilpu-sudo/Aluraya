@@ -1,23 +1,8 @@
-import { useState } from 'react';
 import { useFlow } from './useFlow';
-import type { FlowSnapshot } from '../../contracts/flow';
+import { flowError } from './flowErrors';
 
-const errors: Record<NonNullable<FlowSnapshot['error']>, string> = {
-  WINDOWS_REQUIRED: 'Koneksi Flow tersedia melalui Aluraya Windows.',
-  STORAGE_ERROR:
-    'Daftar profil tidak dapat disimpan atau dibaca. Jangan hapus profil; tutup dan buka kembali aplikasi.',
-  BROWSER_OPEN_FAILED:
-    'Browser gagal dibuka. Pastikan browser pilihan terpasang dan profil Aluraya tidak terbuka di proses lain. Tutup jendela Flow lama lalu coba lagi.',
-  NAVIGATION_FAILED: 'Halaman Flow gagal dimuat. Periksa koneksi lalu buka profil kembali.',
-  BROWSER_CLOSED: 'Browser Flow belum terbuka atau sudah ditutup.',
-  PROFILE_ACTIVE: 'Tutup profil Flow yang aktif sebelum membuka profil lain.',
-  PROFILE_NOT_FOUND: 'Profil tidak ditemukan. Periksa ulang daftar profil.',
-  OBSERVATION_FAILED:
-    'Halaman belum dapat dibaca. Tunggu Flow selesai dimuat lalu periksa kembali.',
-  BUSY: 'Tunggu operasi Flow selesai.',
-};
 const pageNames = {
-  flow: 'Halaman Flow',
+  flow: 'Alamat Flow terbuka',
   login: 'Halaman login Google',
   login_rejected: 'Login ditolak Google',
   other: 'Halaman belum dikenali',
@@ -25,9 +10,8 @@ const pageNames = {
 };
 export function FlowPanel() {
   const { state, error, pending, execute } = useFlow();
-  const [browser, setBrowser] = useState<'chrome' | 'msedge'>('chrome');
-  const busy = pending || !state || state.activity !== 'idle';
-  const loginRejected = state?.observation?.page === 'login_rejected';
+  const busy = pending || !state;
+  const rejected = state?.observation?.page === 'login_rejected';
   return (
     <section className="copilot" aria-labelledby="flow-title">
       <div className="section-heading">
@@ -37,10 +21,14 @@ export function FlowPanel() {
         </div>
       </div>
       <div className="connection-note">
-        <strong>Profil browser khusus Aluraya</strong>
+        <strong>Browser Flow milik Aluraya · WebView2</strong>
         <p>
-          Login sendiri di jendela browser yang dibuka. Profil ini terpisah dari browser harian
-          Anda. Satu profil aktif pada satu waktu.
+          Login sendiri di jendela Flow. Sesi tersimpan pada profil khusus Aluraya. Satu profil
+          aktif pada satu waktu.
+        </p>
+        <p>
+          Profil Chrome/Edge dari versi sebelumnya tetap tersimpan terpisah. Buat profil WebView2
+          baru untuk pemeriksaan ini.
         </p>
       </div>
       {error && (
@@ -50,28 +38,22 @@ export function FlowPanel() {
       )}
       {state?.error && (
         <p className="error" role="alert">
-          {errors[state.error]}
+          {flowError(state.error)}
         </p>
       )}
       {!state && (
-        <button className="button secondary" onClick={() => void execute({ action: 'inspect' })}>
+        <button
+          className="button secondary"
+          disabled={pending}
+          onClick={() => void execute({ action: 'inspect' })}
+        >
           Periksa koneksi desktop
         </button>
       )}
-      <label htmlFor="flow-browser">Browser untuk profil baru</label>
-      <select
-        id="flow-browser"
-        disabled={busy}
-        value={browser}
-        onChange={(event) => setBrowser(event.target.value as 'chrome' | 'msedge')}
-      >
-        <option value="chrome">Google Chrome</option>
-        <option value="msedge">Microsoft Edge</option>
-      </select>
       <button
         className="button secondary"
         disabled={busy}
-        onClick={() => void execute({ action: 'create', browser })}
+        onClick={() => void execute({ action: 'create' })}
       >
         Tambah profil Flow
       </button>
@@ -81,10 +63,7 @@ export function FlowPanel() {
             {state.profiles.map((profile, index) => (
               <li key={profile.id}>
                 <div>
-                  <strong>
-                    Profil {state.profilePage * 10 + index + 1} ·{' '}
-                    {profile.browser === 'chrome' ? 'Chrome' : 'Edge'}
-                  </strong>
+                  <strong>Profil {state.profilePage * 10 + index + 1} · WebView2</strong>
                   <button
                     className="text-button"
                     disabled={busy || state.browserOpen}
@@ -97,7 +76,7 @@ export function FlowPanel() {
             ))}
           </ul>
           {!state.profileCount && (
-            <p className="empty-note">Tambahkan profil untuk mulai login Flow.</p>
+            <p className="empty-note">Tambahkan profil untuk memeriksa akses Flow.</p>
           )}
           {state.profileCount > 10 && (
             <div className="chat-actions">
@@ -117,12 +96,12 @@ export function FlowPanel() {
             </div>
           )}
           <p className="runtime-note" role="status">
-            {busy
+            {pending
               ? 'Sedang memproses…'
-              : loginRejected
-                ? 'Koneksi Flow terhenti: Google menolak login browser ini.'
+              : rejected
+                ? 'Koneksi terhenti: Google menolak login.'
                 : state.browserOpen
-                  ? 'Browser terbuka. Login dan buka proyek Flow untuk diperiksa.'
+                  ? 'Browser terbuka. Login dan buka proyek Flow.'
                   : 'Browser belum terbuka.'}
           </p>
           <div className="chat-actions">
@@ -144,41 +123,29 @@ export function FlowPanel() {
           {state.observation && (
             <div className="connection-note">
               <strong>{pageNames[state.observation.page]}</strong>
-              {loginRejected ? (
+              <p>{state.observation.origin}</p>
+              {rejected ? (
                 <p role="alert">
-                  Google menolak login browser ini. Tutup browser Flow dan simpan pesan
-                  penolakannya. Integrasi menunggu jalur akses yang didukung; jangan ulangi login
-                  otomatis atau pindahkan cookie dari browser lain.
+                  Tutup browser Flow dan kirim pesan penolakan. Aluraya tidak akan mengulang login
+                  dengan konfigurasi penyamaran.
                 </p>
               ) : (
-                <>
-                  <p>
-                    Kolom input terlihat: {state.observation.editorVisible ? 'Ya' : 'Belum'}. Ini
-                    belum membuktikan izin generasi.
-                  </p>
-                  <p>
-                    Label model terlihat:{' '}
-                    {state.observation.modelLabels.join(', ') || 'Belum terbaca'}
-                  </p>
-                  <p>
-                    Teks kredit terlihat:{' '}
-                    {state.observation.creditLabels.join(' · ') || 'Belum terbaca'}
-                  </p>
-                  <p>
-                    Diperiksa: {new Date(state.observation.observedAt).toLocaleTimeString('id-ID')}.
-                    Buka menu akun untuk saldo atau pengaturan prompt untuk model, lalu periksa
-                    lagi.
-                  </p>
-                </>
+                <p>
+                  Status ini hanya mengenali alamat halaman. Login, akses proyek, saldo dan izin
+                  generasi belum diverifikasi. Setelah proyek terbuka, kirim hasilnya tanpa data
+                  akun sensitif.
+                </p>
               )}
+              <p>
+                Diperiksa: {new Date(state.observation.checkedAtMs).toLocaleTimeString('id-ID')}.
+              </p>
             </div>
           )}
         </>
       )}
       <p className="empty-note">
-        Tahap koneksi: biaya per hasil dan kemampuan akun belum terverifikasi. Pengiriman prompt,
-        unggah referensi dan Generate belum diaktifkan. Jika Google menolak login, kirim pesan yang
-        tampil.
+        Tahap pemeriksaan akses: belum ada pengiriman prompt, unggah referensi, Generate atau
+        unduhan otomatis. Tutup jendela utama Aluraya untuk menutup seluruh browser milik aplikasi.
       </p>
     </section>
   );

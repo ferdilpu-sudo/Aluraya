@@ -2,26 +2,9 @@ import { requestSchema, responseSchema, MAX_FRAME_BYTES } from '../../src/contra
 import { inspectHealth } from './health';
 import { ChatSession } from './chatgpt/session';
 import { WindowsStore } from './chatgpt/store';
-import { FlowSession } from './flow/session';
-import { FlowProfiles } from './flow/profiles';
-let flow: FlowSession | null = null;
-
 let chat: ChatSession | null = null;
 export function dispatch(frame: string): string {
   const request = requestSchema.parse(JSON.parse(frame) as unknown);
-  if (request.type === 'flow.action') {
-    const directory = process.env.ALURAYA_FLOW_DIR;
-    if (!directory) throw new Error('FLOW_DIRECTORY_MISSING');
-    flow ??= new FlowSession(new FlowProfiles(directory));
-    const response = JSON.stringify({
-      schemaVersion: 1,
-      requestId: request.requestId,
-      ok: true,
-      payload: flow.act(request.payload),
-    });
-    if (Buffer.byteLength(response) > MAX_FRAME_BYTES) throw new Error('FRAME_TOO_LARGE');
-    return response;
-  }
   if (request.type === 'chat.action') {
     const directory = process.env.ALURAYA_AUTH_DIR;
     if (!directory) throw new Error('AUTH_DIRECTORY_MISSING');
@@ -56,5 +39,5 @@ export function dispatch(frame: string): string {
   );
 }
 export async function closeChat() {
-  await Promise.allSettled([chat?.close(), flow?.close()]);
+  await chat?.close();
 }

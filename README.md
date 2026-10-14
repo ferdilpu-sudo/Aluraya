@@ -4,13 +4,13 @@
 
 Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
 
-**Koneksi Flow awal:** profil Chrome/Edge khusus dan pemeriksaan halaman read-only tersedia melalui tab Flow; lihat [panduan Flow](./docs/FLOW-START.md). Percobaan login pengguna ditolak Google pada 13 Oktober 2026; TASK-004 BLOCKED. Patch mengaktifkan sandbox browser dan mengenali halaman penolakan; keberhasilan login belum terbukti.
+**Koneksi Flow:** browser native WebView2 dengan profil khusus dan popup satu environment telah menggantikan Playwright. Login WebView2 Aluraya masih NOT RUN; laporan pengguna tentang Switchly menjadi dasar evaluasi. Lihat [panduan Flow](./docs/FLOW-START.md) dan [laporan perubahan](./evidence/FLOW-WEBVIEW2-REPORT.md).
 
 **Belum tersedia:** generasi Flow otomatis, penyimpanan proyek, media import, approval produksi, dan scheduler. Chat aktif setelah akun, izin paket, model dan konfirmasi penggunaan tersedia. Tidak ada hasil AI sintetis yang dilabeli sebagai hasil provider. Posisi kartu dan riwayat chat hanya bertahan pada sesi aplikasi.
 
 ## Jalankan
 
-Installer untuk pemeriksaan Windows tersedia pada [artifact CI a8f9e2e](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862/artifacts/11815215304). Ekstrak ZIP lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Paket ini masih fondasi M-001; Flow tetap BLOCKED. Instalasi aplikasi tidak memerlukan toolchain pengembangan di bawah, tetapi membutuhkan WebView2.
+Installer **sebelum perubahan WebView2** tersedia pada [artifact CI a8f9e2e](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862/artifacts/11815215304). Ekstrak ZIP lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Paket ini masih fondasi M-001; Flow tetap BLOCKED. Instalasi aplikasi tidak memerlukan toolchain pengembangan di bawah, tetapi membutuhkan WebView2.
 
 Preview UI (Node.js 24 LTS):
 

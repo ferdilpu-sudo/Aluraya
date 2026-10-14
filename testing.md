@@ -100,3 +100,8 @@ CI 2c4b5dc gagal pada input inspect dengan field tambahan (Rust unit variant). P
 Run [38399230862](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862), commit a8f9e2e: npm run check PASS (75 tes JavaScript), cargo test PASS (8 tes), NSIS build PASS, check-windows-installer.mjs PASS. Pemeriksaan instalasi mencocokkan seluruh byte executable setelah satu patch marker Tauri, runtime Node, sidecar, lisensi dan 115 file Playwright; round-trip sidecar terpasang dan uninstall juga PASS. Tiga tes nsis-integrity menolak korupsi/truncation/wrong type serta marker hilang/duplikat. Bukti, ukuran, hash dan artifact ada di [laporan installer](./evidence/WINDOWS-INSTALLER-REPORT.md).
 
 GUI dari installer, host–sidecar melalui UI terpasang, upgrade, Windows LTSC tanpa WebView2, pemulihan data dan RAM: NOT RUN. Tidak ada generasi atau penggunaan akun provider di CI. TEST-007 tetap belum lulus; TEST-014/015 tidak dipromosikan dari bukti packaging saja.
+
+
+### TASK-004 — penggantian browser WebView2 (14 Oktober 2026)
+
+Lihat evidence/FLOW-WEBVIEW2-REPORT.md. npm run check lokal PASS: 68 tes + 1 Windows-only skipped. Tes adapter Playwright diganti karena implementasinya dihapus; empat tes TS dan lima tes Rust baru memeriksa boundary native dan registry. Build/installer Windows perubahan ini masih PENDING; bukti installer a8f9e2e tidak mencakup WebView2 Flow baru. Live wajib: satu profil WebView2 membuka proyek setelah login pengguna; popup mempertahankan konteks yang sama; close menutup popup; restart mempertahankan sesi; profil lain tidak mencampur akun. Tidak melakukan Generate untuk tes akses ini. Penolakan Google menghentikan modul.

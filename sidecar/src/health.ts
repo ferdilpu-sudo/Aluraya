@@ -32,7 +32,8 @@ export function inspectHealth(): Diagnostics {
         id: 'flow',
         label: 'Google Flow',
         state: 'blocked',
-        detail: 'Adapter browser belum diimplementasikan. Saldo dan capability belum diketahui.',
+        detail:
+          'Browser Flow dikelola host WebView2. Login, saldo dan capability belum terverifikasi.',
       },
       {
         id: 'generation',

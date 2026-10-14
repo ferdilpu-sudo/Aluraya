@@ -1,28 +1,25 @@
-# Flow di Aluraya — koneksi awal TASK-004
+# Flow melalui WebView2 Aluraya
 
-**Status terbaru: login Flow BLOCKED.** Percobaan 13 Oktober 2026 ditolak Google. ChatGPT sudah menjawab di aplikasi. Upload, Generate dan impor Flow otomatis belum aktif.
+Checkpoint 14 Oktober 2026: browser Flow sekarang memakai WebView2 native dalam jendela milik Aluraya, mengacu pada pengelolaan profil dan popup Switchly. Login Flow melalui Chrome biasa dan Switchly dilaporkan berhasil oleh pengguna; kompatibilitas WebView2 Aluraya tetap **NOT RUN** sampai diuji di Windows pengguna. Ini belum membuktikan integrasi generasi otomatis.
 
-Patch terbaru mengaktifkan sandbox Chrome/Edge dan menampilkan status penolakan ketika **Periksa halaman Flow** mengenali halaman sign-in rejected. Ini perbaikan keamanan/diagnostik, bukan jaminan Google menerima login. Tutup browser Flow dan Aluraya lama sebelum memperbarui source:
+## Pemeriksaan akses pertama
 
-```powershell
-git pull --ff-only origin main
-npm.cmd ci
-npm.cmd run tauri dev
-```
+1. Gunakan installer dari run CI untuk perubahan WebView2 ini, atau pull source terbaru lalu jalankan `npm.cmd ci` dan `npm.cmd run tauri dev`. Installer a8f9e2e lama masih memakai Playwright.
+2. Buka tab **Flow → Tambah profil Flow → Buka**. Label profil harus **WebView2**. Aplikasi membuka jendela Flow miliknya sendiri; belum berupa panel yang didock di canvas.
+3. Login sendiri pada halaman Google yang tampil. Aluraya tidak mengisi login, membaca DOM login, menyalin cookie atau mengganti User-Agent. Popup memakai environment WebView2 yang sama dengan pembukanya.
+4. Buka proyek Flow. Periksa apakah editor benar-benar terlihat. **Belum perlu Generate.** Kirim hasil akses atau pesan penolakan, tanpa email, token, URL callback atau data akun sensitif.
+5. Tutup browser melalui tombol **Tutup browser Flow**. Tutup semua popup sebelum membuka profil lain. Menutup jendela utama Aluraya mengakhiri aplikasinya beserta browser miliknya.
 
-Jangan mengulang login otomatis yang sudah ditolak. Integrasi menunggu jalur akses yang didukung. Prosedur di bawah hanya berlaku setelah hambatan akses terselesaikan; jangan membuat profil baru atau mengganti browser untuk menghindari penolakan.
+Status panel hanya klasifikasi alamat (Flow/login/penolakan/halaman lain), bukan verifikasi login, saldo atau kemampuan akun. Penolakan pada popup diprioritaskan agar tab Flow tidak menutupi kegagalan login. Tidak ada status generationReady=true.
 
-## Prosedur pemeriksaan setelah akses tersedia
+## Data dan batas
 
-1. Tutup Aluraya/dev lama. Jalankan `git pull --ff-only origin main`, `npm.cmd ci`, lalu `npm.cmd run tauri dev`.
-2. Buka tab **Flow**. Pilih **Google Chrome** atau **Microsoft Edge** yang sudah terpasang, lalu **Tambah profil Flow**.
-3. Klik **Buka** pada profil. Login Google sendiri di jendela yang muncul dan buka proyek Flow. Browser memakai profil khusus Aluraya; login browser harian tidak disalin.
-4. Kembali ke Aluraya dan klik **Periksa halaman Flow**. Catat jenis halaman dan apakah kolom input terlihat.
-5. Di Flow, buka menu akun untuk menampilkan saldo. Klik **Periksa halaman Flow** lagi. Bila perlu, buka pengaturan prompt untuk model dan biaya, lalu periksa lagi. Aluraya tidak mengklik menu provider atau mengirim prompt pada fase ini.
-6. Kirim screenshot panel Flow Aluraya dan pengaturan model/biaya di Flow. Hindari menampilkan email atau informasi akun lain. Jangan sertakan cookie, profil browser atau URL login.
+Profil baru berada dalam direktori data lokal aplikasi `flow-webview2/<UUID>`. Profil Chrome/Edge lama pada direktori `flow` tidak dimigrasikan, disalin atau dihapus. Jangan memasukkan folder profil ke git/backup proyek. Registry baru memakai lock eksklusif Windows dan penulisan atomik; data rusak menghasilkan error tanpa overwrite.
 
-Jika label tidak terbaca, itu belum berarti saldo nol atau model tidak tersedia. Label adalah kandidat teks, bukan observasi saldo/biaya yang terverifikasi. Belum ada persetujuan generasi atau izin pembelian kredit pada langkah ini.
+Satu profil aktif; jumlah profil tersimpan tidak dibatasi produk. Satu sesi dibatasi hingga lima jendela (utama + popup) untuk mencegah popup tak terbatas. Hanya tujuan HTTPS Google yang didaftarkan di policy diizinkan untuk navigasi tingkat atas. Navigasi lokal/custom-scheme dan origin tiruan ditolak. Bila ada domain login sah yang belum didukung, laporkan nama domain untuk diperiksa.
 
-Jika Google menolak login browser otomatis, berhenti pada layar itu dan kirim pesannya. Jangan menyalin cookie atau memakai profil default untuk melewati penolakan. Jika browser gagal terbuka, pastikan browser pilihan terpasang dan tutup jendela Flow Aluraya lama. **Tutup browser Flow** menutup hanya context milik aplikasi; sesi profil tetap disimpan untuk dipakai lagi.
+Halaman provider tidak memperoleh capability IPC aplikasi. Flow tidak lagi dijalankan sidecar dan tidak ada fallback Playwright. Unduhan diblokir pada tahap pemeriksaan ini; pipeline media otomatis akan dikembangkan setelah akses, capability, biaya dan approval konkret terbukti. Tidak membuka DevTools atau melemahkan sandbox/browser security defaults.
 
-Profil disimpan di folder data lokal aplikasi, `flow/<UUID>`, dengan registry metadata `profiles.json`. Profil berisi sesi sensitif; jangan commit, bagikan atau ikutkan dalam ekspor proyek. Banyak profil dapat disimpan, hanya satu dibuka oleh aplikasi pada satu waktu. Menambah profil tidak mengaktifkan generasi.
+## Langkah sesudah akses terbukti
+
+Buktikan capability/model dan biaya akun, bangun approval satu gambar, baru implementasikan submit/pantau/impor dengan korelasi hasil. Submit ambigu harus berhenti untuk rekonsiliasi, bukan mengirim ulang otomatis. Video menyusul. Pilihan pengguna tetap Flow otomatis dengan kredit Flow; mode produksi manual Switchly bukan target akhir Aluraya.

@@ -119,3 +119,8 @@ Pilihan A tetap berlaku dan TASK-004 tetap BLOCKED. Pekerjaan M-001 dilanjutkan 
 ### TASK-006 — bukti installer diterima (14 Oktober 2026)
 
 Run Windows 38399230862 pada commit a8f9e2e SUCCESS: 75 tes JavaScript, 8 tes Rust, build NSIS dan seluruh enam pemeriksaan install/runtime/uninstall PASS. Validator mengenali patch marker NSIS Tauri tanpa mengabaikan perubahan byte lain. Installer dan report JSON tersedia pada tautan di evidence/WINDOWS-INSTALLER-REPORT.md. Langkah terkecil berikut: jalankan installer pada laptop pengguna, buka aplikasi, lalu Koneksi → Periksa sekarang untuk memeriksa jalur GUI host–sidecar dari paket terpasang. Tidak meminta tes chat atau login Flow berulang. TASK-004 tetap BLOCKED; M-001 belum lulus dan ekspansi studio belum dimulai.
+
+
+### TASK-004 — evaluasi WebView2 disetujui pengguna (14 Oktober 2026)
+
+Pengguna membuktikan akses akun di Chrome biasa dan melaporkan login WebView2 Switchly berhasil. Setelah perbandingan source, pengguna meminta kelanjutan browser WebView2 untuk Aluraya dengan target produksi otomatis tetap berlaku. Host native kini mengelola profil/popup sendiri; jalur Playwright dihapus tanpa migrasi cookie. Ini perubahan adapter, bukan perubahan shell atau penurunan kebutuhan menjadi manual. Uji akses WebView2 Aluraya masih NOT RUN; generasi tetap diblokir sampai login, capability/biaya serta approval batch terbukti. Bukti: evidence/FLOW-WEBVIEW2-REPORT.md. Langkah berikut: installer Windows terbaru, buka profil WebView2, login sendiri dan buka proyek tanpa Generate.

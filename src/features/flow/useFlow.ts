@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { flowAction } from '../../application/flow';
+import { flowError } from './flowErrors';
 import type { FlowAction, FlowSnapshot } from '../../contracts/flow';
 
 export function useFlow() {
@@ -21,11 +22,8 @@ export function useFlow() {
           setError(null);
         }
         return result;
-      } catch {
-        if (mounted.current)
-          setError(
-            'Koneksi desktop tidak tersedia atau sedang dipakai. Buka Aluraya Windows; tutup jendela duplikat bila ada.',
-          );
+      } catch (error) {
+        if (mounted.current) setError(flowError(error));
         return null;
       } finally {
         queued.current--;
@@ -43,8 +41,8 @@ export function useFlow() {
     };
   }, [execute]);
   useEffect(() => {
-    if (!state || state.activity === 'idle') return;
-    const timer = setInterval(() => void execute({ action: 'inspect' }), 500);
+    if (!state?.browserOpen) return;
+    const timer = setInterval(() => void execute({ action: 'inspect' }), 1500);
     return () => clearInterval(timer);
   }, [state, execute]);
   return { state, error, pending, execute };

@@ -90,3 +90,8 @@ Sumber primer diperiksa: https://playwright.dev/docs/api/class-browsertype#brows
 ## Konfirmasi ADR-004 — pilihan A (Accepted, 13 Oktober 2026, 19:21 WIB)
 
 Pengguna memilih A dari docs/FLOW-INTEGRATION-DECISION.md: pertahankan Flow otomatis dengan kredit akun Flow dan hasil otomatis ke canvas. Alternatif pendamping manual maupun API dengan billing terpisah tidak dipilih. Kebutuhan asli tidak berubah; hambatan akses tetap BLOCKED dan kondisi berhenti AGENTS.md berlaku. Tidak menafsirkan keputusan produk ini sebagai bukti izin/akses provider atau persetujuan generasi berbayar.
+
+
+## ADR-013 — browser Flow native WebView2 (14 Oktober 2026)
+
+Accepted untuk implementasi/evaluasi atas permintaan pengguna; kompatibilitas live NOT RUN. Pengguna melaporkan akun berhasil pada Chrome biasa dan Switchly WebView2. Gunakan profil khusus serta popup satu environment sebagai acuan; tidak menyalin cookie/token atau menyamarkan browser. Ganti jalur Playwright di Aluraya agar hanya satu pemilik browser aktif. Profil lama dipertahankan utuh; profil native baru tidak melakukan migrasi sesi. Sidecar ChatGPT tetap. WebView provider terpisah dari UI/capability native lokal. Target akhir tetap otomatis sampai canvas setelah biaya dan approval; mode Generate manual Switchly tidak diadopsi sebagai penerimaan Aluraya.

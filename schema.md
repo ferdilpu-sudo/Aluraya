@@ -74,3 +74,8 @@ Approval snapshot generasi diperluas dengan promptDocumentId/hash dan manifest h
 ## Kontrak scaffold diagnostik (M-001/TASK-002)
 
 `health.inspect` adalah pemeriksaan instalasi tanpa project scope, token, atau side effect provider. `inspect_runtime` merupakan command Tauri lokal; response berisi runtime/platform/nodeVersion/checks. Detail, batas frame dan UUID ada di [docs/IPC.md](./docs/IPC.md); DTO TS ada di `src/contracts/`, mirror Rust di `src-tauri/src/contracts.rs`. Tidak mengubah kontrak produksi yang belum diimplementasikan di atas.
+
+
+## DTO browser Flow v2 — TASK-004, 14 Oktober 2026
+
+`flow_action` kini native-only: inspect/create/open(profileId UUID canonical)/observe/close/profiles(page 0..100000), semua field asing ditolak. create tidak menerima nama browser lagi. Snapshot schemaVersion=2, runtime=webview2, profiles berupa id UUID saja, profileCount/profilePage, activeProfileId nullable, browserOpen, observation nullable {checkedAtMs, page, origin}, generationReady=false, error kode terbatas. page hanya klasifikasi URL dan tidak berarti login sukses. origin tidak memuat path/query/fragment. Kontrak TS di src/contracts/flow.ts dan Rust di src-tauri/src/flow_contracts.rs. flow.action pada stdio sidecar tidak lagi didukung.

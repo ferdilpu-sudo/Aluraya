@@ -5,7 +5,6 @@ use std::time::Duration;
 use super::{frame_reader::read_frame, sidecar_paths, credential_lock};
 use crate::chat_contracts::{ChatAction, ChatSnapshot, ChatResponse};
 use crate::contracts::{Diagnostics, Response};
-use crate::flow_contracts::{FlowAction, FlowSnapshot, FlowResponse};
 
 pub struct Sidecar {
     child: Child,
@@ -19,9 +18,7 @@ impl Sidecar {
         let (runtime, script) = sidecar_paths::resolve(app)?;
         let (auth_directory, credential_lock) = credential_lock::acquire(app)?;
         let mut command = Command::new(runtime);
-        let flow_directory = auth_directory.parent().ok_or("FLOW_PATH_ERROR")?.join("flow");
         command.env("ALURAYA_AUTH_DIR", auth_directory);
-        command.env("ALURAYA_FLOW_DIR", flow_directory);
         command.arg(script).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         // Inherited NODE_OPTIONS could inject code before the trusted sidecar starts.
         command.env_remove("NODE_OPTIONS").env_remove("NODE_PATH");
@@ -79,15 +76,6 @@ impl Sidecar {
         Ok(response.payload)
     }
 
-    pub fn flow(&mut self, action: FlowAction) -> Result<FlowSnapshot, String> {
-        let payload = serde_json::to_value(action).map_err(|_| "INVALID_FLOW_ACTION")?;
-        let (request_id, frame) = self.request("flow.action", payload)?;
-        let response: FlowResponse = serde_json::from_str(&frame).map_err(|_| "SIDECAR_PROTOCOL_ERROR")?;
-        if response.schema_version != 1 || response.request_id != request_id || !response.ok { return Err("SIDECAR_PROTOCOL_ERROR".into()); }
-        response.payload.validate()?;
-        Ok(response.payload)
-    }
-
     pub fn inspect(&mut self) -> Result<Diagnostics, String> {
         let (request_id, frame) = self.request("health.inspect", serde_json::json!({}))?;
         let response: Response = serde_json::from_str(&frame).map_err(|_| "SIDECAR_PROTOCOL_ERROR")?;
@@ -103,7 +91,7 @@ impl Sidecar {
 
 impl Drop for Sidecar {
     fn drop(&mut self) {
-        // EOF lets the sidecar close its owned browser and flush profile data.
+        // EOF lets the sidecar cancel chat work before process teardown.
         drop(self.stdin.take());
         for _ in 0..20 {
             if matches!(self.child.try_wait(), Ok(Some(_))) { return; }

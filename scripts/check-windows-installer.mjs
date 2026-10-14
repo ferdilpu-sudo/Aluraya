@@ -54,22 +54,6 @@ async function same(source, target) {
   if ((await hash(source)) !== (await hash(target)))
     throw new Error(`PACKAGED_FILE_MISMATCH: ${target}`);
 }
-async function compareTree(source, target) {
-  const entries = await readdir(source, { withFileTypes: true });
-  const installed = await readdir(target);
-  if (installed.length !== entries.length) throw new Error('PACKAGED_DIRECTORY_MISMATCH');
-  let files = 0;
-  for (const entry of entries) {
-    const from = join(source, entry.name);
-    const to = join(target, entry.name);
-    if (entry.isDirectory()) files += await compareTree(from, to);
-    else if (entry.isFile()) {
-      await same(from, to);
-      files++;
-    } else throw new Error('UNEXPECTED_PACKAGE_LINK');
-  }
-  return files;
-}
 async function exists(path) {
   return access(path).then(
     () => true,
@@ -105,11 +89,10 @@ try {
   ];
   for (const [source, target] of mappings)
     await same(join(root, source), join(installDirectory, target));
-  report.playwrightFiles = await compareTree(
-    join(root, 'src-tauri/resources/node_modules/playwright-core'),
-    join(installDirectory, 'sidecar/node_modules/playwright-core'),
-  );
+  if (await exists(join(installDirectory, 'sidecar/node_modules/playwright-core')))
+    throw new Error('LEGACY_BROWSER_RUNTIME_PACKAGED');
   report.checks.push('installed_files_match_build');
+  report.checks.push('legacy_playwright_runtime_absent');
   const runtime = JSON.parse(
     await readFile(join(installDirectory, 'sidecar/runtime.json'), 'utf8'),
   );

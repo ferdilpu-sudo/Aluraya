@@ -4,6 +4,7 @@ mod application;
 mod contracts;
 mod chat_contracts;
 mod flow_contracts;
+mod flow;
 mod infrastructure;
 
 use application::diagnostics::{inspect_runtime, RuntimeState};
@@ -14,6 +15,12 @@ use application::flow::flow_action;
 fn main() {
     let app = tauri::Builder::default()
         .manage(RuntimeState::default())
+        .manage(flow::FlowState::default())
+        .on_window_event(|window, event| {
+            if window.label() == "main" && matches!(event, tauri::WindowEvent::Destroyed) {
+                window.app_handle().exit(0);
+            }
+        })
         .invoke_handler(tauri::generate_handler![inspect_runtime, chat_action, flow_action])
         .build(tauri::generate_context!())
         .expect("Unable to initialize Aluraya Studio");

@@ -43,8 +43,7 @@
       "resources/sidecar.cjs": "sidecar/sidecar.cjs",
       "resources/runtime.json": "sidecar/runtime.json",
       "resources/NODE-LICENSE.txt": "licenses/NODE-LICENSE.txt",
-      "../public/THIRD-PARTY-NOTICES.txt": "licenses/THIRD-PARTY-NOTICES.txt",
-      "resources/node_modules/playwright-core/": "sidecar/node_modules/playwright-core/"
+      "../public/THIRD-PARTY-NOTICES.txt": "licenses/THIRD-PARTY-NOTICES.txt"
     },
     "windows": {
       "webviewInstallMode": {
