@@ -10,7 +10,7 @@ Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT d
 
 ## Jalankan
 
-Installer **sebelum perubahan WebView2** tersedia pada [artifact CI a8f9e2e](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862/artifacts/11815215304). Ekstrak ZIP lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Paket ini masih fondasi M-001; Flow tetap BLOCKED. Instalasi aplikasi tidak memerlukan toolchain pengembangan di bawah, tetapi membutuhkan WebView2.
+Installer **WebView2 terbaru** tersedia pada [artifact CI ed59d09](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511/artifacts/11867078618). Ekstrak ZIP lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Build/installer PASS: 69 tes JavaScript, 10 tes Rust serta install/runtime/uninstall. Setelah aplikasi terbuka, pilih **Flow → Tambah profil Flow → Buka**, lalu login sendiri dan buka proyek tanpa Generate. Login WebView2 Aluraya belum diverifikasi. Instalasi membutuhkan WebView2, tanpa toolchain pengembangan di bawah.
 
 Preview UI (Node.js 24 LTS):
 

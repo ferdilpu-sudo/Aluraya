@@ -20,7 +20,11 @@ Pengguna melaporkan akun yang sama bisa membuka Flow di Chrome biasa serta WebVi
 
 Lokal Linux: `npm run check` PASS — format/lint/type/build, 68 tes PASS dan 1 tes DPAPI Windows skipped. Tes Playwright lama dihapus bersama adapter; empat tes TS baru memeriksa kontrak native, gate generasi, penolakan sidecar lama dan redaksi error. Lima tes Rust memeriksa kontrak, URL/origin, prioritas popup penolakan, registry invalid/duplicate, persistensi 25 profil dan lock Windows.
 
-CI Windows native/installer: PENDING. Live WebView2 Aluraya, popup/login, persistensi sesi setelah restart dan cleanup UI: NOT RUN. Login atau generasi tidak dijalankan dalam CI. Tidak mengklaim Flow siap atau M-001 PASS.
+CI Windows native/installer: **PASS**, run [38505405511](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511), commit `ed59d0904f3922103cf1a33c7f5b4d740301fe5c`. Windows menjalankan 69 tes JavaScript dan 10 tes Rust, seluruhnya PASS. Build NSIS, instalasi silent, integritas executable/resource/Node, ketiadaan runtime Playwright, diagnostik sidecar terpasang dan uninstall seluruhnya PASS. Pemeriksaan installer dimulai 14 Oktober 2026 pukul 10:23:38 WIB.
+
+[Unduh installer WebView2](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511/artifacts/11867078618) · [Report JSON asli](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511/artifacts/11867048521). Installer `Aluraya Studio_0.1.0_x64-setup.exe`, 25,643,982 byte; SHA-256 `1bfaf471d455fe1345169a90224d5c63a20a519b7f7a6496b65d96f4b7aca784`. SHA-256 executable terpasang `23663aa0987e8bc1ae7ed33b4c259ec02c05ff213b96e62c4b63786f51ad5368`. Artifact belum kedaluwarsa saat ditinjau; GitHub mencatat kedaluwarsa 12 Januari 2027. Installer belum ditandatangani.
+
+ Live WebView2 Aluraya, popup/login, persistensi sesi setelah restart dan cleanup UI: NOT RUN. Login atau generasi tidak dijalankan dalam CI. Tidak mengklaim Flow siap atau M-001 PASS.
 
 ## Referensi implementasi
 

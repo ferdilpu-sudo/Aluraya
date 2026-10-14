@@ -1,6 +1,6 @@
 # Menjalankan fondasi Aluraya di Windows
 
-Paket ini berisi source M-001. ChatGPT sudah menghasilkan respons nyata; produksi Flow masih terblokir pada login. CI kini membangun installer NSIS dan memeriksa runtime hasil instalasi. Status bukti terakhir ada di [laporan installer](../evidence/WINDOWS-INSTALLER-REPORT.md).
+Paket ini berisi source M-001. ChatGPT sudah menghasilkan respons nyata; produksi Flow masih terblokir pada login. CI kini membangun installer NSIS dan memeriksa runtime hasil instalasi. Status bukti terakhir ada di [laporan WebView2 dan installer terbaru](../evidence/FLOW-WEBVIEW2-REPORT.md).
 
 ## Prasyarat pengembangan
 
@@ -65,17 +65,17 @@ cargo test --manifest-path src-tauri/Cargo.toml
 npm.cmd run tauri build
 ```
 
-Build NSIS dan pemeriksaan installer sudah PASS pada commit a8f9e2e, [run 38399230862](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862). Rinciannya ada di [laporan installer](../evidence/WINDOWS-INSTALLER-REPORT.md). Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
+Build NSIS dan pemeriksaan installer sudah PASS pada commit ed59d09, [run 38505405511](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511). Rinciannya ada di [laporan WebView2 dan installer terbaru](../evidence/FLOW-WEBVIEW2-REPORT.md). Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
 
-Unduh [artifact **aluraya-native-lock-and-executable** yang lulus](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862/artifacts/11815215304) (login GitHub mungkin diperlukan), lalu ekstrak ZIP dan jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Artifact berisi `*-setup.exe`, executable hasil build dan Cargo.lock. Untuk menjalankan aplikasi terpasang gunakan installer, bukan hanya menyalin aluraya.exe yang memerlukan resource pendamping. Artifact **aluraya-installer-check** berisi JSON dengan source commit, hash/ukuran installer dan hasil pemeriksaan.
+Unduh [artifact **aluraya-native-lock-and-executable** yang lulus](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511/artifacts/11867078618) (login GitHub mungkin diperlukan), lalu ekstrak ZIP dan jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Artifact berisi `*-setup.exe`, executable hasil build dan Cargo.lock. Untuk menjalankan aplikasi terpasang gunakan installer, bukan hanya menyalin aluraya.exe yang memerlukan resource pendamping. Artifact **aluraya-installer-check** berisi JSON dengan source commit, hash/ukuran installer dan hasil pemeriksaan.
 
-Pemeriksaan CI memasang installer ke folder sementara dengan spasi, mencocokkan aplikasi/Node/sidecar/lisensi dan seluruh runtime Playwright, menjalankan round-trip diagnostik dari Node terpasang, lalu uninstall. Ini tidak membuktikan GUI, login, upgrade dari versi sebelumnya atau performa laptop pengguna. Skrip `check-windows-installer.mjs` hanya untuk runner Windows CI sementara; jangan menjalankannya pada instalasi pribadi. Tidak ada penandatanganan installer yang dikonfigurasi.
+Pemeriksaan CI memasang installer ke folder sementara dengan spasi, mencocokkan aplikasi/Node/sidecar/lisensi serta memastikan runtime Playwright lama tidak ikut paket, menjalankan round-trip diagnostik dari Node terpasang, lalu uninstall. Ini tidak membuktikan GUI, login, upgrade dari versi sebelumnya atau performa laptop pengguna. Skrip `check-windows-installer.mjs` hanya untuk runner Windows CI sementara; jangan menjalankannya pada instalasi pribadi. Tidak ada penandatanganan installer yang dikonfigurasi.
 
 ## Langkah pembuktian berikutnya
 
 1. Tutup aplikasi dev lama, pasang installer di atas, lalu buka Aluraya Studio hasil instalasi.
 2. Buka **Koneksi → Periksa sekarang**. Catat hasil host/sidecar dan kirim rincian bila gagal. Ini menguji jalur GUI dari paket terpasang yang belum tercakup CI.
-3. ChatGPT live sebelumnya sudah PASS; tidak perlu mengulang login/chat untuk membuktikan packaging. Flow tetap BLOCKED karena penolakan Google; jangan mengulang login yang ditolak sebagai bagian tes installer.
+3. ChatGPT live sebelumnya sudah PASS; tidak perlu mengulang login/chat untuk membuktikan packaging. Browser Playwright lama sudah diganti WebView2. Pemeriksaan akses baru ada di [FLOW-START.md](./FLOW-START.md): buat profil WebView2 dan login sendiri tanpa Generate. Keberhasilan akses Aluraya belum terbukti.
 4. Generasi Flow baru dilanjutkan setelah jalur akses yang didukung terbukti, capability/biaya diketahui dan batch konkret disetujui. M-001 belum lulus.
 
 Mengukur satu sampel process tree (ganti angka dengan PID Aluraya, bukan terminal):

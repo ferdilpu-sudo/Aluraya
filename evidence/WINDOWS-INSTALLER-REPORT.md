@@ -2,6 +2,8 @@
 
 13 Oktober 2026. REQ-014/REQ-015, bagian packaging M-001. Flow pilihan A tetap BLOCKED; pemeriksaan ini independen dari login provider.
 
+Pembaruan 14 Oktober 2026: installer WebView2 terbaru ed59d09 juga PASS; lihat [laporan terbaru](./FLOW-WEBVIEW2-REPORT.md) untuk tautan unduh dan hash. Rincian di bawah adalah bukti historis installer a8f9e2e dengan Playwright.
+
 ## Perubahan
 
 Workflow Windows membangun NSIS melalui `npm run tauri build -- --bundles nsis`, menggantikan executable-only `--no-bundle`. Artifact menyertakan setup.exe, executable dan Cargo.lock hasil resolusi. Tidak ada publikasi GitHub Release atau pembelian sertifikat/billing.

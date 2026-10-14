@@ -4,7 +4,7 @@ Checkpoint 14 Oktober 2026: browser Flow sekarang memakai WebView2 native dalam 
 
 ## Pemeriksaan akses pertama
 
-1. Gunakan installer dari run CI untuk perubahan WebView2 ini, atau pull source terbaru lalu jalankan `npm.cmd ci` dan `npm.cmd run tauri dev`. Installer a8f9e2e lama masih memakai Playwright.
+1. Gunakan [installer WebView2 ed59d09 yang sudah lulus CI](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511/artifacts/11867078618), atau pull source terbaru lalu jalankan `npm.cmd ci` dan `npm.cmd run tauri dev`. Installer a8f9e2e lama masih memakai Playwright.
 2. Buka tab **Flow → Tambah profil Flow → Buka**. Label profil harus **WebView2**. Aplikasi membuka jendela Flow miliknya sendiri; belum berupa panel yang didock di canvas.
 3. Login sendiri pada halaman Google yang tampil. Aluraya tidak mengisi login, membaca DOM login, menyalin cookie atau mengganti User-Agent. Popup memakai environment WebView2 yang sama dengan pembukanya.
 4. Buka proyek Flow. Periksa apakah editor benar-benar terlihat. **Belum perlu Generate.** Kirim hasil akses atau pesan penolakan, tanpa email, token, URL callback atau data akun sensitif.

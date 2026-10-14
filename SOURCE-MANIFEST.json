@@ -29,7 +29,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "7ffc012eaa05cedc6ccdc4be9e2bb411e5202539ac3850c09017e2e242086fc9"
+      "sha256": "1c4358b0434d2753294d8a5b1d348505b1c159185721cf382b663e27cb9b032b"
     },
     {
       "path": "architecture.md",
@@ -53,7 +53,7 @@
     },
     {
       "path": "docs/FLOW-START.md",
-      "sha256": "8f1b81d5943e3305c7c1de5fbef2a14888195862386ec301f6b21f0da0148da6"
+      "sha256": "4677740df38e2ee093ae7ec4fead5d7106d19b48491ddaf4707817257426f5d8"
     },
     {
       "path": "docs/IPC.md",
@@ -61,7 +61,7 @@
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "3769af69529bdb1657128a9bb93252eefb28335b63bf86ede2a250f596166d61"
+      "sha256": "5728bc3a5423c488c586ae3dfcf3b7c414551571be154f6a857de48cebc4a97d"
     },
     {
       "path": "eslint.config.js",
@@ -77,7 +77,7 @@
     },
     {
       "path": "evidence/FLOW-WEBVIEW2-REPORT.md",
-      "sha256": "e2b182c13d023dae18416b5410e3158ab2286758b6e00763880966ab9d1915a9"
+      "sha256": "75ce3685a36ba7c0e371c607865d71745ed9b929b41e93cdbab16f3f3772f53a"
     },
     {
       "path": "evidence/M001-REPORT.md",
@@ -89,7 +89,7 @@
     },
     {
       "path": "evidence/WINDOWS-INSTALLER-REPORT.md",
-      "sha256": "b54e8f9596fd757dd0792c067f4d257e74e42f98376bb6c31464f02a1e382cb7"
+      "sha256": "7f60b69035bc59dddc6584771cbf01b760107b30d6a8b6f93602757f1966299e"
     },
     {
       "path": "evidence/WINDOWS-STARTUP-REPORT.md",
@@ -113,7 +113,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "8077be85534cd634f58478fc2c4037d3ed3f1f675a8a6e7a9480d1f2fb077720"
+      "sha256": "5835539f36992f48665fcf2832f462e3dac12d54eedf47535d86eafa8dd287ed"
     },
     {
       "path": "prd.md",
@@ -453,7 +453,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "68bbe40b9243558731168817ea9c3827b5ccc667c53187475779251dc12663cf"
+      "sha256": "224ad5d5ed842a6232a031adc1a0316ab31f1581d53f181f4a49d054c6b29913"
     },
     {
       "path": "tests/browser-boundary.test.ts",
