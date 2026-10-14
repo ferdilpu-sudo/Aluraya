@@ -1,6 +1,6 @@
 # Rencana verifikasi — Aluraya
 
-Pembaruan 13 Oktober 2026: TEST-002 thin slice chat live PASS berdasarkan screenshot pengguna; quota pause/no fallback PASS dengan fixture. Tes penerimaan lainnya belum lulus. Catatan 12 Oktober di bawah adalah checkpoint historis, bukan status terbaru.
+Pembaruan 14 Oktober 2026: TEST-002 thin slice chat live PASS berdasarkan screenshot pengguna; quota pause/no fallback PASS dengan fixture. Packaging TASK-006 PASS pada CI Windows a8f9e2e (75 tes JS, 8 tes Rust, NSIS/install/runtime/uninstall); ini belum memenuhi seluruh TEST-014/015. Tes penerimaan lainnya belum lulus. Catatan 12 Oktober di bawah adalah checkpoint historis, bukan status terbaru.
 
 ## Strategi
 Unit untuk approval/scheduler/dependency; integrasi untuk transaksi, restart dan media; contract test untuk schema lintas Rust/TS dan respons provider; UI smoke untuk canvas. Live Flow hanya sesudah pengguna menyetujui model/biaya batch. Jangan memakai akun/kredit nyata di CI.
@@ -93,3 +93,10 @@ Screenshot pengguna 09:18 memperlihatkan GPT-6.1-Sol menjawab `tes` dengan label
 ### TASK-004 — regression sandbox/login ditolak
 
 CI 2c4b5dc gagal pada input inspect dengan field tambahan (Rust unit variant). Patch mengganti action tanpa payload menjadi empty struct dan menguji inspect/observe/close. flow-browser memeriksa sandbox aktif tanpa retry melemahkan proteksi, serta popup rejected diprioritaskan tanpa DOM/query login. flow-observation memeriksa path rejected dan origin spoofing. Status live Flow: BLOCKED berdasarkan screenshot pengguna 13 Oktober 14:26; bukan TEST-007 PASS. Hasil pemeriksaan patch ada di evidence/FLOW-SETUP-REPORT.md.
+
+
+### TASK-006 — installer Windows, ditinjau 14 Oktober 2026
+
+Run [38399230862](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862), commit a8f9e2e: npm run check PASS (75 tes JavaScript), cargo test PASS (8 tes), NSIS build PASS, check-windows-installer.mjs PASS. Pemeriksaan instalasi mencocokkan seluruh byte executable setelah satu patch marker Tauri, runtime Node, sidecar, lisensi dan 115 file Playwright; round-trip sidecar terpasang dan uninstall juga PASS. Tiga tes nsis-integrity menolak korupsi/truncation/wrong type serta marker hilang/duplikat. Bukti, ukuran, hash dan artifact ada di [laporan installer](./evidence/WINDOWS-INSTALLER-REPORT.md).
+
+GUI dari installer, host–sidecar melalui UI terpasang, upgrade, Windows LTSC tanpa WebView2, pemulihan data dan RAM: NOT RUN. Tidak ada generasi atau penggunaan akun provider di CI. TEST-007 tetap belum lulus; TEST-014/015 tidak dipromosikan dari bukti packaging saja.

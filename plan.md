@@ -44,11 +44,11 @@ TASK-008: definisikan PromptDocument, ReferenceManifest, StyleRevision dan Promp
 | Task | Status aktual | Bukti / pekerjaan tersisa |
 |---|---|---|
 | TASK-001 | PARTIAL | Kontrak dibaca; docs resmi ChatGPT/Flow/Tauri ditinjau. Lisensi runtime JS dikumpulkan. Audit lisensi Rust/media dan akses provider masih terbuka. |
-| TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Installer belum diverifikasi. |
+| TASK-002 | PARTIAL | React canvas satu kartu, panel copilot, diagnostik, host Tauri dan sidecar ditulis. Format/lint/typecheck/20 tes/build JS PASS. Log dan screenshot pengguna membuktikan build debug Windows dan jendela aplikasi berhasil; round-trip host–sidecar PASS dari screenshot pengguna 18:26:55; CI native b3ae671 PASS. Kemasan installer PASS di CI a8f9e2e; GUI hasil instalasi pada laptop belum diverifikasi. |
 | TASK-003 | PASS — THIN SLICE LIVE | Screenshot 13 Oktober 09:18 memperlihatkan GPT-6.1-Sol menjawab pesan tes dan status Selesai. Simulasi kuota/pause tanpa fallback PASS pada fixture. Bukti dan batas: evidence/CHATGPT-ADAPTER-REPORT.md. Logout/restart/multiakun live belum dinilai. |
 | TASK-004 | BLOCKED — GOOGLE LOGIN REJECTED | Screenshot pengguna 13 Oktober 14:26 membuktikan browser terbuka tetapi Google menolak login. Sandbox diperbaiki dan status penolakan dikenali. Biaya/capability, upload/submit/impor belum terbukti. Lihat evidence/FLOW-SETUP-REPORT.md. |
 | TASK-005 | NOT IMPLEMENTED / LIVE NOT RUN | Video Flow dan impor otomatis belum dibuat; menunggu gambar pertama dan batch konkret. |
-| TASK-006 | PARTIAL FOUNDATION ONLY | Framing IPC, penolakan command/field asing, korelasi respons dan penutupan child setelah EOF diuji. Ini bukan tes recovery submit produksi. |
+| TASK-006 | PARTIAL — PACKAGING CI PASS | Framing IPC, penolakan input asing, korelasi/EOF serta installer NSIS, resource, diagnostik sidecar terpasang dan uninstall PASS. Bukti: evidence/WINDOWS-INSTALLER-REPORT.md. GUI, recovery submit, upgrade dan RAM belum terbukti. |
 | TASK-007 | BLOCKED GATE | M-001 belum lulus. Tidak melanjutkan ekspansi M-002 sebelum dependensi inti terbukti. |
 
 Detail bukti awal: [evidence/M001-REPORT.md](./evidence/M001-REPORT.md); pembaruan startup: [evidence/WINDOWS-STARTUP-REPORT.md](./evidence/WINDOWS-STARTUP-REPORT.md). Round-trip host–sidecar sudah terbukti. ChatGPT thin slice live sudah lulus. Langkah terkecil berikut: TASK-004, siapkan profil Flow khusus dan pembacaan capability/biaya sebelum batch gambar disetujui. Source dipelihara di repository pengguna; tidak ada generasi berbayar yang dilakukan.
@@ -114,3 +114,8 @@ Pengguna memilih mempertahankan spesifikasi awal. REQ-007/AC-007 tetap: Flow oto
 ### TASK-006 — installer Windows independen dari login Flow (13 Oktober 2026)
 
 Pilihan A tetap berlaku dan TASK-004 tetap BLOCKED. Pekerjaan M-001 dilanjutkan pada packaging: workflow membangun NSIS, memasang pada runner Windows sementara, membandingkan resource/runtime, menguji IPC sidecar terpasang tanpa akun, lalu uninstall. Hasil di evidence/WINDOWS-INSTALLER-REPORT.md dan artifact installer-check.json. Ini bukan ekspansi studio atau bukti login/generasi berhasil. GUI, upgrade, recovery dan RAM masih menunggu bukti tersendiri.
+
+
+### TASK-006 — bukti installer diterima (14 Oktober 2026)
+
+Run Windows 38399230862 pada commit a8f9e2e SUCCESS: 75 tes JavaScript, 8 tes Rust, build NSIS dan seluruh enam pemeriksaan install/runtime/uninstall PASS. Validator mengenali patch marker NSIS Tauri tanpa mengabaikan perubahan byte lain. Installer dan report JSON tersedia pada tautan di evidence/WINDOWS-INSTALLER-REPORT.md. Langkah terkecil berikut: jalankan installer pada laptop pengguna, buka aplikasi, lalu Koneksi → Periksa sekarang untuk memeriksa jalur GUI host–sidecar dari paket terpasang. Tidak meminta tes chat atau login Flow berulang. TASK-004 tetap BLOCKED; M-001 belum lulus dan ekspansi studio belum dimulai.

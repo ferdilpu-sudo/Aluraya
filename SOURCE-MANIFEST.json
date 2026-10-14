@@ -29,7 +29,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "30c6380b6f389fe7a70f4540c85b822734ba748f8750d10ae9c2da790e4b127b"
+      "sha256": "9e5bdce44c68bec8f4c8aea56bcac9dace25cae4a4343b2ff9be59107f6fcca2"
     },
     {
       "path": "architecture.md",
@@ -61,7 +61,7 @@
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "c138b8c2be0841af8a08aedb6977f319cd8068d83f4b044e1fbc33a1a72085a1"
+      "sha256": "3769af69529bdb1657128a9bb93252eefb28335b63bf86ede2a250f596166d61"
     },
     {
       "path": "eslint.config.js",
@@ -85,7 +85,7 @@
     },
     {
       "path": "evidence/WINDOWS-INSTALLER-REPORT.md",
-      "sha256": "39ccd4169508cecd2c659d194022363c055339690174782ee76badc0039151b6"
+      "sha256": "b54e8f9596fd757dd0792c067f4d257e74e42f98376bb6c31464f02a1e382cb7"
     },
     {
       "path": "evidence/WINDOWS-STARTUP-REPORT.md",
@@ -109,7 +109,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "5015e7cbda61874506bc95c6e396c3a2933d965ac4fea394b5da5d910e06c4e0"
+      "sha256": "590e1de13e9d53f060fd0ad7eb051328fc5a36b26e434e4195f6b04cf95567f8"
     },
     {
       "path": "prd.md",
@@ -445,7 +445,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "b38fabb21f30551c9c3a4f09c975982e8b8d9089674343b6fe7c78f0bdc1e2ad"
+      "sha256": "9acfe6aabde971de1f26e68ca8c03bc87916d2afce68b856d22e002bb7148dfe"
     },
     {
       "path": "tests/browser-boundary.test.ts",
