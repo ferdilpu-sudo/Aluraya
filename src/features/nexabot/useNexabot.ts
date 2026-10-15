@@ -2,24 +2,26 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { nexabotAction, type NexaView } from '../../application/nexabot';
 import { type NexaAction } from '../../contracts/nexabot';
 import { nexaErrorMessage } from './errors';
+import { NexaActionQueue } from './actionQueue';
 
 export function useNexabot() {
   const [state, setState] = useState<NexaView | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
-  const flight = useRef(false);
+  const queue = useRef(new NexaActionQueue(nexabotAction));
   const execute = useCallback(async (action: NexaAction) => {
-    if (flight.current) return;
-    flight.current = true;
-    if (action.action !== 'inspect') setPending(true);
+    const request = queue.current.run(action);
+    setPending(queue.current.pending > 0);
     try {
-      setState(await nexabotAction(action));
-      setError(null);
+      const result = await request;
+      if (result) {
+        setState(result);
+        setError(null);
+      }
     } catch (failure) {
       if (!(action.action === 'inspect' && failure === 'BUSY')) setError(nexaErrorMessage(failure));
     } finally {
-      flight.current = false;
-      setPending(false);
+      setPending(queue.current.pending > 0);
     }
   }, []);
   useEffect(() => {

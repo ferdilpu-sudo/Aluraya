@@ -32,7 +32,7 @@ export default function App() {
         </div>
         <div className="header-state">
           <span className="status-dot" />
-          Produksi belum aktif
+          Integrasi Nexabot
         </div>
       </header>
       <main className="workspace">
@@ -95,7 +95,7 @@ export default function App() {
             <span className="eyebrow">LANGKAH BERIKUTNYA</span>
             <p>Hubungkan Nexabot, periksa biaya, lalu setujui satu gambar atau video.</p>
             <button className="button primary" disabled aria-describedby="production-help">
-              Mulai produksi
+              Produksi batch
             </button>
             <small id="production-help">Produksi batch menunggu pembuktian integrasi.</small>
           </div>

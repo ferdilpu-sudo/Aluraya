@@ -93,7 +93,7 @@
     },
     {
       "path": "evidence/NEXABOT-REPORT.md",
-      "sha256": "4b3512cf2696cad4a751413a12acff94cda46a6a06ca84dcc4cb8298343bdf94"
+      "sha256": "6b1147aa97eb522e477ea8d28dbd1778779a764fae4918aef2262f0dc2785cc0"
     },
     {
       "path": "evidence/NODE-LICENSE-REPORT.md",
@@ -401,7 +401,7 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "c729e6ba1265f2ce249fffad4c57825e3e6ddf0b1dc52b577a0e712964096e1c"
+      "sha256": "fa05a3f173667e9ab88486a4cc8789c8a40599882a905250ef2d7ee4c830453e"
     },
     {
       "path": "src/application/chat.ts",
@@ -508,12 +508,16 @@
       "sha256": "fdd535beeff4dde5726cbd0b4bb665b450e9e8ebf6e70fae1a8ebf1205a0414f"
     },
     {
+      "path": "src/features/nexabot/actionQueue.ts",
+      "sha256": "48aeb6b039f42de157476e2e9346132e4f5683795d5707d3b1e04243961b9268"
+    },
+    {
       "path": "src/features/nexabot/errors.ts",
       "sha256": "19adff70ae51ccc0748def1733c5c519da198e5e2598cc828f4fed0910be78b1"
     },
     {
       "path": "src/features/nexabot/useNexabot.ts",
-      "sha256": "f39ed1862066f388ec65156098851003f24c1f2cf17d18938ddb8678eca2da30"
+      "sha256": "8079cc4e7d7e01c86c0b0cbcb8158a5b2458820e06a23c0808fa290d6b24172f"
     },
     {
       "path": "src/main.tsx",
@@ -570,6 +574,10 @@
     {
       "path": "tests/flow-contracts.test.ts",
       "sha256": "5476d16f250df1dcc01cec3bd7c023765b4cebd81d19f8ed78dbf36ce6a081ec"
+    },
+    {
+      "path": "tests/nexabot-queue.test.ts",
+      "sha256": "f70fe7d8d60be43118429520f8c268ef65642f7f1406e79ef48f84a5a2cfc1bf"
     },
     {
       "path": "tests/nexabot.test.ts",

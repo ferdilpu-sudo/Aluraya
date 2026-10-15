@@ -9,3 +9,5 @@ Pemeriksaan lokal awal npm run check PASS75tests +2Windows-only skipped; setelah
 Tes risiko: double-submit, biaya berubah, approval usang, timeout-submit+restart, durable submitting→uncertain, key fingerprint, retry download tanpaPOST, redirect key leakage, status ID mismatch, response202rusak, mediaHTML, input asing, error redaction. WindowsDPAPI test disediakan. Native DTO tests menolak path traversal/secretfield/parameter privileged. Installed smoke menambah inisialisasiSQLite Nexabot tanpa key/network.
 
 NOT RUN: live Nexabot credit/generate/refund/download aktual; GUIWindows dan asset preview aktual; validitas decode/kualitasAI; RAM; reference modes; actual redirecthost. M-001 belumPASS. Biaya aktual dicatat bila provider mengirim credit_cost; API tidak mempunyai batas charge atomik. Riwayat lokal tidak dianggap bukti refund.
+
+Perbaikan timing: antrean UI tidak membuang klik saat inspect IPC berjalan; hanya inspect tambahan yang digabung. Dua tes antrean memverifikasi urutan dan kelanjutan setelah error. Pemeriksaan akhir lokal npm run check PASS77 tes +2 Windows-only skipped; total79 pada Windows.
