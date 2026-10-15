@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "57685d575a8b178bf9776de82cec45476ebafe36",
+  "checkedAt": "2026-10-15T01:42:52.657Z",
+  "status": "PASS",
+  "checks": [
+    "silent_install",
+    "installed_executable_matches_nsis_patch",
+    "installed_files_match_build",
+    "legacy_playwright_runtime_absent",
+    "bundled_node_hash",
+    "installed_sidecar_round_trip_and_clean_exit",
+    "installed_nexabot_sqlite_and_clean_exit",
+    "silent_uninstall_removes_runtime"
+  ],
+  "limits": "No GUI, provider login, generation, upgrade or Windows LTSC verification.",
+  "installer": {
+    "name": "Aluraya Studio_0.1.0_x64-setup.exe",
+    "bytes": 25711904,
+    "sha256": "e646c0a69ee767eb2468e866e9286cb7b09413fc94a213d305be7efeb3347818"
+  },
+  "installedAppSha256": "ce8a6213352dc5709c6cd3e5007728c931e91c73e419f42969d9035aa79defd3"
+}

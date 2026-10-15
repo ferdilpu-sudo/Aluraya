@@ -109,3 +109,5 @@ Lihat evidence/FLOW-WEBVIEW2-REPORT.md. npm run check lokal PASS: 68 tes + 1 Win
 ## Nexabot — 15 Oktober 2026
 
 Jalur provider aktif menggantikan Flow, sesuai ADR-014. tests/nexabot.test.ts menguji persetujuan sekali pakai, fresh cost, restart uncertain, key ownership, resume download tanpa resubmit, redirect dan redaksi; satu tes DPAPI hanya Windows. src-tauri/tests/nexabot_contracts.rs menguji boundary. Installer smoke memasukkan SQLite dari Node terpaket. Lihat evidence/NEXABOT-REPORT.md untuk hasil aktual. Fixture bukan provider live; TEST-007 tetap pending sampai gambar/video nyata diterima otomatis oleh aplikasi Windows.
+
+CI Windows final57685d5/run38666298634:79JavaScript+12RustPASS, NSIS+install/runtime/uninstallPASS. Detail hash/checks pada evidence/NEXABOT-INSTALLER.json. Tidak mengulang tesChatGPTlive atau loginFlow; liveNexabot menjadi gate berikutnya.

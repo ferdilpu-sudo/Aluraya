@@ -1,6 +1,6 @@
 # Aluraya Studio
 
-**Dari naskah menjadi adegan.** Fondasi Windows pribadi, source v0.1.0 berdasarkan spesifikasi v1.1. Checkpoint 14 Oktober 2026: **M-001 in progress, integrasi belum lulus**.
+**Dari naskah menjadi adegan.** Fondasi Windows pribadi, source v0.1.0 berdasarkan spesifikasi v1.1. Checkpoint 15 Oktober 2026: **M-001 in progress, integrasi belum lulus**.
 
 Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
 
@@ -10,7 +10,7 @@ Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT d
 
 ## Jalankan
 
-Installer Nexabot menunggu build Windows perubahan ini. Installer WebView2 lama tidak memiliki panel Nexabot. Lihat [workflow Windows](https://github.com/ferdilpu-sudo/Aluraya/actions/workflows/windows.yml) dan panduan Nexabot untuk paket setelah CI selesai.
+Installer Nexabot [siap diunduh](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38666298634/artifacts/11942940371). Ekstrak ZIP, lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. CI Windows 57685d5 PASS: 79 tes JavaScript, 12 tes Rust dan delapan pemeriksaan install/runtime/uninstall. Mulai dari **Nexabot → Simpan key → Cek saldo**. Generasi memerlukan persetujuan input/biaya di aplikasi. Live Nexabot dan preview GUI belum diverifikasi.
 
 Preview UI (Node.js 24 LTS):
 

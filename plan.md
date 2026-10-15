@@ -136,3 +136,8 @@ Run 38505405511 / commit ed59d09 SUCCESS. Windows: 69 tes JS dan 10 tes Rust PAS
 ### TASK-004/005 — migrasi Nexabot (15 Oktober 2026)
 
 Keputusan pengguna menggantikan pilihan A dan ADR-013. API contract berasal dari dokumentasi reseller yang dikirim pengguna: origin nexabot.id, submit POST /api/v1/api, GET credit/job/download. Bukan endpoint pemasaran /generate. Slice pertama img + t2v, persetujuan satu request, biaya segar dari credit endpoint, job SQLite tahan restart, download terbatas dan preview lokal. API key DPAPI. Browser Flow tidak lagi tersedia melalui IPC/UI; profil lama tetap utuh. Referensi sfv/i2v/r2v/extend, multi-key scheduler, compiler dan ekspor masih menunggu slice berikut. Tidak ada key/biaya live yang dipakai oleh coding agent. M-001 belum lulus.
+
+
+### TASK-004/005 — installer Nexabot final PASS (15 Oktober 2026)
+
+Commit57685d5, run38666298634 SUCCESS:79tesJS/12Rust, installer/runtime/uninstall8checks. Termasuk perbaikan antrean klik pengguna saat polling. Artifact11942940371. APIkey aktual, saldo dan generasi live tetap NOT RUN; M-001 belum lulus. Langkah pengguna: install → Nexabot → Simpan key → Cek saldo, kemudian approval satu gambar bila biaya disetujui. Bukti evidence/NEXABOT-REPORT.md.

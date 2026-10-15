@@ -29,7 +29,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "4b2458d9d443f3e4e4c5ab37160e46906f69a297190a97adad5687dce74568c8"
+      "sha256": "81bde039cba3e89313d6a59768418335994f496124dbb2e0490d2b5fd7b9320c"
     },
     {
       "path": "architecture.md",
@@ -65,11 +65,11 @@
     },
     {
       "path": "docs/NEXABOT-START.md",
-      "sha256": "a971244e90cad22a92b0e791a2fc55228bf525d536fc3e453dc8012273150518"
+      "sha256": "7e7af8fe46985e95ca01ec5ca83b3ae715d3efc605178c5daebe11060e279420"
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "5728bc3a5423c488c586ae3dfcf3b7c414551571be154f6a857de48cebc4a97d"
+      "sha256": "d10b4f0ebfdf02ca3acf63985577d229fe92e1513fa8a0087b07740424439236"
     },
     {
       "path": "eslint.config.js",
@@ -92,8 +92,12 @@
       "sha256": "52f953830e58418c1cdb56c72790da8705e7802d4c720a4e67ac6937018a6d08"
     },
     {
+      "path": "evidence/NEXABOT-INSTALLER.json",
+      "sha256": "c40cd074d1db90b7c55221c924292ab4bd84bbeeae38f0cc8e17e95e1ca599ff"
+    },
+    {
       "path": "evidence/NEXABOT-REPORT.md",
-      "sha256": "6b1147aa97eb522e477ea8d28dbd1778779a764fae4918aef2262f0dc2785cc0"
+      "sha256": "9cf921d28b8861175e1a930cf47f368026450a61e84ac8e9f0a37eb1df9d172d"
     },
     {
       "path": "evidence/NODE-LICENSE-REPORT.md",
@@ -125,7 +129,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "6e5afdbbb78adee7bcd376a0e5397a8a57a3e148a221df3b1269a33a44589b01"
+      "sha256": "71a91b917939dcf61080033b20b6cc2c120294a250a832f7d564bee87be61294"
     },
     {
       "path": "prd.md",
@@ -545,7 +549,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "4f0e95601f2971b41cd511b878b9cfc5c89b55122d34ccb315ea1ffd2624cef7"
+      "sha256": "cc1006722ae94ec527c922845f8dca0e2de6e8d581512e3e0c6e50197feeaee5"
     },
     {
       "path": "tests/browser-boundary.test.ts",

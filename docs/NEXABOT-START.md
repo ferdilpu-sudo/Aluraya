@@ -1,8 +1,8 @@
 # Memulai Nexabot di Aluraya
 
-Build Nexabot sedang dipersiapkan. Installer WebView2 lama tidak mendukung API key ini.
+[Unduh installer Nexabot](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38666298634/artifacts/11942940371) — commit `57685d5`, [CI Windows PASS](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38666298634). Login GitHub bila diperlukan, ekstrak ZIP, jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Jika tautan langsung tidak mengunduh, buka halaman CI lalu pilih Artifacts → aluraya-native-lock-and-executable. Installer WebView2 lama tidak mendukung API key ini.
 
-1. Pasang installer Nexabot setelah build Windows lulus dan buka tab **Nexabot**.
+1. Tutup aplikasi lama, pasang installer Nexabot dan buka tab **Nexabot**.
 2. Buat key di https://nexabot.id/api-keys, tempel ke input password di Aluraya lalu **Simpan key**. Jangan kirim key ke chat/repo.
 3. Klik **Cek saldo**. Ini GET gratis menurut dokumentasi provider. Paket unlimited tidak berlaku untuk API.
 4. Untuk uji pertama pilih **Gambar dari teks**, tulis prompt dan rasio. Klik **Periksa biaya**.
