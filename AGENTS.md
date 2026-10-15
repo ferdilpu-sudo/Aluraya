@@ -29,3 +29,6 @@ Perubahan dan alasan; file/modul; TASK serta REQ terkait; PASS/FAIL/NOT RUN deng
 
 ## Tambahan v1.1
 Nama produk Aluraya sudah dipilih pengguna; jangan kembali memakai nama kerja DramaCanvas untuk UI/branding. Penuhi REQ-016 melalui compiler prompt empat tipe dan manifest referensi; jangan menyalin prompt contoh sebagai aturan universal proyek. Jangan menyatukan board akhir pelarian dengan video awal kedatangan hanya karena keduanya diberikan dalam pesan yang sama. Baca aturan lint dan peran plan-only vs start-frame sebelum menghubungkan generator. Prompt contoh belum diuji pada Flow.
+
+## Prioritas frontend — 15 Oktober 2026
+Pengguna meminta frontend diselesaikan dahulu, sinkronisasi backend/API key menyusul. Ini mengizinkan perluasan editor draf sebelum gate M-001 live lulus; tidak mengizinkan generasi berbayar, mock sukses provider, atau klaim M-001 selesai. Draf frontend IndexedDB terpisah dari jurnal Nexabot/rahasia OS. Lihat ADR-015.

@@ -150,7 +150,10 @@ export function CopilotPanel() {
       </div>
       <div className="copilot-intro">
         <p>Ide Anda. Arah cerita Anda.</p>
-        <span>Hubungkan ChatGPT untuk mulai mengembangkan cerita. Produksi Flow belum aktif.</span>
+        <span>
+          Kembangkan ide melalui paket ChatGPT Anda. Konteks draf belum dikirim otomatis; perubahan
+          cerita tetap Anda tinjau.
+        </span>
       </div>
       {error && (
         <p role="alert" className="error">

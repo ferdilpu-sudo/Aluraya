@@ -141,3 +141,6 @@ Keputusan pengguna menggantikan pilihan A dan ADR-013. API contract berasal dari
 ### TASK-004/005 — installer Nexabot final PASS (15 Oktober 2026)
 
 Commit57685d5, run38666298634 SUCCESS:79tesJS/12Rust, installer/runtime/uninstall8checks. Termasuk perbaikan antrean klik pengguna saat polling. Artifact11942940371. APIkey aktual, saldo dan generasi live tetap NOT RUN; M-001 belum lulus. Langkah pengguna: install → Nexabot → Simpan key → Cek saldo, kemudian approval satu gambar bila biaya disetujui. Bukti evidence/NEXABOT-REPORT.md.
+
+## Checkpoint aktif — frontend dahulu (15 Oktober 2026)
+Keputusan pengguna terbaru mengizinkan penyelesaian frontend sebelum sinkronisasi API key. Implementasi editor draf REQ-001/003/004/011/012/015: proyek, naskah, aset lokal, canvas/daftar shot, detail dan review rencana, cadangan JSON; panel ChatGPT dan Nexabot dipertahankan. Peninjauan dan draf tidak mengirim generasi. M-002/M-003 FRONTEND PARTIAL; backend/native dan live gates belum lulus. Pemeriksaan lokal: 83 PASS + 2 Windows-only SKIP; format/lint/type/build PASS. Visual/browser runtime tidak tersedia, GUI Windows dan JSON download WebView NOT RUN. Detail evidence/FRONTEND-STUDIO-REPORT.md. Langkah berikut: verifikasi frontend Windows, kemudian hubungkan draft project/shot → backend/API dengan approval biaya konkret.

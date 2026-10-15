@@ -5,6 +5,8 @@ import './styles/tokens.css';
 import './styles/workspace.css';
 import './styles/canvas.css';
 import './styles/panels.css';
+import './styles/nexabot.css';
+import './styles/studio.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Application root is missing');

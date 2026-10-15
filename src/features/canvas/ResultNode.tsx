@@ -16,7 +16,7 @@ export function ResultNode({ selected, data }: NodeProps<ResultCanvasNode>) {
       aria-label={job ? 'Hasil Nexabot tersimpan' : 'Belum ada media'}
     >
       <div className="card-top">
-        <span className="eyebrow">HASIL PERTAMA</span>
+        <span className="eyebrow">HASIL NEXABOT</span>
         <span className="badge not_run">{job ? 'Tersimpan' : 'Belum ada media'}</span>
       </div>
       {job?.previewUrl ? (
@@ -27,7 +27,12 @@ export function ResultNode({ selected, data }: NodeProps<ResultCanvasNode>) {
             <video
               src={job.previewUrl}
               controls
-              preload="metadata"
+              preload="none"
+              onPlay={(event) => {
+                document.querySelectorAll('video').forEach((video) => {
+                  if (video !== event.currentTarget) video.pause();
+                });
+              }}
               onError={() => setFailed(true)}
             />
           )}
@@ -52,7 +57,7 @@ export function ResultNode({ selected, data }: NodeProps<ResultCanvasNode>) {
         </div>
       )}
       <div className="card-bottom">
-        <span>01 / Pembuktian integrasi</span>
+        <span>Media tersimpan lokal</span>
         <span aria-hidden="true">↗</span>
       </div>
     </article>

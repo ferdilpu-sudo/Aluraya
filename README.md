@@ -2,15 +2,17 @@
 
 **Dari naskah menjadi adegan.** Fondasi Windows pribadi, source v0.1.0 berdasarkan spesifikasi v1.1. Checkpoint 15 Oktober 2026: **M-001 in progress, integrasi belum lulus**.
 
-Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
+Frontend terbaru: proyek draf, editor naskah, referensi aset lokal, canvas/daftar shot, panel detail, review rencana, serta cadangan JSON. Backend proyek/API belum disinkronkan. Lihat [panduan frontend](docs/FRONTEND-STUDIO.md).
+
+Sudah tersedia: diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
 
 **Koneksi generasi:** API reseller Nexabot menggantikan browser Flow atas keputusan pengguna 15 Oktober 2026. Key terenkripsi Windows, cek saldo, approval satu request, gambar/text-to-video, jurnal restart dan hasil otomatis ke canvas tersedia dalam kode. Live API dan GUI terbaru belum diverifikasi. Lihat [panduan Nexabot](docs/NEXABOT-START.md) dan [bukti](evidence/NEXABOT-REPORT.md).
 
-**Belum tersedia:** mode referensi, produksi batch/scheduler, penyimpanan proyek penuh dan ekspor. Hasil Nexabot tersimpan lokal; riwayat chat hanya untuk sesi aplikasi. Tidak ada generasi live dijalankan oleh coding agent.
+**Belum tersedia:** upload referensi ke API, produksi batch/scheduler, database proyek native, pengaitan shot–job dan ekspor klip. Draf frontend tersimpan lokal di IndexedDB. Hasil Nexabot tersimpan lokal; riwayat chat hanya untuk sesi aplikasi. Tidak ada generasi live dijalankan oleh coding agent.
 
 ## Jalankan
 
-Installer Nexabot [siap diunduh](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38666298634/artifacts/11942940371). Ekstrak ZIP, lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. CI Windows 57685d5 PASS: 79 tes JavaScript, 12 tes Rust dan delapan pemeriksaan install/runtime/uninstall. Mulai dari **Nexabot → Simpan key → Cek saldo**. Generasi memerlukan persetujuan input/biaya di aplikasi. Live Nexabot dan preview GUI belum diverifikasi.
+Installer integrasi Nexabot **sebelum pembaruan frontend** [siap diunduh](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38666298634/artifacts/11942940371). Ekstrak ZIP, lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. CI Windows 57685d5 PASS: 79 tes JavaScript, 12 tes Rust dan delapan pemeriksaan install/runtime/uninstall. Mulai dari **Nexabot → Simpan key → Cek saldo**. Generasi memerlukan persetujuan input/biaya di aplikasi. Live Nexabot dan preview GUI belum diverifikasi.
 
 Preview UI (Node.js 24 LTS):
 

@@ -1,20 +1,80 @@
-import { useState } from 'react';
-import { NexaPanel } from './features/nexabot/NexaPanel';
+import { useEffect, useState } from 'react';
 import { useNexabot } from './features/nexabot/useNexabot';
-import './styles/nexabot.css';
 import { StudioCanvas } from './features/canvas/StudioCanvas';
-import { CopilotPanel } from './features/copilot/CopilotPanel';
-import { DiagnosticsPanel } from './features/diagnostics/DiagnosticsPanel';
-import { useDiagnostics } from './features/diagnostics/useDiagnostics';
+import { useStudio } from './features/studio/useStudio';
+import { ProjectDialog } from './features/studio/ProjectDialog';
+import { ScriptEditor } from './features/studio/ScriptEditor';
+import { AssetsView } from './features/studio/AssetsView';
+import { ReviewView } from './features/studio/ReviewView';
+import { StudioInspector, type InspectorTab } from './features/studio/StudioInspector';
+import { Icon } from './features/studio/Icon';
+import { newShot, stageNames, type Stage } from './domain/studio';
 
 export default function App() {
-  const [tab, setTab] = useState<'connections' | 'copilot' | 'nexabot'>('nexabot');
-  const diagnostics = useDiagnostics();
+  const studio = useStudio();
   const nexabot = useNexabot();
+  const [stage, setStage] = useState<Stage>('script');
+  const [tab, setTab] = useState<InspectorTab>('detail');
+  const [selectedId, setSelectedId] = useState('');
+  const [projectsOpen, setProjectsOpen] = useState(false);
+  const [panelOpen, setPanelOpen] = useState(() => window.innerWidth > 1100);
+  const [online, setOnline] = useState(navigator.onLine);
+  useEffect(() => {
+    const change = () => setOnline(navigator.onLine);
+    window.addEventListener('online', change);
+    window.addEventListener('offline', change);
+    return () => {
+      window.removeEventListener('online', change);
+      window.removeEventListener('offline', change);
+    };
+  }, []);
+  const project = studio.project;
+  if (!project)
+    return (
+      <main className="startup-state">
+        <span className="brand-symbol">a</span>
+        <h1>Aluraya Studio</h1>
+        <p role="status">{studio.loading ? 'Membuka ruang cerita Anda…' : studio.error}</p>
+        {!studio.loading && (
+          <button className="button secondary" onClick={() => window.location.reload()}>
+            Coba lagi
+          </button>
+        )}
+      </main>
+    );
+  function select(id: string) {
+    setSelectedId(id);
+    setTab('detail');
+    setPanelOpen(true);
+  }
+  function addShot() {
+    if (!project) return;
+    const shot = newShot(project.shots.length);
+    studio.update({ ...project, shots: [...project.shots, shot] });
+    select(shot.id);
+  }
+  function openProvider() {
+    setTab('provider');
+    setPanelOpen(true);
+  }
+  const counts = {
+    script: project.script.trim() ? 'Terisi' : 'Mulai di sini',
+    assets: `${project.assets.length} referensi`,
+    board: `${project.shots.length} shot`,
+    review: `${project.shots.filter((s) => s.review === 'reviewed').length} rencana ditinjau`,
+  };
   return (
-    <div className="app-shell">
+    <div className="app-shell studio-shell">
       <header className="app-header">
-        <div className="brand">
+        <a
+          className="brand"
+          href="#"
+          aria-label="Buka proyek Aluraya"
+          onClick={(e) => {
+            e.preventDefault();
+            setProjectsOpen(true);
+          }}
+        >
           <span className="brand-symbol" aria-hidden="true">
             a
           </span>
@@ -24,88 +84,148 @@ export default function App() {
             </h1>
             <p>Dari naskah menjadi adegan.</p>
           </div>
-        </div>
-        <div className="project-heading">
-          <span className="project-dot" />
-          <strong>Studio pertama</strong>
-          <span className="badge not_run">Fondasi M-001</span>
-        </div>
-        <div className="header-state">
-          <span className="status-dot" />
-          Integrasi Nexabot
+        </a>
+        <button className="project-switcher" onClick={() => setProjectsOpen(true)}>
+          <Icon name="folder" />
+          <span>{project.name}</span>
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <div className="header-actions">
+          <span className="save-state" role="status">
+            <span className={`save-dot ${studio.error ? 'failed' : ''}`} />
+            {studio.error ? 'Belum tersimpan' : studio.saving ? 'Menyimpan…' : 'Draf tersimpan'}
+          </span>
+          <button
+            className="button secondary panel-toggle"
+            aria-pressed={panelOpen}
+            onClick={() => setPanelOpen(!panelOpen)}
+          >
+            <Icon name="chat" size={16} />
+            {panelOpen ? 'Tutup panel' : 'Buka panel'}
+          </button>
         </div>
       </header>
-      <main className="workspace">
-        <aside className="journey" aria-label="Tahap produksi">
+      {!online && (
+        <div className="offline-banner" role="status">
+          Anda sedang offline. Naskah, aset, dan storyboard lokal tetap bisa disunting.
+        </div>
+      )}
+      {studio.error && (
+        <div className="save-error" role="alert">
+          {studio.error}
+          <button className="text-button" onClick={studio.retry}>
+            Coba simpan lagi
+          </button>
+          <button className="text-button" onClick={() => setProjectsOpen(true)}>
+            Cadangkan draf
+          </button>
+        </div>
+      )}
+      <main className={`workspace studio-workspace ${panelOpen ? '' : 'panel-closed'}`}>
+        <aside className="journey">
+          <button className="all-projects" onClick={() => setProjectsOpen(true)}>
+            <Icon name="folder" /> Semua proyek
+          </button>
           <span className="eyebrow">ALUR PRODUKSI</span>
-          <ol>
-            <li className="current">
-              <span>01</span>
-              <div>
-                Koneksi studio<small>Tahap saat ini</small>
-              </div>
-            </li>
-            <li>
-              <span>02</span>
-              <div>
-                Naskah & aset<small>Menunggu M-001</small>
-              </div>
-            </li>
-            <li>
-              <span>03</span>
-              <div>
-                Storyboard<small>Belum dimulai</small>
-              </div>
-            </li>
-            <li>
-              <span>04</span>
-              <div>
-                Klip & review<small>Belum dimulai</small>
-              </div>
-            </li>
-          </ol>
-          <div className="journey-note">
-            <strong>Ruang untuk cerita Anda.</strong>
-            <p>Satu kartu awal untuk membuktikan alur gambar dan video.</p>
-          </div>
-        </aside>
-        <StudioCanvas results={nexabot.state?.jobs ?? []} />
-        <aside className="inspector" aria-label="Panel studio">
-          <nav className="panel-tabs" aria-label="Pilihan panel">
-            <button aria-pressed={tab === 'connections'} onClick={() => setTab('connections')}>
-              Koneksi
-            </button>
-            <button aria-pressed={tab === 'copilot'} onClick={() => setTab('copilot')}>
-              Copilot
-            </button>
-            <button aria-pressed={tab === 'nexabot'} onClick={() => setTab('nexabot')}>
-              Nexabot
-            </button>
+          <nav aria-label="Tahap produksi">
+            {(Object.keys(stageNames) as Stage[]).map((id, index) => (
+              <button
+                className={stage === id ? 'active' : ''}
+                aria-current={stage === id ? 'step' : undefined}
+                aria-label={stageNames[id]}
+                onClick={() => setStage(id)}
+                key={id}
+              >
+                <Icon name={id} />
+                <span>
+                  <strong>{stageNames[id]}</strong>
+                  <small>{counts[id]}</small>
+                </span>
+                <span className="stage-index">0{index + 1}</span>
+              </button>
+            ))}
           </nav>
-          <div hidden={tab !== 'connections'}>
-            <DiagnosticsPanel {...diagnostics} onRefresh={() => void diagnostics.refresh()} />
+          <div className="journey-summary">
+            <span className="eyebrow">PROYEK INI</span>
+            <dl>
+              <div>
+                <dt>Format</dt>
+                <dd>{project.ratio}</dd>
+              </div>
+              <div>
+                <dt>Target</dt>
+                <dd>{project.targetSeconds} detik</dd>
+              </div>
+              <div>
+                <dt>Aset</dt>
+                <dd>{project.assets.length}</dd>
+              </div>
+            </dl>
           </div>
-          <div hidden={tab !== 'copilot'}>
-            <CopilotPanel />
+          <div className="journey-note">
+            <div className="mini-brand">a</div>
+            <strong>
+              Cerita yang baik
+              <br />
+              dimulai dari Anda.
+            </strong>
+            <p>
+              Atur detailnya di sini.
+              <br />
+              Hidupkan bersama AI.
+            </p>
           </div>
-          <div hidden={tab !== 'nexabot'}>
-            <NexaPanel {...nexabot} />
-          </div>
-          <div className="production-footer">
-            <span className="eyebrow">LANGKAH BERIKUTNYA</span>
-            <p>Hubungkan Nexabot, periksa biaya, lalu setujui satu gambar atau video.</p>
-            <button className="button primary" disabled aria-describedby="production-help">
-              Produksi batch
-            </button>
-            <small id="production-help">Produksi batch menunggu pembuktian integrasi.</small>
-          </div>
+          <button className="connection-link" onClick={openProvider}>
+            <Icon name="settings" /> Koneksi & pengaturan
+            <span className="status-dot" />
+          </button>
         </aside>
+        <div className="studio-main" key={project.id}>
+          {stage === 'script' && (
+            <ScriptEditor
+              project={project}
+              update={studio.update}
+              next={() => setStage('assets')}
+            />
+          )}
+          {stage === 'assets' && <AssetsView project={project} update={studio.update} />}
+          {stage === 'board' && (
+            <StudioCanvas
+              project={project}
+              update={studio.update}
+              selectedId={selectedId}
+              select={select}
+              add={addShot}
+            />
+          )}
+          {stage === 'review' && (
+            <ReviewView
+              project={project}
+              results={nexabot.state?.jobs ?? []}
+              openProvider={openProvider}
+            />
+          )}
+        </div>
+        <div className="inspector-container" hidden={!panelOpen}>
+          <StudioInspector
+            tab={tab}
+            setTab={setTab}
+            project={project}
+            update={studio.update}
+            selectedId={selectedId}
+            select={select}
+            nexabot={nexabot}
+          />
+        </div>
       </main>
       <footer className="app-footer">
         <span>ALURAYA STUDIO · 0.1.0</span>
-        <span>Data lokal · 1 job Nexabot aktif</span>
-        <span>M-001 belum lulus</span>
+        <span>
+          {online ? 'Ruang kerja lokal' : 'Mode offline'} · {project.shots.length} shot
+        </span>
+        <span>Produksi API belum disinkronkan</span>
       </footer>
+      {projectsOpen && <ProjectDialog studio={studio} close={() => setProjectsOpen(false)} />}
     </div>
   );
 }
