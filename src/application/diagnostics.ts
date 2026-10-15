@@ -33,10 +33,10 @@ export async function inspectRuntime(): Promise<Diagnostics> {
           'Login tersedia di panel Copilot pada aplikasi Windows. Preview ini tidak memakai akun.',
       },
       {
-        id: 'flow',
-        label: 'Google Flow',
+        id: 'nexabot',
+        label: 'Nexabot',
         state: 'blocked',
-        detail: 'Adapter browser belum diimplementasikan. Akun, model, dan saldo belum diketahui.',
+        detail: 'Masukkan API key di aplikasi Windows untuk memeriksa saldo Nexabot.',
       },
       {
         id: 'generation',

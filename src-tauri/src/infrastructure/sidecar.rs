@@ -3,6 +3,8 @@ use std::process::{Child, ChildStdin, Command, Stdio};
 use std::sync::mpsc::{self, Receiver};
 use std::time::Duration;
 use super::{frame_reader::read_frame, sidecar_paths, credential_lock};
+use tauri::Manager;
+use crate::nexabot_contracts::{NexaAction, NexaSnapshot, NexaResponse};
 use crate::chat_contracts::{ChatAction, ChatSnapshot, ChatResponse};
 use crate::contracts::{Diagnostics, Response};
 
@@ -19,6 +21,7 @@ impl Sidecar {
         let (auth_directory, credential_lock) = credential_lock::acquire(app)?;
         let mut command = Command::new(runtime);
         command.env("ALURAYA_AUTH_DIR", auth_directory);
+        command.env("ALURAYA_NEXABOT_DIR", app.path().app_local_data_dir().map_err(|_| "STORAGE_ERROR")?.join("nexabot"));
         command.arg(script).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         // Inherited NODE_OPTIONS could inject code before the trusted sidecar starts.
         command.env_remove("NODE_OPTIONS").env_remove("NODE_PATH");
@@ -72,6 +75,15 @@ impl Sidecar {
         if response.schema_version != 1 || response.request_id != request_id || !response.ok {
             return Err("SIDECAR_PROTOCOL_ERROR".into());
         }
+        response.payload.validate()?;
+        Ok(response.payload)
+    }
+
+    pub fn nexabot(&mut self, action: NexaAction) -> Result<NexaSnapshot, String> {
+        let payload = serde_json::to_value(action).map_err(|_| "INVALID_NEXABOT_ACTION")?;
+        let (request_id, frame) = self.request("nexabot.action", payload)?;
+        let response: NexaResponse = serde_json::from_str(&frame).map_err(|_| "SIDECAR_PROTOCOL_ERROR")?;
+        if response.schema_version != 1 || response.request_id != request_id || !response.ok { return Err("SIDECAR_PROTOCOL_ERROR".into()); }
         response.payload.validate()?;
         Ok(response.payload)
     }

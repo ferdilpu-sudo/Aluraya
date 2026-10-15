@@ -1,6 +1,7 @@
 import { Background, Controls, ReactFlow, useNodesState } from '@xyflow/react';
 import { ResultNode, type ResultCanvasNode } from './ResultNode';
 import '@xyflow/react/dist/style.css';
+import type { NexaView } from '../../application/nexabot';
 
 const nodeTypes = { result: ResultNode };
 const initialNodes: ResultCanvasNode[] = [
@@ -12,8 +13,17 @@ const initialNodes: ResultCanvasNode[] = [
   },
 ];
 
-export function StudioCanvas() {
+export function StudioCanvas({ results }: { results: NexaView['jobs'] }) {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const ready = results.filter((job) => job.media && job.previewUrl);
+  const displayed: ResultCanvasNode[] = ready.length
+    ? ready.map((job, index) => ({
+        id: job.id,
+        type: 'result',
+        position: { x: index * 410, y: 0 },
+        data: { selectedForReview: false, job },
+      }))
+    : nodes;
   function selectResult() {
     setNodes((current) => current.map((node) => ({ ...node, selected: true })));
   }
@@ -25,9 +35,10 @@ export function StudioCanvas() {
         <p>Mulai dengan memastikan koneksi studio Anda.</p>
       </div>
       <ReactFlow
-        nodes={nodes}
+        nodes={displayed}
         nodeTypes={nodeTypes}
-        onNodesChange={onNodesChange}
+        onNodesChange={ready.length ? undefined : onNodesChange}
+        nodesDraggable={!ready.length}
         fitView
         fitViewOptions={{ padding: 0.45, maxZoom: 1 }}
         minZoom={0.35}
@@ -43,7 +54,7 @@ export function StudioCanvas() {
         <button className="text-button" onClick={selectResult}>
           Pilih kartu hasil
         </button>
-        <span>Posisi hanya untuk sesi ini</span>
+        <span>Hasil tersimpan lokal · tampilan mengikuti halaman riwayat</span>
       </div>
     </section>
   );

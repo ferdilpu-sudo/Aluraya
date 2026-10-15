@@ -1,3 +1,5 @@
+> Riwayat: sejak 15 Oktober 2026 pengguna memilih API Nexabot setelah WebView2 diblokir. Gunakan [NEXABOT-START.md](NEXABOT-START.md); instruksi login Flow di dokumen ini tidak lagi berlaku.
+
 # Flow melalui WebView2 Aluraya
 
 Checkpoint 14 Oktober 2026: browser Flow sekarang memakai WebView2 native dalam jendela milik Aluraya, mengacu pada pengelolaan profil dan popup Switchly. Login Flow melalui Chrome biasa dan Switchly dilaporkan berhasil oleh pengguna; kompatibilitas WebView2 Aluraya tetap **NOT RUN** sampai diuji di Windows pengguna. Ini belum membuktikan integrasi generasi otomatis.

@@ -1,0 +1,84 @@
+.nexa-panel {
+  padding: 20px;
+  font-size: 13px;
+}
+.nexa-section {
+  padding: 16px 0;
+  border-top: 1px solid var(--line, #d5dbd0);
+}
+.nexa-section h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+.nexa-section label {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0;
+}
+.nexa-section input,
+.nexa-section select,
+.nexa-section textarea {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #c7cdbf;
+  border-radius: 7px;
+  background: #fff;
+  color: #28332b;
+  padding: 9px;
+  font: inherit;
+}
+.nexa-section textarea {
+  resize: vertical;
+}
+.nexa-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.nexa-approval {
+  padding: 12px;
+  margin-top: 12px;
+  background: #e8eee1;
+  border-radius: 8px;
+}
+.nexa-checkbox {
+  display: flex !important;
+  align-items: flex-start;
+}
+.nexa-checkbox input {
+  width: auto;
+  margin-top: 3px;
+}
+.nexa-error {
+  border-left: 3px solid #a75533;
+  padding: 10px;
+  background: #fff1e7;
+}
+.nexa-job {
+  padding: 14px 0;
+  border-bottom: 1px solid #d5dbd0;
+  overflow-wrap: anywhere;
+}
+.nexa-prompt {
+  white-space: pre-wrap;
+  max-height: 100px;
+  overflow: auto;
+}
+.result-preview {
+  padding: 12px;
+}
+.result-preview img,
+.result-preview video {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  background: #151b16;
+}
+.result-preview p {
+  max-height: 100px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const checkSchema = z
   .object({
-    id: z.enum(['host', 'sidecar', 'chatgpt', 'flow', 'generation']),
+    id: z.enum(['host', 'sidecar', 'chatgpt', 'nexabot', 'generation']),
     label: z.string().min(1).max(80),
     state: z.enum(['pass', 'blocked', 'not_run']),
     detail: z.string().min(1).max(500),

@@ -1,3 +1,5 @@
+> Riwayat: sejak 15 Oktober 2026 pengguna memilih API Nexabot setelah WebView2 diblokir. Gunakan [NEXABOT-START.md](NEXABOT-START.md); instruksi login Flow di dokumen ini tidak lagi berlaku.
+
 # Pilihan integrasi setelah login Flow ditolak
 
 13 Oktober 2026. TASK-004 / REQ-007 dan REQ-008. Status: A DIPILIH pengguna pada 13 Oktober 2026, 19:21 WIB. Kebutuhan asli tetap berlaku; M-001 belum lulus.

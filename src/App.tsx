@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { FlowPanel } from './features/flow/FlowPanel';
+import { NexaPanel } from './features/nexabot/NexaPanel';
+import { useNexabot } from './features/nexabot/useNexabot';
+import './styles/nexabot.css';
 import { StudioCanvas } from './features/canvas/StudioCanvas';
 import { CopilotPanel } from './features/copilot/CopilotPanel';
 import { DiagnosticsPanel } from './features/diagnostics/DiagnosticsPanel';
 import { useDiagnostics } from './features/diagnostics/useDiagnostics';
 
 export default function App() {
-  const [tab, setTab] = useState<'connections' | 'copilot' | 'flow'>('connections');
+  const [tab, setTab] = useState<'connections' | 'copilot' | 'nexabot'>('nexabot');
   const diagnostics = useDiagnostics();
+  const nexabot = useNexabot();
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -66,7 +69,7 @@ export default function App() {
             <p>Satu kartu awal untuk membuktikan alur gambar dan video.</p>
           </div>
         </aside>
-        <StudioCanvas />
+        <StudioCanvas results={nexabot.state?.jobs ?? []} />
         <aside className="inspector" aria-label="Panel studio">
           <nav className="panel-tabs" aria-label="Pilihan panel">
             <button aria-pressed={tab === 'connections'} onClick={() => setTab('connections')}>
@@ -75,8 +78,8 @@ export default function App() {
             <button aria-pressed={tab === 'copilot'} onClick={() => setTab('copilot')}>
               Copilot
             </button>
-            <button aria-pressed={tab === 'flow'} onClick={() => setTab('flow')}>
-              Flow
+            <button aria-pressed={tab === 'nexabot'} onClick={() => setTab('nexabot')}>
+              Nexabot
             </button>
           </nav>
           <div hidden={tab !== 'connections'}>
@@ -85,20 +88,22 @@ export default function App() {
           <div hidden={tab !== 'copilot'}>
             <CopilotPanel />
           </div>
-          {tab === 'flow' && <FlowPanel />}
+          <div hidden={tab !== 'nexabot'}>
+            <NexaPanel {...nexabot} />
+          </div>
           <div className="production-footer">
             <span className="eyebrow">LANGKAH BERIKUTNYA</span>
-            <p>Hubungkan profil Flow, lalu periksa kemampuan dan biaya sebelum produksi.</p>
+            <p>Hubungkan Nexabot, periksa biaya, lalu setujui satu gambar atau video.</p>
             <button className="button primary" disabled aria-describedby="production-help">
               Mulai produksi
             </button>
-            <small id="production-help">Menunggu integrasi dan persetujuan biaya.</small>
+            <small id="production-help">Produksi batch menunggu pembuktian integrasi.</small>
           </div>
         </aside>
       </main>
       <footer className="app-footer">
         <span>ALURAYA STUDIO · 0.1.0</span>
-        <span>Data lokal · 1 profil / job aktif direncanakan</span>
+        <span>Data lokal · 1 job Nexabot aktif</span>
         <span>M-001 belum lulus</span>
       </footer>
     </div>

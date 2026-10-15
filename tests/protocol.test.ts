@@ -38,7 +38,7 @@ describe('diagnostic command boundary', () => {
     expect(response.requestId).toBe(requestId);
     if (!response.ok) throw new Error('Expected health result');
     expect(response.payload.checks.find((check) => check.id === 'sidecar')?.state).toBe('pass');
-    for (const id of ['chatgpt', 'flow', 'generation']) {
+    for (const id of ['chatgpt', 'nexabot', 'generation']) {
       expect(response.payload.checks.find((check) => check.id === id)?.state).toBe('blocked');
     }
   });

@@ -14,12 +14,12 @@ SQLite milik host, foreign keys aktif, migration versioned. UUID string untuk ID
 | ENT-006 | Dependency(id, projectId, sourceRevisionId, targetShotRevisionId, kind:reference/last_frame/continuity) | graph produksi harus acyclic; tidak self-edge |
 | ENT-007 | CanvasNode(id, projectId, entityType, entityId, x:real, y:real, width:real, height:real, groupId?) | referensi entity valid; ukuran > 0 |
 | ENT-008 | CanvasEdge(id, projectId, sourceNodeId, targetNodeId, kind:reference/sequence/continuity) | tidak semua edge visual adalah dependensi job |
-| ENT-009 | ProviderAccount(id, provider:flow/chatgpt, label:text, profileRef:text, state:ready/needs_login/disabled/rate_limited, creditPoolId?, capabilities:JSON, checkedAt?) | profileRef opaque; bukan token |
-| ENT-010 | CreditObservation(id, accountId, poolId?, balance:int?, observedAt, source:provider_ui, freshness:known/unknown/stale) | balance >= 0; null != 0 |
-| ENT-011 | Approval(id, projectId, stage:script/assets/storyboard/generation, snapshotHash, accountPoolIds:JSON, maxCredits:int?, maxAttempts:int, approvedAt, revokedAt?) | maxAttempts >= 1; generation perlu batas kredit terverifikasi |
+| ENT-009 | ProviderAccount(id, provider:nexabot/chatgpt, label:text, profileRef:text, state:ready/needs_login/disabled/rate_limited, creditPoolId?, capabilities:JSON, checkedAt?) | profileRef opaque; bukan token |
+| ENT-010 | CreditObservation(id, accountId, poolId?, balance:decimal?, observedAt, source:provider_api, freshness:known/unknown/stale) | balance >= 0; null != 0 |
+| ENT-011 | Approval(id, projectId, stage:script/assets/storyboard/generation, snapshotHash, accountPoolIds:JSON, maxCredits:decimal?, maxAttempts:int, approvedAt, revokedAt?) | maxAttempts >= 1; generation perlu batas kredit terverifikasi |
 | ENT-012 | Job(id, projectId, inputRevisionId, approvalId, status, priority:int, createdAt, leaseOwner?, leaseUntil?) | satu dispatcher aktif per job |
-| ENT-013 | Attempt(id, jobId, ordinal:int, accountId, modelId:text, snapshotHash, estimatedCredits:int, state, providerJobRef?, providerProjectRef?, submittedAt?, errorCode?) | unique(jobId, ordinal); immutable input snapshot |
-| ENT-014 | CreditReservation(id, attemptId, poolKey:text, amount:int, state:held/reconciled/released/uncertain) | transaksi bersama pemilihan akun |
+| ENT-013 | Attempt(id, jobId, ordinal:int, accountId, modelId:text, snapshotHash, estimatedCredits:decimal, state, providerJobRef?, providerProjectRef?, submittedAt?, errorCode?) | unique(jobId, ordinal); immutable input snapshot |
+| ENT-014 | CreditReservation(id, attemptId, poolKey:text, amount:decimal, state:held/reconciled/released/uncertain) | transaksi bersama pemilihan akun |
 | ENT-015 | MediaFile(id, projectId, relativePath:text, sha256, mime:text, bytes:int, durationMs:int?, width:int?, height:int?, attemptId?, sourceMediaId?, extractionMs:int?) | unique(projectId, relativePath); bytes > 0 |
 | ENT-016 | Conversation(id, projectId, messages:JSON, summary:text, updatedAt) | model context disusun dari state lokal |
 | ENT-017 | Proposal(id, projectId, expectedRevision:int, operations:JSON, state:pending/applied/rejected, createdAt) | tidak dapat membawa approval pengguna palsu |
@@ -79,3 +79,12 @@ Approval snapshot generasi diperluas dengan promptDocumentId/hash dan manifest h
 ## DTO browser Flow v2 — TASK-004, 14 Oktober 2026
 
 `flow_action` kini native-only: inspect/create/open(profileId UUID canonical)/observe/close/profiles(page 0..100000), semua field asing ditolak. create tidak menerima nama browser lagi. Snapshot schemaVersion=2, runtime=webview2, profiles berupa id UUID saja, profileCount/profilePage, activeProfileId nullable, browserOpen, observation nullable {checkedAtMs, page, origin}, generationReady=false, error kode terbatas. page hanya klasifikasi URL dan tidak berarti login sukses. origin tidak memuat path/query/fragment. Kontrak TS di src/contracts/flow.ts dan Rust di src-tauri/src/flow_contracts.rs. flow.action pada stdio sidecar tidak lagi didukung.
+
+
+## DTO dan jurnal Nexabot M-001 — 15 Oktober 2026
+
+Sumber executable: src/contracts/nexabot.ts dan src-tauri/src/nexabot_contracts.rs. Command inspect/save_key/remove_key/credit/prepare/submit/resume/pause/history. prepare menerima input img(prompt,aspect) atau t2v(prompt,ratio,resolution), tanpa field model/duration/media yang belum dibuat. submit hanya menerima approvalId, bukan input baru atau boolean approved.
+
+Snapshot: activity, configured, credit(balance/cost/checkedAt), quote(id,input,cost,expiresAt), jobs (3 per halaman), jobCount/page, activeId, error allowlist. Job: UUID, providerId nullable, immutable input/cost, chargedCost nullable, createdAt, state, error, media nullable. State submitting → queued/uncertain/failed; queued/processing → done/failed; done → ready hanya setelah file lokal tersimpan. Restart submitting → uncertain. Error unduhan mempertahankan done dan ID, tidak membuat attempt baru. Tidak ada endpoint publik terdokumentasi untuk rekonsiliasi job tanpa ID; uncertain menahan generasi dan perlu bukti dari provider sebelum resolusi.
+
+Jurnal SQLite khusus integrasi (user_version1), sidecar single owner, kolom sequence/id/fingerprint/body tervalidasi. Banyak hasil tersimpan, pagination3 untuk batas IPC64KiB. Key DPAPI terpisah, approval tidak dipersist. Tidak ada data login/browser lama dimigrasikan atau dihapus.

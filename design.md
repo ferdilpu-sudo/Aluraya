@@ -40,3 +40,8 @@ Detail node menyediakan tab Struktur, Prompt final, Referensi, dan Pemeriksaan. 
 Video timeline berbentuk daftar beat bertimestamp: framing, kamera, siapa terlihat, siapa berbicara, dialog, ambience dan SFX. Ini editor rencana, bukan editor video penuh. Tampilkan perkiraan durasi dialog di samping jatah waktu; teks "perkiraan" wajib. Copilot menawarkan memperpanjang klip, membagi shot, atau mengadaptasi dialog; perubahan dialog preserve mode memerlukan keputusan pengguna.
 
 Lint menampilkan konflik dengan lokasi field dan usulan perbaikan. Contoh: "locked-off dan handheld pada beat yang sama", "semua 3 orang wajib terlihat tetapi shot meminta wajah tunggal", "shallow dan medium depth of field sekaligus", atau reference slot tanpa attachment. Tidak memperbaiki cerita/blocking diam-diam. Hard blocker menonaktifkan Generate; warning yang dapat diterima dicatat bersama approval. Timeline multi-cut dan one-take tidak boleh aktif sekaligus.
+
+
+## Perubahan aktif Nexabot — 15 Oktober 2026
+
+Tab Flow diganti Nexabot: koneksi key/password + cek saldo; form gambar/video; Periksa biaya; review satu request dan checkbox persetujuan; tombol Generate berbiaya. Edit input membatalkan checkbox/menyembunyikan quote yang tidak cocok. Tampilkan model/durasi ditentukan provider, tanpa dropdown palsu. Status busy/loading/error dan saldo time-stamped. Riwayat menampilkan ID job aman, state dan tindakan lanjut monitoring/download; uncertain menjelaskan jangan submit ulang. Canvas otomatis menampilkan hasil lokal di halaman riwayat, image atau video controls tanpa autoplay. Key tidak pernah ditampilkan ulang. Produksi batch tetap belum aktif.

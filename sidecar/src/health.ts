@@ -29,18 +29,17 @@ export function inspectHealth(): Diagnostics {
           'Adapter OAuth belum diimplementasikan. Login, izin kuota dan streaming belum diuji.',
       },
       {
-        id: 'flow',
-        label: 'Google Flow',
+        id: 'nexabot',
+        label: 'Nexabot',
         state: 'blocked',
-        detail:
-          'Browser Flow dikelola host WebView2. Login, saldo dan capability belum terverifikasi.',
+        detail: 'Cek saldo di panel Nexabot. Key tersimpan saja belum membuktikan akses provider.',
       },
       {
         id: 'generation',
         label: 'Generasi',
         state: 'blocked',
         detail:
-          'Submit tidak tersedia. Menunggu provider, biaya terverifikasi dan persetujuan batch.',
+          'Generasi tersedia setelah cek biaya dan persetujuan satu request di panel Nexabot.',
       },
     ],
   });

@@ -4,13 +4,13 @@
 
 Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
 
-**Koneksi Flow:** browser native WebView2 dengan profil khusus dan popup satu environment telah menggantikan Playwright. Login WebView2 Aluraya masih NOT RUN; laporan pengguna tentang Switchly menjadi dasar evaluasi. Lihat [panduan Flow](./docs/FLOW-START.md) dan [laporan perubahan](./evidence/FLOW-WEBVIEW2-REPORT.md).
+**Koneksi generasi:** API reseller Nexabot menggantikan browser Flow atas keputusan pengguna 15 Oktober 2026. Key terenkripsi Windows, cek saldo, approval satu request, gambar/text-to-video, jurnal restart dan hasil otomatis ke canvas tersedia dalam kode. Live API dan GUI terbaru belum diverifikasi. Lihat [panduan Nexabot](docs/NEXABOT-START.md) dan [bukti](evidence/NEXABOT-REPORT.md).
 
-**Belum tersedia:** generasi Flow otomatis, penyimpanan proyek, media import, approval produksi, dan scheduler. Chat aktif setelah akun, izin paket, model dan konfirmasi penggunaan tersedia. Tidak ada hasil AI sintetis yang dilabeli sebagai hasil provider. Posisi kartu dan riwayat chat hanya bertahan pada sesi aplikasi.
+**Belum tersedia:** mode referensi, produksi batch/scheduler, penyimpanan proyek penuh dan ekspor. Hasil Nexabot tersimpan lokal; riwayat chat hanya untuk sesi aplikasi. Tidak ada generasi live dijalankan oleh coding agent.
 
 ## Jalankan
 
-Installer **WebView2 terbaru** tersedia pada [artifact CI ed59d09](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38505405511/artifacts/11867078618). Ekstrak ZIP lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Build/installer PASS: 69 tes JavaScript, 10 tes Rust serta install/runtime/uninstall. Setelah aplikasi terbuka, pilih **Flow → Tambah profil Flow → Buka**, lalu login sendiri dan buka proyek tanpa Generate. Login WebView2 Aluraya belum diverifikasi. Instalasi membutuhkan WebView2, tanpa toolchain pengembangan di bawah.
+Installer Nexabot menunggu build Windows perubahan ini. Installer WebView2 lama tidak memiliki panel Nexabot. Lihat [workflow Windows](https://github.com/ferdilpu-sudo/Aluraya/actions/workflows/windows.yml) dan panduan Nexabot untuk paket setelah CI selesai.
 
 Preview UI (Node.js 24 LTS):
 
@@ -28,7 +28,7 @@ npm.cmd ci
 npm.cmd run tauri dev
 ```
 
-Petunjuk lengkap, perbaikan prasyarat dan build installer ada di [docs/WINDOWS-START.md](./docs/WINDOWS-START.md). Tidak diperlukan OPENAI_API_KEY. Belum ada config kredensial yang harus diisi.
+Petunjuk lengkap, perbaikan prasyarat dan build installer ada di [docs/WINDOWS-START.md](./docs/WINDOWS-START.md). Tidak diperlukan OPENAI_API_KEY. API key Nexabot dimasukkan hanya di panel Nexabot aplikasi Windows.
 
 ## Pemeriksaan tersedia
 

@@ -31,7 +31,7 @@ pub struct Response {
 
 impl Response {
     pub fn validate(&self, request_id: &str) -> Result<(), String> {
-        let ids = ["host", "sidecar", "chatgpt", "flow", "generation"];
+        let ids = ["host", "sidecar", "chatgpt", "nexabot", "generation"];
         let payload = &self.payload;
         let valid = self.schema_version == 1 && self.request_id == request_id && self.ok
             && payload.schema_version == 1 && payload.runtime == "desktop"

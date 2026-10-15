@@ -105,3 +105,7 @@ GUI dari installer, host–sidecar melalui UI terpasang, upgrade, Windows LTSC t
 ### TASK-004 — penggantian browser WebView2 (14 Oktober 2026)
 
 Lihat evidence/FLOW-WEBVIEW2-REPORT.md. npm run check lokal PASS: 68 tes + 1 Windows-only skipped. Tes adapter Playwright diganti karena implementasinya dihapus; empat tes TS dan lima tes Rust baru memeriksa boundary native dan registry. Build/installer Windows perubahan ini PASS pada run 38505405511 / commit ed59d09: 69 tes JS, 10 tes Rust serta NSIS/install/runtime/uninstall. Smoke juga memastikan runtime Playwright tidak ikut paket. Bukti installer a8f9e2e adalah riwayat sebelum WebView2. Live wajib: satu profil WebView2 membuka proyek setelah login pengguna; popup mempertahankan konteks yang sama; close menutup popup; restart mempertahankan sesi; profil lain tidak mencampur akun. Tidak melakukan Generate untuk tes akses ini. Penolakan Google menghentikan modul.
+
+## Nexabot — 15 Oktober 2026
+
+Jalur provider aktif menggantikan Flow, sesuai ADR-014. tests/nexabot.test.ts menguji persetujuan sekali pakai, fresh cost, restart uncertain, key ownership, resume download tanpa resubmit, redirect dan redaksi; satu tes DPAPI hanya Windows. src-tauri/tests/nexabot_contracts.rs menguji boundary. Installer smoke memasukkan SQLite dari Node terpaket. Lihat evidence/NEXABOT-REPORT.md untuk hasil aktual. Fixture bukan provider live; TEST-007 tetap pending sampai gambar/video nyata diterima otomatis oleh aplikasi Windows.

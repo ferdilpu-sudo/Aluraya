@@ -1,10 +1,12 @@
 # Rencana implementasi — Aluraya
 
-Strategi: buktikan integrasi mahal/berisiko terlebih dahulu, baru perluas studio. **M-001 In progress: fondasi TASK-002 tersedia, gate integrasi belum lulus. M-002–M-006 Not started.** ChatGPT sudah menghasilkan respons nyata di aplikasi Windows; integrasi Flow dan installer belum terbukti. Stack rekomendasi Tauri dapat ditinjau jika M-001 membuktikan hambatan signifikan.
+**Checkpoint aktif 15 Oktober 2026:** pengguna melaporkan WebView2 diblokir dan memilih API reseller Nexabot. TASK-004/005 kini memakai Nexabot; catatan Flow di bawah merupakan riwayat. Implementasi img/t2v, cek saldo, approval, jurnal dan impor hasil tersedia. Live provider belum dijalankan. Lihat [panduan Nexabot](docs/NEXABOT-START.md).
+
+Strategi: buktikan integrasi mahal/berisiko terlebih dahulu, baru perluas studio. **M-001 In progress: fondasi TASK-002 tersedia, gate integrasi belum lulus. M-002–M-006 Not started.** ChatGPT sudah menghasilkan respons nyata di aplikasi Windows; integrasi Nexabot belum terbukti live; installer sebelumnya sudah PASS. Stack rekomendasi Tauri dapat ditinjau jika M-001 membuktikan hambatan signifikan.
 
 | ID | Sasaran | Dependensi | Deliverable | Requirement | Exit gate |
 |---|---|---|---|---|---|
-| M-001 | Dua integrasi dan hasil otomatis | Tidak ada | Thin slice Windows, login ChatGPT, satu gambar/klip Flow ke kartu | REQ-002, REQ-007, REQ-014 | Live login/inference, gambar/video muncul otomatis, ukur total proses |
+| M-001 | Dua integrasi dan hasil otomatis | Tidak ada | Thin slice Windows, login ChatGPT, satu gambar/klip Nexabot ke kartu | REQ-002, REQ-007, REQ-014 | Live login/inference, gambar/video muncul otomatis, ukur total proses |
 | M-002 | Proyek dan canvas persisten | M-001 | SQLite, node/edge, impor media, backup dasar | REQ-001, REQ-003, REQ-004, REQ-015 | Restart/offline memulihkan proyek dan media |
 | M-003 | Planner dan approval | M-002 | Skill berversi, scene/shot, proposal, approval snapshot | REQ-005, REQ-006, REQ-012 | Input cuplikan tak dianggap lengkap; stale approval diblokir |
 | M-004 | Scheduler multiakun dan recovery | M-003 | Credit observation/reservation, round robin, reconcile | REQ-008, REQ-010 | Fault setelah submit tidak menggandakan generasi |
@@ -12,20 +14,20 @@ Strategi: buktikan integrasi mahal/berisiko terlebih dahulu, baru perluas studio
 | M-006 | Paket Windows dan penerimaan | M-005 | Installer pribadi, restore, profiling, keyboard QA | Semua REQ | Seluruh AC dan batas hardware diverifikasi |
 
 ## M-001: urutan executable
-- TASK-001: baca seluruh kontrak; periksa repo bila diberikan. Revalidasi dokumen resmi login ChatGPT, batas Flow, browser yang didukung, lisensi sidecar/media. Catat bukti/versi di decisions.
+- TASK-001: baca seluruh kontrak; periksa repo bila diberikan. Revalidasi dokumen resmi login ChatGPT, batas Nexabot, browser yang didukung, lisensi sidecar/media. Catat bukti/versi di decisions.
 - TASK-002: scaffold Tauri/React/TypeScript dengan satu kartu, panel chat, bridge terbatas dan sidecar. Buat planned scripts README menjadi benar-benar runnable. Build Windows dan kemas sidecar sederhana.
 - TASK-003: jalankan sign-in resmi dengan akun pengguna; verifikasi izin plan usage; discovery model; satu respons streaming di panel chat. Simulasikan kuota habis untuk memastikan pause tanpa fallback biaya.
-- TASK-004: siapkan satu profil Flow khusus; login sendiri. Buktikan capability/cost observation, unggah satu reference, submit satu gambar setelah approval biaya eksplisit. Ambil output otomatis, hash, metadata, thumbnail dan kartu.
+- TASK-004: siapkan satu profil Nexabot khusus; login sendiri. Buktikan capability/cost observation, unggah satu reference, submit satu gambar setelah approval biaya eksplisit. Ambil output otomatis, hash, metadata, thumbnail dan kartu.
 - TASK-005: ulangi thin slice video dengan dialog/SFX pendek yang disetujui pengguna. Catat cara korelasi job/result dan jalur download yang diizinkan. Buktikan polling serta preview video/audio dalam canvas.
 - TASK-006: putus koneksi secara terkendali atau pakai fixture setelah submit. Validasi status uncertain dan tidak auto-resubmit. Uji packaging dan ukur RAM seluruh proses pada laptop 8 GB.
-- TASK-007: laporkan hasil gate. Jika akses login/Flow/unduhan gagal, tandai BLOCKED dengan bukti; jangan membangun fitur penuh di atas adapter mock dan menyebut otomatisasi selesai.
+- TASK-007: laporkan hasil gate. Jika akses login/Nexabot/unduhan gagal, tandai BLOCKED dengan bukti; jangan membangun fitur penuh di atas adapter mock dan menyebut otomatisasi selesai.
 M-001 dapat memakai schema minimal tetapi approval biaya eksplisit tetap wajib. Budget live belum ditentukan, jadi tidak ada izin menjalankan pengeluaran dari dokumen ini sendiri.
 
 ## Pekerjaan berikutnya
 M-002: impor aman dan source preservation; layout dan edge; schema migration/backup; preview lokal. M-003: mode adaptasi dan versioning skill; DTO proposal; dialog natural; referensi terikat; approval UI yang host-validates. M-004: banyak profil tersimpan, pool-aware reservation, lease, pause/reconcile, error state. M-005: last frame dari accepted output, invalidation, ekspor. M-006: ukur dan perbaiki bottleneck nyata; tidak menambah timeline/subtitle/musik.
 
 ## Risiko dan respons
-- Integrasi Flow UI berubah: adapter versioned, fail dengan PROVIDER_CHANGED, simpan job dan aset. Tidak ada fallback manual diam-diam.
+- Integrasi Nexabot UI berubah: adapter versioned, fail dengan PROVIDER_CHANGED, simpan job dan aset. Tidak ada fallback manual diam-diam.
 - Kuota ChatGPT: pause dengan usage action, resumable; tidak beralih biaya.
 - RAM 8 GB: satu profil/job, thumbnail, tidak autoplay; ukur sebelum menambah concurrency.
 - Korelasi hasil lemah: uncertain tetap membutuhkan rekonsiliasi; matching prompt/waktu saja tidak cukup jika beberapa hasil identik.
@@ -129,3 +131,8 @@ Pengguna membuktikan akses akun di Chrome biasa dan melaporkan login WebView2 Sw
 ### TASK-004 — paket WebView2 siap uji akses (14 Oktober 2026)
 
 Run 38505405511 / commit ed59d09 SUCCESS. Windows: 69 tes JS dan 10 tes Rust PASS; NSIS/install/runtime/uninstall PASS. Paket tidak lagi menyertakan Playwright. Tautan unduh dan hash ada di evidence/FLOW-WEBVIEW2-REPORT.md. Langkah berikut milik pengguna: tutup build lama, pasang installer baru, Flow → Tambah profil Flow → Buka; login sendiri dan buka proyek tanpa Generate. Kode observer hanya mengenali alamat, bukan autentikasi. Ini menyelesaikan slice implementasi browser native/build; tidak menyelesaikan login live, produksi Flow atau M-001.
+
+
+### TASK-004/005 — migrasi Nexabot (15 Oktober 2026)
+
+Keputusan pengguna menggantikan pilihan A dan ADR-013. API contract berasal dari dokumentasi reseller yang dikirim pengguna: origin nexabot.id, submit POST /api/v1/api, GET credit/job/download. Bukan endpoint pemasaran /generate. Slice pertama img + t2v, persetujuan satu request, biaya segar dari credit endpoint, job SQLite tahan restart, download terbatas dan preview lokal. API key DPAPI. Browser Flow tidak lagi tersedia melalui IPC/UI; profil lama tetap utuh. Referensi sfv/i2v/r2v/extend, multi-key scheduler, compiler dan ekspor masih menunggu slice berikut. Tidak ada key/biaya live yang dipakai oleh coding agent. M-001 belum lulus.

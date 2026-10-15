@@ -1,7 +1,9 @@
 # Arsitektur — Aluraya
 
+**Arsitektur aktif 15 Oktober 2026:** Nexabot menggantikan adapter browser Flow. Bagian Flow dan checkpoint lama di bawah merupakan riwayat, bukan jalur runtime aktif.
+
 ## Rekomendasi dan batas
-Tauri 2 + React/TypeScript untuk shell/canvas pada laptop RAM 8 GB. Satu sidecar Node/TypeScript untuk adapter ChatGPT dan Flow; SQLite lokal untuk state; media disimpan sebagai file. Rekomendasi bersifat provisional sampai M-001 membuktikan packaging dan integrasi. Tidak ada backend cloud, Redis, Kubernetes, atau microservices.
+Tauri 2 + React/TypeScript untuk shell/canvas pada laptop RAM 8 GB. Satu sidecar Node/TypeScript untuk adapter ChatGPT dan Nexabot; SQLite lokal untuk state; media disimpan sebagai file. Rekomendasi bersifat provisional sampai M-001 membuktikan packaging dan integrasi. Tidak ada backend cloud, Redis, Kubernetes, atau microservices.
 
 ## Proses runtime
 ```mermaid
@@ -10,8 +12,7 @@ flowchart TD
   H --> DB["SQLite dan media lokal"]
   H --> W["Sidecar integrasi"]
   W --> GPT["ChatGPT plan usage"]
-  W --> B["Browser profil Flow"]
-  B --> FLOW["Google Flow"]
+  W --> N["Nexabot reseller API"]
   W --> H
 ```
 WebView aplikasi hanya merender UI lokal. Google login/Flow memakai browser khusus terpisah; jangan memuat situs remote dengan hak akses filesystem aplikasi. Domain tidak bergantung pada Tauri, React, Playwright atau SQL.
@@ -104,3 +105,14 @@ Observasi hanya pada origin/path Flow yang diizinkan, tidak pada Google login; U
 Browser Flow kini dimiliki host Rust/Tauri melalui WebView2 pada Windows. Ketentuan lama bahwa semua halaman remote harus dibuka pada browser eksternal digantikan untuk jendela Flow khusus: jendela remote tidak menerima capability IPC, tidak boleh menavigasi ke origin aplikasi lokal, dan tidak memiliki bridge generik untuk filesystem/shell. UI studio lokal tetap terpisah. Sidecar hanya melayani ChatGPT/diagnostik; route Flow dan Playwright dihapus. Sesi profil baru memakai direktori flow-webview2 dan lock eksklusif. Popup mewarisi environment pembuka melalui window_features. Pola ini mengacu pada Switchly tanpa mengambil data atau sesi Switchly.
 
 Observasi awal hanya URL-classification; tidak membaca DOM login, token atau cookie. API tidak menerima perintah Generate dan generationReady selalu false. Pengendalian produksi otomatis tetap target REQ-007, menunggu bukti login/capability/biaya dan approval. Ini kandidat kompatibilitas, bukan klaim dukungan provider atau keberhasilan live.
+
+
+## Adapter Nexabot — aktif
+
+`sidecar/src/nexabot` memisahkan client HTTP, secret/journal store, session coordinator, monitor dan media collector. Root tepercaya diberikan host sebagai ALURAYA_NEXABOT_DIR. Lock OS milik host (shared lifecycle dengan sidecar ChatGPT) mencegah dua proses aplikasi memakai jurnal bersamaan. Native command nexabot_action hanya untuk window main dan memvalidasi DTO dua arah; tidak menerima URL/path/script. React menerima status dan path media dari host, bukan secret yang sudah disimpan. API key hanya melewati input password → IPC saat disimpan, tidak dipantulkan kembali.
+
+Pengecualian ownership sempit untuk M-001: jurnal integrasi `nexabot/jobs.sqlite` dimiliki sidecar satu proses, bukan database proyek. Ini memungkinkan commit SQLite FULL sebelum POST tanpa protokol callback host baru. Database proyek tetap rencana host untuk M-002; journal tidak menjadi jalan menulis proyek langsung. SQLite Node bawaan dimuat lazy. Input, hash key, biaya disetujui, biaya dilaporkan, ID provider dan hasil disimpan; key terpisah DPAPI CurrentUser.
+
+Approval in-memory dua menit mengikat input/cost/key, satu kali konsumsi. Ganti key atau restart menghapus approval. GET credit diverifikasi ulang sebelum POST; saldo tidak cukup atau harga berubah menahan submit. Provider tidak mendokumentasikan idempotency key, cancel, reconcile tanpa job ID, ataupun maximum-charge parameter: timeout/5xx/202 malformed menghasilkan uncertain, menahan generasi baru tanpa retry POST. Selisih biaya respons dicatat untuk inspeksi; harga provider tidak dapat dikunci atomik oleh aplikasi.
+
+Known ID dapat dilanjutkan via GET setelah restart. Poll interval 3 detik, network request timeout 30 detik, monitoring dibatasi 30 menit sebelum perlu lanjut manual; jeda menghentikan monitoring lokal saja. Download stream max JPG25MiB/MP4256MiB, MIME+signature, SHA256, fsync dan rename. Redirect hanya same-origin agar key tidak bocor; cross-origin perlu kontrak domain dari provider sebelum didukung. Tidak ada DOM/browser automation. Progres provider dapat mengandung email sehingga tidak ditampilkan/disimpan. Media scoped Tauri asset protocol hanya folder nexabot/media dengan ekstensi jpg/mp4; tidak meliputi SQLite/key. Tidak mengklaim signature check sebagai validasi kualitas/decode media.

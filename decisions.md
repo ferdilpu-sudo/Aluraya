@@ -95,3 +95,12 @@ Pengguna memilih A dari docs/FLOW-INTEGRATION-DECISION.md: pertahankan Flow otom
 ## ADR-013 — browser Flow native WebView2 (14 Oktober 2026)
 
 Accepted untuk implementasi/evaluasi atas permintaan pengguna; kompatibilitas live NOT RUN. Pengguna melaporkan akun berhasil pada Chrome biasa dan Switchly WebView2. Gunakan profil khusus serta popup satu environment sebagai acuan; tidak menyalin cookie/token atau menyamarkan browser. Ganti jalur Playwright di Aluraya agar hanya satu pemilik browser aktif. Profil lama dipertahankan utuh; profil native baru tidak melakukan migrasi sesi. Sidecar ChatGPT tetap. WebView provider terpisah dari UI/capability native lokal. Target akhir tetap otomatis sampai canvas setelah biaya dan approval; mode Generate manual Switchly tidak diadopsi sebagai penerimaan Aluraya.
+
+
+## ADR-014 — API reseller Nexabot (Accepted, 15 Oktober 2026)
+
+Pengguna melaporkan login WebView2 Aluraya diblokir (gambar tidak tersedia untuk inspeksi), lalu memilih API key Nexabot. Ini menggantikan kewajiban memakai akun/kredit Flow pada ADR-004, pilihan A, serta evaluasi browser ADR-013. ChatGPT plan usage tetap. Tidak ada bypass penolakan browser. Sumber kontrak adalah dokumentasi reseller lengkap yang ditempel pengguna 08:19 WIB; lebih spesifik daripada landing page yang mengiklankan endpoint/key berbeda. Lihat docs/NEXABOT-API.md.
+
+Implementasi bertahap: img/t2v sampai canvas dahulu; reference modes dan multi-key sesudah live gate. Satu request per approval, biaya diperiksa via endpoint gratis, tidak memakai unlimited pass. SQLite journal integrasi dimiliki sidecar sebagai pengecualian sementara terhadap database proyek host (lihat architecture); source of truth pembayaran/hasil tetap provider dan state tersimpan, bukan UI. Tidak menafsirkan keputusan migrasi sebagai persetujuan menghabiskan kredit live.
+
+Provider tidak mendokumentasikan nama model/durasi atau idempotency/reconcile/cancel. Jangan mengarangnya. Tidak ada jaminan kualitas, ketersediaan, atau refund berdasarkan klaim dokumentasi saja. Cross-origin redirect download belum didukung sebelum domain resminya diketahui.

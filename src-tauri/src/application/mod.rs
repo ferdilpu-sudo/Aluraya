@@ -2,4 +2,4 @@ pub mod diagnostics;
 
 pub mod chat;
 
-pub mod flow;
+pub mod nexabot;
