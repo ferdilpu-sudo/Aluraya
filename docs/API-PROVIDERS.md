@@ -1,6 +1,6 @@
 # API yang dapat disesuaikan
 
-Status 16 Oktober 2026: **kontrak konfigurasi dan UI**, belum executor API. Nexabot dihapus. Alur produk tetap Copilot → tinjau aset/shot → approval → produksi → review hasil di canvas.
+Status API-002, 16 Oktober 2026: **Chat Completions teks sudah memiliki executor desktop**, sedangkan protokol lain dan media tetap kontrak konfigurasi/UI. Baca [panduan Copilot API](API-LLM-START.md). Nexabot dihapus. Alur produk tetap Copilot → tinjau aset/shot → approval → produksi → review hasil di canvas.
 
 Buka **Koneksi API**, tambah profil untuk peran yang diperlukan, isi nama/base URL/endpoint/model, lalu Simpan profil. Pilih profil pada dropdown peran. Auth, biaya, capability dan mapping tersedia dalam JSON profil. Untuk memindahkan konfigurasi gunakan Tampilkan JSON / Impor JSON. Contoh lengkap: [providers.example.json](../examples/providers.example.json). Ganti placeholder berdasarkan dokumentasi provider; contoh memakai domain example.com, bukan layanan siap dipanggil.
 
@@ -32,10 +32,10 @@ Sumber validasi: `src/contracts/providers.ts`. Seluruh object menolak field asin
 
 `routing` memetakan llm/image/video ke UUID profil dengan role yang sama atau null. Profile ID tidak boleh duplikat. `schemaVersion` wajib 1. Tidak ada limit jumlah profil buatan produk. Impor UI dibatasi 128 KB per dokumen untuk ukuran input, bukan limit akun.
 
-Konfigurasi nonrahasia disimpan di localStorage `aluraya-provider-config-v1`, terpisah dari draf proyek IndexedDB. Browser preview dan aplikasi desktop mempunyai storage terpisah. **Jangan tempel key di field apa pun.** `secretRef` adalah nama slot seperti `providers/llm/main`, bukan isi key. Field apiKey/token tidak diterima. Validator tidak dapat mendeteksi key yang sengaja ditulis dalam label/model; pengguna tetap harus menjaga config bebas rahasia. Belum ada kolom input key atau penyimpanan key API generik.
+Konfigurasi nonrahasia disimpan di localStorage `aluraya-provider-config-v1`, terpisah dari draf proyek IndexedDB. Browser preview dan aplikasi desktop mempunyai storage terpisah. **Jangan tempel key di field apa pun.** `secretRef` adalah nama slot seperti `providers/llm/main`, bukan isi key. Field apiKey/token tidak diterima. Validator tidak dapat mendeteksi key yang sengaja ditulis dalam label/model; pengguna tetap harus menjaga config bebas rahasia. Kolom key Chat Completions tersedia di Copilot API Windows, terpisah dari config JSON, memakai DPAPI.
 
 ## Protokol LLM dan adapter
-Tabel ini adalah rancangan adapter, **belum koneksi yang diimplementasikan**.
+Chat Completions pada tabel sudah diimplementasikan untuk teks nonstreaming; baris lainnya masih rancangan. Implementasi bukan bukti koneksi provider live.
 
 | Protokol | Bentuk request/response yang harus diterjemahkan adapter |
 |---|---|
@@ -90,4 +90,4 @@ Nama path/status di atas contoh fiktif, bukan endpoint provider tertentu. Status
 5. Download ke staging dengan limit ukuran, MIME/signature, hash dan rename atomik. Tidak meneruskan key ke redirect lintas origin. Origin CDN harus disetujui adapter tanpa kredensial provider. Tolak file/internal network URL tidak sesuai profil; loopback hanya eksplisit untuk LLM lokal.
 6. Simpan `Output { projectId, shotId, revisionId, providerProfileId, providerJobId, mediaId, state }`; hasil tampil pada slot shot. Human review memilih versi diterima. Tidak ada mock output yang diberi label sukses.
 
-Belum diimplementasikan: secure key API generik, executor protokol, live connection test, proposal planner, quote/approval backend, upload/poll/download, jurnal produksi dan binding hasil. Tidak ada request atau pengeluaran dari menyimpan config. Langkah berikutnya adalah satu adapter LLM sesuai layanan yang Anda pilih.
+Implementasi API-002: secure key Chat Completions, executor teks, review tarif yang dikonfirmasi pengguna, approval sekali pakai, respons/error/cancel. Belum diimplementasikan: executor protokol lain, proposal planner, quote otomatis dari provider, upload/poll/download media, jurnal produksi dan binding hasil. Menyimpan config/key tidak mengirim request. Tidak ada pengeluaran live dari coding agent.

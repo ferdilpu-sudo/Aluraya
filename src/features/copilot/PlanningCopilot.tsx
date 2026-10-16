@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { StudioProject } from '../../domain/studio';
 import type { ProviderConfig } from '../../contracts/providers';
+import { ApiCopilot } from '../llm/ApiCopilot';
 import { CopilotPanel } from './CopilotPanel';
 export function PlanningCopilot({
   project,
@@ -27,7 +28,7 @@ export function PlanningCopilot({
           {project.name} · {project.script.trim() ? 'Naskah tersedia' : 'Naskah belum diisi'} ·{' '}
           {project.assets.length} aset · {project.shots.length} shot
         </p>
-        <small>Konteks ini belum dikirim ke provider.</small>
+        <small>Konteks proyek tidak dikirim otomatis; pilih teks melalui Copilot API.</small>
       </div>
       <ol className="copilot-workflow">
         <li>Susun usulan cerita dan aset</li>
@@ -39,7 +40,7 @@ export function PlanningCopilot({
         <strong>{profile ? `${profile.name} · ${profile.model}` : 'Pilih API LLM Anda'}</strong>
         <p>
           {profile
-            ? 'Profil dipilih. Adapter eksekusi dan proposal canvas belum terhubung.'
+            ? 'Profil dipilih. Chat Completions dapat dipakai melalui Copilot API di bawah; proposal canvas menyusul.'
             : 'Provider, endpoint dan model dapat disesuaikan melalui Koneksi API.'}
         </p>
         <button className="button secondary" onClick={configure}>
@@ -50,8 +51,10 @@ export function PlanningCopilot({
         Susun usulan dari naskah
       </button>
       <p className="context-note">
-        Aktif setelah adapter LLM tersambung. Usulan AI tetap memerlukan persetujuan Anda.
+        Penerapan proposal ke canvas belum aktif. Gunakan Copilot API untuk meninjau usulan sebagai
+        teks.
       </p>
+      <ApiCopilot profile={profile} project={project} />
       <details onToggle={(e) => setLegacy(e.currentTarget.open)}>
         <summary>ChatGPT akun · opsi terpisah</summary>
         {legacy && <CopilotPanel />}

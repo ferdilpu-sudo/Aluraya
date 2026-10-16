@@ -8,6 +8,7 @@
   ],
   "permissions": [
     "allow-inspect-runtime",
-    "allow-chat-action"
+    "allow-chat-action",
+    "allow-llm-action"
   ]
 }

@@ -36,7 +36,7 @@ export async function inspectRuntime(): Promise<Diagnostics> {
         id: 'providers',
         label: 'API provider',
         state: 'blocked',
-        detail: 'Profil API dapat disusun di Koneksi. Eksekutor API belum tersambung.',
+        detail: 'Chat Completions tersedia pada desktop. Provider pilihan belum diverifikasi.',
       },
       {
         id: 'generation',

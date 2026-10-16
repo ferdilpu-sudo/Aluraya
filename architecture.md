@@ -2,7 +2,7 @@
 
 **Arsitektur aktif 16 Oktober 2026 — ADR-016:** React merender canvas terpadu dan Copilot kanan. Profil API nonrahasia disimpan lokal melalui schema Zod. Routing LLM/gambar/video terpisah. Adapter Nexabot, IPC, capability dan akses asset protocol-nya dihapus; Flow tetap tidak aktif.
 
-Target eksekusi berikut: UI → use case/approval host → adapter protokol sidecar → API pengguna. Key hanya di secure store native, tidak diteruskan kembali ke renderer; URL, mapping, kapasitas, biaya dan snapshot harus divalidasi ulang pada boundary native. Adapter LLM mengembalikan proposal, bukan mutasi proyek langsung. Adapter media mengembalikan job/hasil yang diikat projectId/shotId/revision. HTTP generik tidak dijalankan dari renderer. Kontrak saat ini belum menyediakan executor. Baca [API-PROVIDERS](docs/API-PROVIDERS.md).
+Target eksekusi berikut: UI → use case/approval host → adapter protokol sidecar → API pengguna. Key hanya di secure store native, tidak diteruskan kembali ke renderer; URL, mapping, kapasitas, biaya dan snapshot harus divalidasi ulang pada boundary native. Adapter LLM mengembalikan proposal, bukan mutasi proyek langsung. Adapter media mengembalikan job/hasil yang diikat projectId/shotId/revision. HTTP generik tidak dijalankan dari renderer. Chat Completions teks memiliki executor API-002; lihat bagian aktif di bawah. Baca [API-PROVIDERS](docs/API-PROVIDERS.md).
 
 ## Rancangan awal dan checkpoint historis
 Catatan di bawah menjelaskan evolusi desain; bagian Flow tidak berlaku sebagai runtime aktif.
@@ -114,3 +114,6 @@ Observasi awal hanya URL-classification; tidak membaca DOM login, token atau coo
 
 ## Editor draf frontend — ADR-015
 `src/domain/studio.ts` memiliki schema dan aturan review draf. `src/infrastructure/studioStorage.ts` menyimpan proyek ke IndexedDB lokal (`aluraya-studio-drafts`, store `projects`), membaca referensi JPG/PNG/WebP, dan impor/ekspor JSON. `src/features/studio/useStudio.ts` mengantrekan penulisan dan melaporkan gagal simpan per proyek. Komponen editor, canvas, inspector, koneksi dan review terpisah. Tidak ada token/key dalam draf. Native database proyek tetap pekerjaan berikut; IndexedDB bukan jurnal produksi native. Browser preview dan WebView desktop memiliki storage masing-masing; pindahkan draf dengan JSON, bukan menganggap keduanya sinkron.
+
+## API-002 — adapter LLM teks aktif
+`sidecar/src/llm/` memisahkan secret store, transport Chat Completions dan lifecycle review/request. Native memvalidasi action dan snapshot, root key dipercaya dari host di bawah lock OS. `src/features/llm/` memisahkan controller IPC, key controls, review dan composer. Respons tidak mengubah proyek. Secure key terikat profil/tujuan/auth dan tidak berada pada config renderer; tarif dikonfirmasi pengguna pada setiap review, bukan quote otomatis provider. State chat/review sesi saja; restart tidak mengirim ulang. [Detail](docs/API-LLM-START.md).

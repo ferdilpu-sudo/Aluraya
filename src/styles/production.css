@@ -231,3 +231,65 @@
     gap: 18px;
   }
 }
+.api-copilot {
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.api-copilot h3 {
+  font-size: 18px;
+}
+.api-copilot label {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+  font-size: 12px;
+}
+.api-copilot input,
+.api-copilot textarea,
+.api-copilot select {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #fffefa;
+  font: inherit;
+}
+.api-copilot small {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.api-copilot .llm-checkbox {
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.7;
+}
+.api-copilot .llm-checkbox input {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.llm-review,
+.llm-reply {
+  padding: 16px;
+  background: #f0f3e9;
+  border: 1px solid #dbe3d2;
+  border-radius: 10px;
+  margin: 18px 0;
+}
+.llm-review pre,
+.llm-reply pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 420px;
+  overflow: auto;
+  font: 12px/1.8 inherit;
+}
+.llm-destination {
+  overflow-wrap: anywhere;
+}

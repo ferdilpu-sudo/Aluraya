@@ -12,7 +12,7 @@ Config provider v1 memisahkan llm/image/video; endpoint/model/protocol, auth sec
 - PASS `git diff --check` setelah normalisasi newline modul Rust.
 - Tes tambahan: schema example/default; unknown secret/verified fields; route role/duplicate IDs; credential/insecure/invalid URL; endpoint escapes; chat/media mismatch; async polling/status; graph referensi dan slot output tanpa hasil palsu. Tes draf lama tetap PASS.
 - Warning build: bundle JS sekitar 543 KB (167 KB gzip), di atas advisory 500 KB. Tidak mengklaim benchmark atau optimasi RAM.
-- Native Windows/installer versi ini: menunggu CI setelah push; bukti installer d31890d tidak digunakan sebagai bukti versi ini.
+- Native Windows/installer reset c47c951: PASS pada run 38837743565, termasuk install/runtime/uninstall. Ini bukan bukti adapter API-002 yang ditambahkan sesudahnya.
 - NOT RUN visual browser/GUI Windows: browser runtime tidak tersedia pada lingkungan kerja; tidak ada screenshot hasil verifikasi.
 - NOT RUN live API, planner/proposal, produksi media, biaya, upload/download dan hasil nyata. Fitur tersebut belum diimplementasikan di jalur API generik.
 

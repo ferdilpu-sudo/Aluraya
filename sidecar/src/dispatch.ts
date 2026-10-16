@@ -2,9 +2,25 @@ import { requestSchema, responseSchema, MAX_FRAME_BYTES } from '../../src/contra
 import { inspectHealth } from './health';
 import { ChatSession } from './chatgpt/session';
 import { WindowsStore } from './chatgpt/store';
+import { LlmSession } from './llm/session';
+import { WindowsLlmSecrets } from './llm/secretStore';
+let llm: LlmSession | null = null;
 let chat: ChatSession | null = null;
 export function dispatch(frame: string): string {
   const request = requestSchema.parse(JSON.parse(frame) as unknown);
+  if (request.type === 'llm.action') {
+    const directory = process.env.ALURAYA_LLM_DIR;
+    if (!directory) throw new Error('LLM_DIRECTORY_MISSING');
+    llm ??= new LlmSession(new WindowsLlmSecrets(directory));
+    const response = JSON.stringify({
+      schemaVersion: 1,
+      requestId: request.requestId,
+      ok: true,
+      payload: llm.act(request.payload),
+    });
+    if (Buffer.byteLength(response) > MAX_FRAME_BYTES) throw new Error('FRAME_TOO_LARGE');
+    return response;
+  }
   if (request.type === 'chat.action') {
     const directory = process.env.ALURAYA_AUTH_DIR;
     if (!directory) throw new Error('AUTH_DIRECTORY_MISSING');
@@ -39,5 +55,6 @@ export function dispatch(frame: string): string {
   );
 }
 export async function closeChat() {
+  await llm?.close();
   await chat?.close();
 }

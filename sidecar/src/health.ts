@@ -32,7 +32,8 @@ export function inspectHealth(): Diagnostics {
         id: 'providers',
         label: 'API provider',
         state: 'blocked',
-        detail: 'Konfigurasi provider belum membuktikan akses API. Eksekutor belum tersambung.',
+        detail:
+          'Adapter Chat Completions tersedia. Konfigurasi/key saja belum membuktikan respons provider.',
       },
       {
         id: 'generation',

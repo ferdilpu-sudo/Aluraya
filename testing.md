@@ -119,3 +119,6 @@ Pembaruan 16 Oktober 2026: CI Windows d31890d/run 38717052876 PASS — 85 JS, 12
 
 ## Reset provider — 16 Oktober 2026 (aktif)
 Nexabot runtime/test suite dihapus bersama implementasi. Bukti Nexabot/installer terdahulu historis. `tests/providers.test.ts` menguji role/routing, penolakan key/verified fields, URL/endpoint, mapping async dan graph aset→shot→slot hasil. `tests/protocol.test.ts` menolak command Nexabot yang dihapus. Tes draf lama tetap berjalan. Hasil aktual pada [PROVIDER-RESET-REPORT](evidence/PROVIDER-RESET-REPORT.md); GUI dan API live tidak disimpulkan dari unit/build.
+
+## API-002 — Chat Completions
+Tests llm-session/http/secrets/sidecar menguji approval sekali pakai/kedaluwarsa, tarif wajib, invalidasi key/tujuan, request ambigu/cancel, redaksi, redirect, response malformed/oversized, real HTTP loopback dan pipeline sidecar terpaket. DPAPI roundtrip hanya Windows; semua key dan server adalah fixture. Rust llm_contracts menolak privilege/secret fields, tarif belum dicek dan URL tidak aman. Bukti aktual di [LLM-ADAPTER-REPORT](evidence/LLM-ADAPTER-REPORT.md).

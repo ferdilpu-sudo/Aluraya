@@ -114,7 +114,7 @@ export function productionGraph(project: StudioProject, selectedId: string) {
       0,
       SHOT_TOP,
       'Usulan shot akan muncul di sini',
-      'Copilot akan mengusulkan rencana untuk Anda tinjau. Eksekutor LLM belum tersambung.',
+      'Copilot akan mengusulkan rencana untuk Anda tinjau. Penerapan proposal ke canvas belum aktif.',
       'MENUNGGU RENCANA',
     );
   const outputTop = Math.max(
@@ -156,7 +156,7 @@ export function productionGraph(project: StudioProject, selectedId: string) {
       0,
       outputTop + 110,
       'Hasil produksi',
-      'Gambar dan klip akan masuk ke canvas yang sama. Belum ada request API.',
+      'Gambar dan klip akan masuk ke canvas yang sama. Belum ada produksi media.',
       'BELUM ADA MEDIA',
     );
   return {

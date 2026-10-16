@@ -4,6 +4,7 @@ use std::sync::mpsc::{self, Receiver};
 use std::time::Duration;
 use super::{frame_reader::read_frame, sidecar_paths, credential_lock};
 use crate::chat_contracts::{ChatAction, ChatSnapshot, ChatResponse};
+use crate::llm_contracts::{LlmAction, LlmSnapshot, LlmResponse};
 use crate::contracts::{Diagnostics, Response};
 
 pub struct Sidecar {
@@ -18,7 +19,8 @@ impl Sidecar {
         let (runtime, script) = sidecar_paths::resolve(app)?;
         let (auth_directory, credential_lock) = credential_lock::acquire(app)?;
         let mut command = Command::new(runtime);
-        command.env("ALURAYA_AUTH_DIR", auth_directory);
+        command.env("ALURAYA_AUTH_DIR", &auth_directory);
+        command.env("ALURAYA_LLM_DIR", auth_directory.join("llm-keys"));
         command.arg(script).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         // Inherited NODE_OPTIONS could inject code before the trusted sidecar starts.
         command.env_remove("NODE_OPTIONS").env_remove("NODE_PATH");
@@ -72,6 +74,15 @@ impl Sidecar {
         if response.schema_version != 1 || response.request_id != request_id || !response.ok {
             return Err("SIDECAR_PROTOCOL_ERROR".into());
         }
+        response.payload.validate()?;
+        Ok(response.payload)
+    }
+
+    pub fn llm(&mut self, action: LlmAction) -> Result<LlmSnapshot, String> {
+        let payload = serde_json::to_value(action).map_err(|_| "INVALID_LLM_ACTION")?;
+        let (request_id, frame) = self.request("llm.action", payload)?;
+        let response: LlmResponse = serde_json::from_str(&frame).map_err(|_| "SIDECAR_PROTOCOL_ERROR")?;
+        if response.schema_version != 1 || response.request_id != request_id || !response.ok { return Err("SIDECAR_PROTOCOL_ERROR".into()); }
         response.payload.validate()?;
         Ok(response.payload)
     }

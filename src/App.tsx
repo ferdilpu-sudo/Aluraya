@@ -170,7 +170,7 @@ export default function App() {
         <span>
           {online ? 'Ruang kerja lokal' : 'Mode offline'} · {project.shots.length} shot
         </span>
-        <span>Skema API tersedia · eksekutor belum tersambung</span>
+        <span>Copilot API tersedia · produksi media menyusul</span>
       </footer>
       {projectsOpen && <ProjectDialog studio={studio} close={() => setProjectsOpen(false)} />}
     </div>

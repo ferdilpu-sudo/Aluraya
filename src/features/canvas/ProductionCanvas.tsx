@@ -163,7 +163,7 @@ export function ProductionCanvas({
       </div>
       <div className="board-status">
         <span>Aset di atas · storyboard di tengah · hasil di bawah</span>
-        <span>Eksekusi API belum tersambung</span>
+        <span>Produksi gambar/video belum tersambung</span>
       </div>
     </section>
   );

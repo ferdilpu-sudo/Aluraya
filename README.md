@@ -4,9 +4,9 @@
 
 Arah aktif 16 Oktober 2026: **canvas terpadu dengan Copilot kanan**, aset di atas, storyboard di tengah, slot hasil di bawah. Draf proyek, editor detail, referensi lokal, pan/zoom, pencarian shot dan backup JSON tetap tersedia. [Panduan frontend](docs/FRONTEND-STUDIO.md).
 
-**Nexabot dihapus. Flow tidak diaktifkan kembali.** [Skema API netral provider](docs/API-PROVIDERS.md) dan [contoh config](examples/providers.example.json) tersedia untuk LLM, gambar dan video secara terpisah. Profil dapat diatur di Koneksi API: protokol, base URL, endpoint, model, auth reference, mapping/polling dan biaya deklaratif. Config bukan koneksi terverifikasi; tidak menyimpan API key atau menjalankan request generik.
+**Nexabot dihapus. Flow tidak diaktifkan kembali.** [Skema API netral provider](docs/API-PROVIDERS.md) dan [contoh config](examples/providers.example.json) tersedia untuk LLM, gambar dan video secara terpisah. Profil dapat diatur di Koneksi API: protokol, base URL, endpoint, model, auth reference, mapping/polling dan biaya deklaratif. Config bukan koneksi terverifikasi. **Copilot API Chat Completions kini tersedia** pada Windows: key DPAPI, review sekali pakai dan request teks melalui sidecar. Lihat [panduan LLM](docs/API-LLM-START.md).
 
-ChatGPT akun tetap opsi terpisah (login/streaming pernah dibuktikan), tanpa fallback berbayar otomatis. **Belum tersedia:** executor API generik, planner proposal/approval backend, produksi batch, upload/poll/download media generik, database produksi native, pengaitan hasil/versi dan ekspor klip. M-001 belum lulus. Tidak ada generasi berbayar dijalankan.
+ChatGPT akun tetap opsi terpisah (login/streaming pernah dibuktikan), tanpa fallback berbayar otomatis. **Belum tersedia:** executor protokol LLM lain, planner proposal/approval canvas, produksi batch, upload/poll/download media generik, database produksi native, pengaitan hasil/versi dan ekspor klip. M-001 belum lulus. Tidak ada generasi berbayar dijalankan.
 
 ## Jalankan
 
@@ -28,7 +28,7 @@ npm.cmd ci
 npm.cmd run tauri dev
 ```
 
-Petunjuk lengkap, perbaikan prasyarat dan build installer ada di [docs/WINDOWS-START.md](./docs/WINDOWS-START.md). Tidak perlu API key untuk menyunting draf atau konfigurasi. Penyimpanan key dan executor API generik menyusul.
+Petunjuk lengkap, perbaikan prasyarat dan build installer ada di [docs/WINDOWS-START.md](./docs/WINDOWS-START.md). Tidak perlu API key untuk menyunting draf atau konfigurasi. Key Chat Completions dimasukkan pada Copilot API aplikasi Windows; endpoint/provider live belum diuji.
 
 ## Pemeriksaan tersedia
 

@@ -58,8 +58,8 @@ export function ProviderSettings({ config, error, save }: ProviderController) {
       <span className="eyebrow">KONEKSI YANG DAPAT DISESUAIKAN</span>
       <h2>API provider</h2>
       <p className="context-note">
-        Pilih provider dan model untuk setiap peran. Ini skema konfigurasi; eksekutor API dan
-        penyimpanan key belum tersambung.
+        Pilih provider dan model untuk setiap peran. Chat Completions teks tersedia pada Copilot
+        API; simpan key di sana. Executor gambar/video dan protokol LLM lain menyusul.
       </p>
       {error && (
         <p className="error" role="alert">
@@ -79,7 +79,7 @@ export function ProviderSettings({ config, error, save }: ProviderController) {
                     routing: { ...config.routing, [role]: e.target.value || null },
                   })
                 )
-                  setNotice('Pilihan provider disimpan. Belum ada request API.');
+                  setNotice('Pilihan provider disimpan. Tindakan ini tidak mengirim request API.');
               }}
             >
               <option value="">Belum dipilih</option>
