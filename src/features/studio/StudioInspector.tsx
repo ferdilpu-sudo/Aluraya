@@ -1,12 +1,10 @@
-import type { ProjectUpdate } from '../../domain/studio';
-import { useState } from 'react';
-import { CopilotPanel } from '../copilot/CopilotPanel';
-import { NexaPanel } from '../nexabot/NexaPanel';
-import { DiagnosticsPanel } from '../diagnostics/DiagnosticsPanel';
-import { useDiagnostics } from '../diagnostics/useDiagnostics';
-import type { NexaController } from '../nexabot/useNexabot';
+import type { ProjectUpdate, StudioProject } from '../../domain/studio';
 import { ShotInspector } from './ShotInspector';
-import type { StudioProject } from '../../domain/studio';
+import { ScriptEditor } from './ScriptEditor';
+import { AssetsView } from './AssetsView';
+import { ProviderSettings } from '../providers/ProviderSettings';
+import type { ProviderController } from '../providers/useProviderConfig';
+import { PlanningCopilot } from '../copilot/PlanningCopilot';
 export type InspectorTab = 'detail' | 'copilot' | 'provider';
 export function StudioInspector({
   tab,
@@ -15,7 +13,7 @@ export function StudioInspector({
   update,
   selectedId,
   select,
-  nexabot,
+  providers,
 }: {
   tab: InspectorTab;
   setTab: (tab: InspectorTab) => void;
@@ -23,18 +21,17 @@ export function StudioInspector({
   update: ProjectUpdate;
   selectedId: string;
   select: (id: string) => void;
-  nexabot: NexaController;
+  providers: ProviderController;
 }) {
-  const diagnostics = useDiagnostics();
-  const [showDiagnostics, setShowDiagnostics] = useState(false);
+  const shotId = selectedId.replace(/^output-/, '');
   return (
     <aside className="inspector" aria-label="Panel studio">
       <nav className="panel-tabs" aria-label="Pilihan panel">
         {(
           [
-            ['detail', 'Detail'],
             ['copilot', 'Copilot'],
-            ['provider', 'Nexabot'],
+            ['detail', 'Detail'],
+            ['provider', 'Koneksi API'],
           ] as const
         ).map(([id, label]) => (
           <button key={id} aria-pressed={tab === id} onClick={() => setTab(id)}>
@@ -42,47 +39,37 @@ export function StudioInspector({
           </button>
         ))}
       </nav>
-      <div hidden={tab !== 'detail'}>
-        <ShotInspector
-          key={selectedId}
+      <div hidden={tab !== 'copilot'}>
+        <PlanningCopilot
           project={project}
-          shot={project.shots.find((s) => s.id === selectedId)}
-          update={update}
-          select={select}
+          config={providers.config}
+          configure={() => setTab('provider')}
         />
       </div>
-      <div hidden={tab !== 'copilot'}>
-        <CopilotPanel />
-      </div>
       <div hidden={tab !== 'provider'}>
-        <div className="connection-context">
-          <span className="eyebrow">KONEKSI PRODUKSI</span>
-          <h2>Nexabot</h2>
-          <p>
-            Draf studio belum terhubung ke job API. Form generasi di bawah bekerja sebagai
-            permintaan terpisah dengan persetujuan biaya sendiri.
-          </p>
-        </div>
-        <NexaPanel {...nexabot} />
-        <div className="diagnostic-toggle">
-          <button
-            className="text-button"
-            aria-expanded={showDiagnostics}
-            onClick={() => setShowDiagnostics(!showDiagnostics)}
-          >
-            Diagnostik aplikasi {showDiagnostics ? '−' : '+'}
-          </button>
-        </div>
-        {showDiagnostics && (
-          <DiagnosticsPanel {...diagnostics} onRefresh={() => void diagnostics.refresh()} />
+        <ProviderSettings {...providers} />
+      </div>
+      <div hidden={tab !== 'detail'}>
+        {selectedId === 'script' ? (
+          <ScriptEditor project={project} update={update} next={() => setTab('copilot')} />
+        ) : selectedId === 'empty-assets' || project.assets.some((a) => a.id === selectedId) ? (
+          <AssetsView
+            key={selectedId}
+            project={project}
+            update={update}
+            initialSelectedId={selectedId}
+          />
+        ) : (
+          <ShotInspector
+            key={shotId}
+            project={project}
+            shot={project.shots.find((s) => s.id === shotId)}
+            update={update}
+            select={select}
+          />
         )}
       </div>
-      <div className="inspector-foot">
-        <span className="status-dot" />
-        {tab === 'copilot'
-          ? 'ChatGPT menggunakan paket akun Anda'
-          : 'Draf lokal · sinkronisasi produksi berikutnya'}
-      </div>
+      <div className="inspector-foot">Persetujuan rencana dan biaya tetap terpisah</div>
     </aside>
   );
 }

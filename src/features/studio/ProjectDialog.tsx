@@ -114,7 +114,7 @@ export function ProjectDialog({ studio, close }: { studio: StudioController; clo
       </div>
       <p className="muted">
         Draf dan referensi tersimpan di perangkat ini. Cadangan JSON tidak menyertakan API key, sesi
-        ChatGPT, atau hasil Nexabot.
+        ChatGPT, atau hasil provider.
       </p>
       {error && (
         <p role="alert" className="error">

@@ -3,13 +3,11 @@
 mod application;
 mod contracts;
 mod chat_contracts;
-mod nexabot_contracts;
 mod infrastructure;
 
 use application::diagnostics::{inspect_runtime, RuntimeState};
 use tauri::Manager;
 use application::chat::chat_action;
-use application::nexabot::nexabot_action;
 
 fn main() {
     let app = tauri::Builder::default()
@@ -19,7 +17,7 @@ fn main() {
                 window.app_handle().exit(0);
             }
         })
-        .invoke_handler(tauri::generate_handler![inspect_runtime, chat_action, nexabot_action])
+        .invoke_handler(tauri::generate_handler![inspect_runtime, chat_action])
         .build(tauri::generate_context!())
         .expect("Unable to initialize Aluraya Studio");
     app.run(|handle, event| {

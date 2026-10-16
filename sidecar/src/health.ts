@@ -26,20 +26,19 @@ export function inspectHealth(): Diagnostics {
         label: 'ChatGPT',
         state: 'blocked',
         detail:
-          'Adapter OAuth belum diimplementasikan. Login, izin kuota dan streaming belum diuji.',
+          'Status akun diperiksa melalui panel ChatGPT; belum ada sesi aktif pada diagnostik ini.',
       },
       {
-        id: 'nexabot',
-        label: 'Nexabot',
+        id: 'providers',
+        label: 'API provider',
         state: 'blocked',
-        detail: 'Cek saldo di panel Nexabot. Key tersimpan saja belum membuktikan akses provider.',
+        detail: 'Konfigurasi provider belum membuktikan akses API. Eksekutor belum tersambung.',
       },
       {
         id: 'generation',
         label: 'Generasi',
         state: 'blocked',
-        detail:
-          'Generasi tersedia setelah cek biaya dan persetujuan satu request di panel Nexabot.',
+        detail: 'Generasi menunggu adapter API, kemampuan model, biaya, dan persetujuan.',
       },
     ],
   });

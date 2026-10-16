@@ -3,7 +3,6 @@ import { createHash, randomUUID } from 'node:crypto';
 import { access, mkdir, mkdtemp, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
-import { checkNexabotRuntime } from './check-nexabot-runtime.mjs';
 import { verifyNsisExecutable } from './nsis-integrity.mjs';
 
 // This installs/uninstalls only in a disposable hosted Windows CI runner.
@@ -15,10 +14,7 @@ const output = resolve('evidence/local/installer-check.json');
 const installDirectory = await mkdtemp(join(tmpdir(), 'Aluraya Installer QA-'));
 const environment = Object.fromEntries(
   Object.entries(process.env).filter(
-    ([key]) =>
-      !/^(NODE_OPTIONS|NODE_PATH|ALURAYA_AUTH_DIR|ALURAYA_FLOW_DIR|ALURAYA_NEXABOT_DIR)$/i.test(
-        key,
-      ),
+    ([key]) => !/^(NODE_OPTIONS|NODE_PATH|ALURAYA_AUTH_DIR|ALURAYA_FLOW_DIR)$/i.test(key),
   ),
 );
 const report = {
@@ -121,13 +117,6 @@ try {
     throw new Error('INSTALLED_SIDECAR_PROTOCOL_FAILED');
   }
   report.checks.push('installed_sidecar_round_trip_and_clean_exit');
-  await checkNexabotRuntime(
-    executable,
-    join(installDirectory, 'sidecar/sidecar.cjs'),
-    await mkdtemp(join(tmpdir(), 'Aluraya Nexabot QA-')),
-    environment,
-  );
-  report.checks.push('installed_nexabot_sqlite_and_clean_exit');
 } catch (error) {
   failure = error;
 }

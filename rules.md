@@ -1,7 +1,7 @@
 # Aturan engineering — Aluraya
 
 ## Modularitas
-**1 file = 1 tanggung jawab utama.** Pisahkan komponen canvas, use case approval, scheduler, repository, adapter UI Flow dan parser hasil. Tinjau file di kisaran 250–350 baris nonkosong sebagai pemicu review, bukan batas kaku. Tidak ada App.tsx yang memuat seluruh aplikasi, god service, giant utils, atau fragmentasi puluhan wrapper kosong.
+**1 file = 1 tanggung jawab utama.** Pisahkan komponen canvas, use case approval, scheduler, repository, adapter API provider dan parser hasil. Tinjau file di kisaran 250–350 baris nonkosong sebagai pemicu review, bukan batas kaku. Tidak ada App.tsx yang memuat seluruh aplikasi, god service, giant utils, atau fragmentasi puluhan wrapper kosong.
 Dependency: UI -> application -> domain; infrastructure mengimplementasikan port. Hindari circular import dan global mutable scheduler. Host menjadi satu-satunya penulis DB. Rust dan TypeScript memakai DTO versioned tervalidasi; buat contract test lintas proses.
 
 ## Integritas produksi
@@ -54,3 +54,6 @@ Perubahan kecil sesuai milestone; bukan refactor luas tanpa alasan. Migration pu
 
 ## Aturan dialog dan durasi
 Durasi tersedia untuk ucapan tidak otomatis sepanjang beat: sisihkan onset, aksi, respons dan jeda sesuai rencana. Estimator memakai bahasa/delivery dan ditampilkan sebagai kisaran yang dapat ditinjau. Jangan menetapkan universal words-per-second sebagai kebenaran. Jika tidak muat, sediakan split/perpanjang sesuai capability, atau versi dialog adaptasi dengan approval baru. Bahasa prompt bisa Inggris, dialog tetap bahasa proyek dan verbatim.
+
+## Override aktif ADR-016
+Nexabot dihapus; tidak menghidupkan kembali Flow. Schema API tidak boleh melakukan request, menyimpan key literal, atau menyatakan adapter siap. Peran LLM/gambar/video terpisah. URL lokal HTTP hanya loopback; executor masa depan wajib memvalidasi ulang redirect, key scope dan input di host. Tidak ada retry POST otomatis pada submit ambigu.

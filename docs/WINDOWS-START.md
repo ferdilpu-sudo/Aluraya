@@ -1,6 +1,6 @@
 # Menjalankan fondasi Aluraya di Windows
 
-Paket ini berisi frontend studio draf serta fondasi M-001. ChatGPT sudah menghasilkan respons nyata; Nexabot menggantikan Flow. Sinkronisasi proyek/shot ke API menunggu tahap berikutnya. CI kini membangun installer NSIS dan memeriksa runtime hasil instalasi. Status bukti terakhir ada di [laporan Nexabot dan installer terbaru](../evidence/FRONTEND-STUDIO-REPORT.md).
+Paket aktif ADR-016: canvas terpadu dengan Copilot kanan dan skema API yang dapat disesuaikan. Nexabot dihapus, Flow tidak diaktifkan kembali. Lihat [panduan frontend](FRONTEND-STUDIO.md) dan [laporan perubahan](../evidence/PROVIDER-RESET-REPORT.md).
 
 ## Prasyarat pengembangan
 
@@ -41,7 +41,7 @@ Alternatif setelah prasyarat tersedia:
 
 Ikuti kebijakan eksekusi PowerShell perangkat; tidak perlu mengubahnya karena perintah npm di atas setara. Build awal Rust dapat mengunduh dependensi dan memerlukan waktu. Aplikasi tidak meminta `OPENAI_API_KEY`.
 
-Buka tab **Koneksi**, lalu klik **Periksa sekarang**. Hasil yang diharapkan pada Windows: host dan sidecar terhubung; ChatGPT belum terhubung sampai login melalui Copilot; Flow dan generasi **belum siap**. Itu status yang benar pada checkpoint ini. Jangan menilai provider sudah bekerja hanya dari PASS host.
+Panel **Koneksi API** sekarang menyimpan skema provider, bukan diagnostik koneksi. Pilih protokol dan model sesuai dokumentasi provider; eksekutor belum tersambung. Diagnostik host/sidecar tetap diperiksa melalui test packaging. Jangan menilai provider siap dari PASS host.
 
 Vite mengabaikan `src-tauri` agar tidak memantau DLL/EXE/PDB yang dikunci compiler atau aplikasi Windows. Tauri tetap memantau perubahan source Rust. Setelah menarik perbaikan konfigurasi ini, tutup aplikasi dan hentikan proses dev lama dengan Ctrl+C, lalu jalankan kembali `npm.cmd run tauri dev`.
 
@@ -65,7 +65,7 @@ cargo test --manifest-path src-tauri/Cargo.toml
 npm.cmd run tauri build
 ```
 
-Build NSIS dan pemeriksaan installer sudah PASS pada commit d31890d, [run 38717052876](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876). Rinciannya ada di [laporan Nexabot dan installer terbaru](../evidence/FRONTEND-STUDIO-REPORT.md). Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
+Build NSIS dan pemeriksaan installer sudah PASS pada commit d31890d, [run 38717052876](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876). Rinciannya ada di [laporan installer historis](../evidence/FRONTEND-STUDIO-REPORT.md). Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
 
 Unduh [artifact **aluraya-native-lock-and-executable** yang lulus](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876/artifacts/11964370081) (login GitHub mungkin diperlukan), lalu ekstrak ZIP dan jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Artifact berisi `*-setup.exe`, executable hasil build dan Cargo.lock. Untuk menjalankan aplikasi terpasang gunakan installer, bukan hanya menyalin aluraya.exe yang memerlukan resource pendamping. Artifact **aluraya-installer-check** berisi JSON dengan source commit, hash/ukuran installer dan hasil pemeriksaan.
 
@@ -75,8 +75,8 @@ Pemeriksaan CI memasang installer ke folder sementara dengan spasi, mencocokkan 
 
 1. Tutup aplikasi dev lama, pasang installer di atas, lalu buka Aluraya Studio hasil instalasi.
 2. Buka **Koneksi → Periksa sekarang**. Catat hasil host/sidecar dan kirim rincian bila gagal. Ini menguji jalur GUI dari paket terpasang yang belum tercakup CI.
-3. ChatGPT live sebelumnya sudah PASS; tidak perlu mengulang login/chat untuk membuktikan packaging. Browser Playwright lama sudah diganti WebView2. Pemeriksaan akses baru ada di [FLOW-START.md](./FLOW-START.md): buat profil WebView2 dan login sendiri tanpa Generate. Keberhasilan akses Aluraya belum terbukti.
-4. Generasi Flow baru dilanjutkan setelah jalur akses yang didukung terbukti, capability/biaya diketahui dan batch konkret disetujui. M-001 belum lulus.
+3. ChatGPT akun tetap opsi terpisah di Copilot. Tidak perlu mengulang login Flow yang sudah diblokir.
+4. Langkah integrasi berikutnya: satu adapter LLM pilihan pengguna, lalu adapter media setelah capability/biaya dan approval tersedia.
 
 Mengukur satu sampel process tree (ganti angka dengan PID Aluraya, bukan terminal):
 
@@ -90,4 +90,4 @@ Ini bukan pengukuran peak atau p95 dan belum membuktikan performa RAM 8 GB.
 
 Ikuti [CHATGPT-START.md](./CHATGPT-START.md) untuk login, model dan pesan pertama. Jangan mengirim token atau URL callback ke chat dukungan.
 
-Paket terbaru menggunakan panel Nexabot. Mulai dari [NEXABOT-START.md](NEXABOT-START.md); jangan mengulangi login Flow yang diblokir.
+Paket aktif tidak memuat Nexabot. Gunakan [skema API](API-PROVIDERS.md); belum ada input API key generik.

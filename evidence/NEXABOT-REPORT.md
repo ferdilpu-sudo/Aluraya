@@ -1,3 +1,5 @@
+> ARSIP: integrasi ini dihapus pada ADR-016 (16 Oktober 2026). Bukan panduan runtime aktif; lihat [plan terbaru](../plan.md).
+
 # Nexabot thin slice — 15 Oktober 2026
 
 REQ-004/006/007/010, TASK-004/005. Provider diganti atas keputusan eksplisit pengguna setelah laporan WebView2 diblokir. Screenshot penolakan tidak tersedia untuk dibaca; laporan pengguna dicatat tanpa mengklaim inspeksi gambar.

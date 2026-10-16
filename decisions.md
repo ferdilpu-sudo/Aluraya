@@ -97,7 +97,7 @@ Pengguna memilih A dari docs/FLOW-INTEGRATION-DECISION.md: pertahankan Flow otom
 Accepted untuk implementasi/evaluasi atas permintaan pengguna; kompatibilitas live NOT RUN. Pengguna melaporkan akun berhasil pada Chrome biasa dan Switchly WebView2. Gunakan profil khusus serta popup satu environment sebagai acuan; tidak menyalin cookie/token atau menyamarkan browser. Ganti jalur Playwright di Aluraya agar hanya satu pemilik browser aktif. Profil lama dipertahankan utuh; profil native baru tidak melakukan migrasi sesi. Sidecar ChatGPT tetap. WebView provider terpisah dari UI/capability native lokal. Target akhir tetap otomatis sampai canvas setelah biaya dan approval; mode Generate manual Switchly tidak diadopsi sebagai penerimaan Aluraya.
 
 
-## ADR-014 — API reseller Nexabot (Accepted, 15 Oktober 2026)
+## ADR-014 — API reseller Nexabot (superseded ADR-016, riwayat 15 Oktober 2026)
 
 Pengguna melaporkan login WebView2 Aluraya diblokir (gambar tidak tersedia untuk inspeksi), lalu memilih API key Nexabot. Ini menggantikan kewajiban memakai akun/kredit Flow pada ADR-004, pilihan A, serta evaluasi browser ADR-013. ChatGPT plan usage tetap. Tidak ada bypass penolakan browser. Sumber kontrak adalah dokumentasi reseller lengkap yang ditempel pengguna 08:19 WIB; lebih spesifik daripada landing page yang mengiklankan endpoint/key berbeda. Lihat docs/NEXABOT-API.md.
 
@@ -105,5 +105,12 @@ Implementasi bertahap: img/t2v sampai canvas dahulu; reference modes dan multi-k
 
 Provider tidak mendokumentasikan nama model/durasi atau idempotency/reconcile/cancel. Jangan mengarangnya. Tidak ada jaminan kualitas, ketersediaan, atau refund berdasarkan klaim dokumentasi saja. Cross-origin redirect download belum didukung sebelum domain resminya diketahui.
 
-## ADR-015 — frontend draf lebih dahulu (accepted, 15 Oktober 2026)
+## ADR-015 — frontend draf lebih dahulu (UX superseded ADR-016, riwayat 15 Oktober 2026)
 Permintaan pengguna: “lanjut selesaikan front end, nanti kita sinkronkan backend api key ini”. Urutan kerja frontend M-002/M-003 kini boleh berjalan sebelum pembuktian Nexabot live. Implementasi: editor naskah, aset lokal, shot dan review rencana; penyimpanan IndexedDB khusus draf untuk bisa dipakai tanpa host/backend. Ini pengecualian terbatas terhadap aturan host-only DB: database proyek produksi/native tetap belum dibuat, jurnal Nexabot tidak berubah. Schema draf version 1 terpisah dari schema produksi. Tidak ada key/sesi/provider media di backup JSON. Peninjauan rencana bukan approval biaya. Hubungan proyek/shot dengan job, compiler AI, upload API, batch, ekspor klip native dan migrasi draf ke native menunggu sinkronisasi berikutnya.
+
+## ADR-016 — kembali ke canvas awal, API dapat disesuaikan (accepted, 16 Oktober 2026)
+Pengguna meminta “kembalikkan plan awal. hapus saja nexabot. karena flow tidak bisa buatkan saja skema pakai api llm apapun agar saya bisa menyesuaikan”. Pulihkan pusat kerja canvas terpadu (aset → storyboard → hasil) dengan Copilot kanan dan approval bertahap. Hapus seluruh integrasi Nexabot yang dapat dipanggil. Flow tetap tidak aktif. Draf pengguna dan file hasil lama tidak dihapus.
+
+Profil API dipisahkan menjadi LLM, gambar dan video; satu vendor boleh melayani beberapa peran melalui profil tersendiri. Protokol Chat Completions, Responses, Anthropic Messages dan Gemini Content memerlukan adapter berbeda. Custom HTTP memiliki input/output mapping dan polling deklaratif, bukan eksekusi script. Ini kontrak/config UI dahulu, tidak mengklaim kompatibilitas universal atau koneksi live. Akun ChatGPT tetap pilihan eksplisit terpisah, tidak berubah menjadi fallback biaya.
+
+Konfigurasi nonrahasia disimpan lokal; secretRef hanya nama slot key. Native secret store, adapters, proposal/approval snapshot, submit/poll/download dan pengaitan versi merupakan pekerjaan berikutnya. Tidak ada pengeluaran live dari mandat ini. ADR-003 sekarang opsi, ADR-004/013 tetap historis, ADR-014 ditarik dan UX multipage ADR-015 dikoreksi. Prioritas frontend lebih dahulu masih berlaku.

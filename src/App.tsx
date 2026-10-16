@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useNexabot } from './features/nexabot/useNexabot';
-import { StudioCanvas } from './features/canvas/StudioCanvas';
+import { useProviderConfig } from './features/providers/useProviderConfig';
+import { ProductionCanvas } from './features/canvas/ProductionCanvas';
 import { useStudio } from './features/studio/useStudio';
 import { ProjectDialog } from './features/studio/ProjectDialog';
-import { ScriptEditor } from './features/studio/ScriptEditor';
-import { AssetsView } from './features/studio/AssetsView';
-import { ReviewView } from './features/studio/ReviewView';
 import { StudioInspector, type InspectorTab } from './features/studio/StudioInspector';
 import { Icon } from './features/studio/Icon';
-import { newShot, stageNames, type Stage } from './domain/studio';
+import { newShot } from './domain/studio';
 
 export default function App() {
   const studio = useStudio();
-  const nexabot = useNexabot();
-  const [stage, setStage] = useState<Stage>('script');
-  const [tab, setTab] = useState<InspectorTab>('detail');
+  const providers = useProviderConfig();
+  const [focus, setFocus] = useState('');
+  const [tab, setTab] = useState<InspectorTab>('copilot');
   const [selectedId, setSelectedId] = useState('');
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [panelOpen, setPanelOpen] = useState(() => window.innerWidth > 1100);
@@ -44,7 +41,7 @@ export default function App() {
     );
   function select(id: string) {
     setSelectedId(id);
-    setTab('detail');
+    setTab(id === 'empty-shots' || id === 'empty-output' ? 'copilot' : 'detail');
     setPanelOpen(true);
   }
   function addShot() {
@@ -57,12 +54,6 @@ export default function App() {
     setTab('provider');
     setPanelOpen(true);
   }
-  const counts = {
-    script: project.script.trim() ? 'Terisi' : 'Mulai di sini',
-    assets: `${project.assets.length} referensi`,
-    board: `${project.shots.length} shot`,
-    review: `${project.shots.filter((s) => s.review === 'reviewed').length} rencana ditinjau`,
-  };
   return (
     <div className="app-shell studio-shell">
       <header className="app-header">
@@ -121,90 +112,46 @@ export default function App() {
           </button>
         </div>
       )}
-      <main className={`workspace studio-workspace ${panelOpen ? '' : 'panel-closed'}`}>
-        <aside className="journey">
-          <button className="all-projects" onClick={() => setProjectsOpen(true)}>
-            <Icon name="folder" /> Semua proyek
-          </button>
-          <span className="eyebrow">ALUR PRODUKSI</span>
-          <nav aria-label="Tahap produksi">
-            {(Object.keys(stageNames) as Stage[]).map((id, index) => (
-              <button
-                className={stage === id ? 'active' : ''}
-                aria-current={stage === id ? 'step' : undefined}
-                aria-label={stageNames[id]}
-                onClick={() => setStage(id)}
-                key={id}
-              >
-                <Icon name={id} />
-                <span>
-                  <strong>{stageNames[id]}</strong>
-                  <small>{counts[id]}</small>
-                </span>
-                <span className="stage-index">0{index + 1}</span>
-              </button>
-            ))}
-          </nav>
-          <div className="journey-summary">
-            <span className="eyebrow">PROYEK INI</span>
-            <dl>
-              <div>
-                <dt>Format</dt>
-                <dd>{project.ratio}</dd>
-              </div>
-              <div>
-                <dt>Target</dt>
-                <dd>{project.targetSeconds} detik</dd>
-              </div>
-              <div>
-                <dt>Aset</dt>
-                <dd>{project.assets.length}</dd>
-              </div>
-            </dl>
-          </div>
-          <div className="journey-note">
-            <div className="mini-brand">a</div>
-            <strong>
-              Cerita yang baik
-              <br />
-              dimulai dari Anda.
-            </strong>
-            <p>
-              Atur detailnya di sini.
-              <br />
-              Hidupkan bersama AI.
-            </p>
-          </div>
-          <button className="connection-link" onClick={openProvider}>
-            <Icon name="settings" /> Koneksi & pengaturan
-            <span className="status-dot" />
-          </button>
-        </aside>
+      <nav className="canvas-navigation" aria-label="Navigasi canvas">
+        <span className="eyebrow">CANVAS PRODUKSI</span>
+        <button
+          className="text-button"
+          onClick={() => {
+            select('script');
+            setFocus(`script:${Date.now()}`);
+          }}
+        >
+          Naskah
+        </button>
+        <button
+          className="text-button"
+          onClick={() => {
+            select('empty-assets');
+            setFocus(`lane-assets:${Date.now()}`);
+          }}
+        >
+          Aset
+        </button>
+        <button className="text-button" onClick={() => setFocus(`lane-shots:${Date.now()}`)}>
+          Storyboard
+        </button>
+        <button className="text-button" onClick={() => setFocus(`lane-output:${Date.now()}`)}>
+          Hasil
+        </button>
+        <button className="text-button" onClick={openProvider}>
+          Koneksi API
+        </button>
+      </nav>
+      <main className={`workspace canvas-workspace ${panelOpen ? '' : 'panel-closed'}`}>
         <div className="studio-main" key={project.id}>
-          {stage === 'script' && (
-            <ScriptEditor
-              project={project}
-              update={studio.update}
-              next={() => setStage('assets')}
-            />
-          )}
-          {stage === 'assets' && <AssetsView project={project} update={studio.update} />}
-          {stage === 'board' && (
-            <StudioCanvas
-              project={project}
-              update={studio.update}
-              selectedId={selectedId}
-              select={select}
-              add={addShot}
-            />
-          )}
-          {stage === 'review' && (
-            <ReviewView
-              project={project}
-              results={nexabot.state?.jobs ?? []}
-              openProvider={openProvider}
-            />
-          )}
+          <ProductionCanvas
+            project={project}
+            update={studio.update}
+            selectedId={selectedId}
+            select={select}
+            focus={focus}
+            addShot={addShot}
+          />
         </div>
         <div className="inspector-container" hidden={!panelOpen}>
           <StudioInspector
@@ -214,7 +161,7 @@ export default function App() {
             update={studio.update}
             selectedId={selectedId}
             select={select}
-            nexabot={nexabot}
+            providers={providers}
           />
         </div>
       </main>
@@ -223,7 +170,7 @@ export default function App() {
         <span>
           {online ? 'Ruang kerja lokal' : 'Mode offline'} · {project.shots.length} shot
         </span>
-        <span>Produksi API belum disinkronkan</span>
+        <span>Skema API tersedia · eksekutor belum tersambung</span>
       </footer>
       {projectsOpen && <ProjectDialog studio={studio} close={() => setProjectsOpen(false)} />}
     </div>

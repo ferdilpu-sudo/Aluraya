@@ -9,9 +9,17 @@ import {
 } from '../../domain/studio';
 import { readReference } from '../../infrastructure/studioStorage';
 import { Icon } from './Icon';
-export function AssetsView({ project, update }: { project: StudioProject; update: ProjectUpdate }) {
+export function AssetsView({
+  project,
+  update,
+  initialSelectedId = '',
+}: {
+  project: StudioProject;
+  update: ProjectUpdate;
+  initialSelectedId?: string;
+}) {
   const [filter, setFilter] = useState('all');
-  const [selectedId, setSelectedId] = useState('');
+  const [selectedId, setSelectedId] = useState(initialSelectedId);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const selected = project.assets.find((a) => a.id === selectedId);
@@ -128,7 +136,7 @@ export function AssetsView({ project, update }: { project: StudioProject; update
               placeholder="Ciri wajah, pakaian, tata ruang, warna, atau detail yang harus konsisten…"
             />
           </label>
-          <div className="nexa-actions">
+          <div className="inline-actions">
             <label className="button secondary file-button">
               {busy ? 'Membaca gambar…' : 'Pilih gambar'}
               <input
@@ -181,7 +189,7 @@ export function AssetsView({ project, update }: { project: StudioProject; update
             </button>
           </div>
           <small>
-            JPG, PNG, WebP · maks. 4 MB. Gambar tersimpan lokal; unggah ke Nexabot menunggu
+            JPG, PNG, WebP · maks. 4 MB. Gambar tersimpan lokal; unggah ke API provider menunggu
             sinkronisasi.
           </small>
           {error && (

@@ -1,9 +1,14 @@
 # Arsitektur — Aluraya
 
-**Arsitektur aktif 15 Oktober 2026:** Nexabot menggantikan adapter browser Flow. Bagian Flow dan checkpoint lama di bawah merupakan riwayat, bukan jalur runtime aktif.
+**Arsitektur aktif 16 Oktober 2026 — ADR-016:** React merender canvas terpadu dan Copilot kanan. Profil API nonrahasia disimpan lokal melalui schema Zod. Routing LLM/gambar/video terpisah. Adapter Nexabot, IPC, capability dan akses asset protocol-nya dihapus; Flow tetap tidak aktif.
+
+Target eksekusi berikut: UI → use case/approval host → adapter protokol sidecar → API pengguna. Key hanya di secure store native, tidak diteruskan kembali ke renderer; URL, mapping, kapasitas, biaya dan snapshot harus divalidasi ulang pada boundary native. Adapter LLM mengembalikan proposal, bukan mutasi proyek langsung. Adapter media mengembalikan job/hasil yang diikat projectId/shotId/revision. HTTP generik tidak dijalankan dari renderer. Kontrak saat ini belum menyediakan executor. Baca [API-PROVIDERS](docs/API-PROVIDERS.md).
+
+## Rancangan awal dan checkpoint historis
+Catatan di bawah menjelaskan evolusi desain; bagian Flow tidak berlaku sebagai runtime aktif.
 
 ## Rekomendasi dan batas
-Tauri 2 + React/TypeScript untuk shell/canvas pada laptop RAM 8 GB. Satu sidecar Node/TypeScript untuk adapter ChatGPT dan Nexabot; SQLite lokal untuk state; media disimpan sebagai file. Rekomendasi bersifat provisional sampai M-001 membuktikan packaging dan integrasi. Tidak ada backend cloud, Redis, Kubernetes, atau microservices.
+Tauri 2 + React/TypeScript untuk shell/canvas pada laptop RAM 8 GB. Satu sidecar Node/TypeScript untuk adapter ChatGPT dan API provider terpilih; SQLite lokal untuk state; media disimpan sebagai file. Rekomendasi bersifat provisional sampai M-001 membuktikan packaging dan integrasi. Tidak ada backend cloud, Redis, Kubernetes, atau microservices.
 
 ## Proses runtime
 ```mermaid
@@ -12,7 +17,7 @@ flowchart TD
   H --> DB["SQLite dan media lokal"]
   H --> W["Sidecar integrasi"]
   W --> GPT["ChatGPT plan usage"]
-  W --> N["Nexabot reseller API"]
+  W --> N["API gambar/video"]
   W --> H
 ```
 WebView aplikasi hanya merender UI lokal. Google login/Flow memakai browser khusus terpisah; jangan memuat situs remote dengan hak akses filesystem aplikasi. Domain tidak bergantung pada Tauri, React, Playwright atau SQL.
@@ -30,7 +35,7 @@ WebView aplikasi hanya merender UI lokal. Google login/Flow memakai browser khus
 | copilot | Konteks dan proposal tool | Conversation, Proposal |
 | media | Validasi file, thumbnail, last frame, ekspor | MediaFile |
 | chatgpt-adapter | OAuth, model discovery, streaming | ChatAgentPort |
-| flow-adapter | Interaksi UI provider dan hasil | GenerationPort |
+| media-adapter (rencana) | Request/poll/download sesuai provider | GenerationPort |
 
 Susunan yang direncanakan: `src/features/<feature>/` untuk UI; `src/contracts/` untuk DTO tervalidasi; `src-tauri/src/application/`, `domain/`, `infrastructure/` untuk host; `sidecar/src/chatgpt/`, `flow/`, `transport/` untuk integrasi. Path ini belum berupa source yang telah dibuat. Registry hanya wiring, bukan semua logika dalam satu file.
 
@@ -39,7 +44,7 @@ Host adalah satu-satunya penulis database. Sidecar mengirim event tervalidasi me
 ## Alur ChatGPT
 Login resmi dengan browser sistem; izin identity dan plan usage diperiksa terpisah. Token disimpan melalui fasilitas OS/penyimpanan terenkripsi, tidak dikirim ke React. Konteks chat tersimpan lokal dan disusun ulang sesuai jalur API yang didukung. Model berasal dari discovery, bukan nama model hardcoded. Proposal tool tidak langsung mengeksekusi generasi: host memvalidasi schema, proyek, scope dan approval.
 Penggunaan paket tidak memberi akses otomatis ke riwayat chat akun. Tidak ada API key berbayar fallback. Kuota habis -> pause; kontrol penggunaan diarahkan ke pengaturan resmi. Opsi penggunaan kredit tambahan tidak diaktifkan oleh aplikasi; verifikasi setting akun selama setup.
-Keterbatasan preview resmi (diperiksa 11 Oktober 2026): jalur plan usage tidak mendukung tool image generation atau input audio/video. Gunakan Flow untuk gambar/video dan review manusia untuk audio. Deteksi visual opsional hanya dari frame yang diekstrak; bukan bukti kualitas audio.
+Keterbatasan preview resmi (diperiksa 11 Oktober 2026): jalur plan usage tidak mendukung tool image generation atau input audio/video. Gunakan adapter media terpisah untuk gambar/video dan review manusia untuk audio. Deteksi visual opsional hanya dari frame yang diekstrak; bukan bukti kualitas audio.
 
 ## Alur Flow otomatis
 GenerationPort harus membuktikan kemampuan berikut: inspectCapabilities, observeCredits, prepareReferences, submit, reconcile, observeStatus, collectOutputs. Nama ini kontrak internal; bukan klaim endpoint Google tersedia.
@@ -107,15 +112,5 @@ Browser Flow kini dimiliki host Rust/Tauri melalui WebView2 pada Windows. Ketent
 Observasi awal hanya URL-classification; tidak membaca DOM login, token atau cookie. API tidak menerima perintah Generate dan generationReady selalu false. Pengendalian produksi otomatis tetap target REQ-007, menunggu bukti login/capability/biaya dan approval. Ini kandidat kompatibilitas, bukan klaim dukungan provider atau keberhasilan live.
 
 
-## Adapter Nexabot — aktif
-
-`sidecar/src/nexabot` memisahkan client HTTP, secret/journal store, session coordinator, monitor dan media collector. Root tepercaya diberikan host sebagai ALURAYA_NEXABOT_DIR. Lock OS milik host (shared lifecycle dengan sidecar ChatGPT) mencegah dua proses aplikasi memakai jurnal bersamaan. Native command nexabot_action hanya untuk window main dan memvalidasi DTO dua arah; tidak menerima URL/path/script. React menerima status dan path media dari host, bukan secret yang sudah disimpan. API key hanya melewati input password → IPC saat disimpan, tidak dipantulkan kembali.
-
-Pengecualian ownership sempit untuk M-001: jurnal integrasi `nexabot/jobs.sqlite` dimiliki sidecar satu proses, bukan database proyek. Ini memungkinkan commit SQLite FULL sebelum POST tanpa protokol callback host baru. Database proyek tetap rencana host untuk M-002; journal tidak menjadi jalan menulis proyek langsung. SQLite Node bawaan dimuat lazy. Input, hash key, biaya disetujui, biaya dilaporkan, ID provider dan hasil disimpan; key terpisah DPAPI CurrentUser.
-
-Approval in-memory dua menit mengikat input/cost/key, satu kali konsumsi. Ganti key atau restart menghapus approval. GET credit diverifikasi ulang sebelum POST; saldo tidak cukup atau harga berubah menahan submit. Provider tidak mendokumentasikan idempotency key, cancel, reconcile tanpa job ID, ataupun maximum-charge parameter: timeout/5xx/202 malformed menghasilkan uncertain, menahan generasi baru tanpa retry POST. Selisih biaya respons dicatat untuk inspeksi; harga provider tidak dapat dikunci atomik oleh aplikasi.
-
-Known ID dapat dilanjutkan via GET setelah restart. Poll interval 3 detik, network request timeout 30 detik, monitoring dibatasi 30 menit sebelum perlu lanjut manual; jeda menghentikan monitoring lokal saja. Download stream max JPG25MiB/MP4256MiB, MIME+signature, SHA256, fsync dan rename. Redirect hanya same-origin agar key tidak bocor; cross-origin perlu kontrak domain dari provider sebelum didukung. Tidak ada DOM/browser automation. Progres provider dapat mengandung email sehingga tidak ditampilkan/disimpan. Media scoped Tauri asset protocol hanya folder nexabot/media dengan ekstensi jpg/mp4; tidak meliputi SQLite/key. Tidak mengklaim signature check sebagai validasi kualitas/decode media.
-
 ## Editor draf frontend — ADR-015
-`src/domain/studio.ts` memiliki schema dan aturan review draf. `src/infrastructure/studioStorage.ts` menyimpan proyek ke IndexedDB lokal (`aluraya-studio-drafts`, store `projects`), membaca referensi JPG/PNG/WebP, dan impor/ekspor JSON. `src/features/studio/useStudio.ts` mengantrekan penulisan dan melaporkan gagal simpan per proyek. Komponen editor, canvas, inspector, koneksi dan review terpisah. Tidak ada token/key dalam draf. Native database proyek tetap pekerjaan berikut; IndexedDB tidak menggantikan SQLite jurnal Nexabot. Browser preview dan WebView desktop memiliki storage masing-masing; pindahkan draf dengan JSON, bukan menganggap keduanya sinkron.
+`src/domain/studio.ts` memiliki schema dan aturan review draf. `src/infrastructure/studioStorage.ts` menyimpan proyek ke IndexedDB lokal (`aluraya-studio-drafts`, store `projects`), membaca referensi JPG/PNG/WebP, dan impor/ekspor JSON. `src/features/studio/useStudio.ts` mengantrekan penulisan dan melaporkan gagal simpan per proyek. Komponen editor, canvas, inspector, koneksi dan review terpisah. Tidak ada token/key dalam draf. Native database proyek tetap pekerjaan berikut; IndexedDB bukan jurnal produksi native. Browser preview dan WebView desktop memiliki storage masing-masing; pindahkan draf dengan JSON, bukan menganggap keduanya sinkron.

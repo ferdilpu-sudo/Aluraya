@@ -1,18 +1,16 @@
 # Aluraya Studio
 
-**Dari naskah menjadi adegan.** Fondasi Windows pribadi, source v0.1.0 berdasarkan spesifikasi v1.1. Checkpoint 15 Oktober 2026: **M-001 in progress, integrasi belum lulus**.
+**Dari naskah menjadi adegan.** Fondasi Windows pribadi, source v0.1.0 berdasarkan spesifikasi v1.1. Checkpoint 16 Oktober 2026: **M-001 in progress, integrasi belum lulus**.
 
-Frontend terbaru: proyek draf, editor naskah, referensi aset lokal, canvas/daftar shot, panel detail, review rencana, serta cadangan JSON. Backend proyek/API belum disinkronkan. Lihat [panduan frontend](docs/FRONTEND-STUDIO.md).
+Arah aktif 16 Oktober 2026: **canvas terpadu dengan Copilot kanan**, aset di atas, storyboard di tengah, slot hasil di bawah. Draf proyek, editor detail, referensi lokal, pan/zoom, pencarian shot dan backup JSON tetap tersedia. [Panduan frontend](docs/FRONTEND-STUDIO.md).
 
-Sudah tersedia: diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
+**Nexabot dihapus. Flow tidak diaktifkan kembali.** [Skema API netral provider](docs/API-PROVIDERS.md) dan [contoh config](examples/providers.example.json) tersedia untuk LLM, gambar dan video secara terpisah. Profil dapat diatur di Koneksi API: protokol, base URL, endpoint, model, auth reference, mapping/polling dan biaya deklaratif. Config bukan koneksi terverifikasi; tidak menyimpan API key atau menjalankan request generik.
 
-**Koneksi generasi:** API reseller Nexabot menggantikan browser Flow atas keputusan pengguna 15 Oktober 2026. Key terenkripsi Windows, cek saldo, approval satu request, gambar/text-to-video, jurnal restart dan hasil otomatis ke canvas tersedia dalam kode. Live API dan GUI terbaru belum diverifikasi. Lihat [panduan Nexabot](docs/NEXABOT-START.md) dan [bukti](evidence/NEXABOT-REPORT.md).
-
-**Belum tersedia:** upload referensi ke API, produksi batch/scheduler, database proyek native, pengaitan shot–job dan ekspor klip. Draf frontend tersimpan lokal di IndexedDB. Hasil Nexabot tersimpan lokal; riwayat chat hanya untuk sesi aplikasi. Tidak ada generasi live dijalankan oleh coding agent.
+ChatGPT akun tetap opsi terpisah (login/streaming pernah dibuktikan), tanpa fallback berbayar otomatis. **Belum tersedia:** executor API generik, planner proposal/approval backend, produksi batch, upload/poll/download media generik, database produksi native, pengaitan hasil/versi dan ekspor klip. M-001 belum lulus. Tidak ada generasi berbayar dijalankan.
 
 ## Jalankan
 
-**[Unduh installer frontend terbaru](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876/artifacts/11964370081)** — commit `d31890d`. Ekstrak ZIP, lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. [CI Windows PASS](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876): 85 tes JavaScript, 12 tes Rust dan delapan pemeriksaan install/runtime/uninstall. Mulai dari **Naskah → Aset → Storyboard → Klip & review**; API key tidak diperlukan untuk editor draf. GUI Windows dan sinkronisasi proyek ke backend belum diverifikasi. Lihat [panduan frontend](docs/FRONTEND-STUDIO.md).
+[Build Windows](https://github.com/ferdilpu-sudo/Aluraya/actions): pilih workflow commit terbaru yang berhasil → Artifacts → `aluraya-native-lock-and-executable`. Ekstrak ZIP dan jalankan installer. Installer frontend d31890d merupakan versi lama yang masih memuat Nexabot. Bukti perubahan ini ada di [laporan reset](evidence/PROVIDER-RESET-REPORT.md).
 
 Preview UI (Node.js 24 LTS):
 
@@ -30,7 +28,7 @@ npm.cmd ci
 npm.cmd run tauri dev
 ```
 
-Petunjuk lengkap, perbaikan prasyarat dan build installer ada di [docs/WINDOWS-START.md](./docs/WINDOWS-START.md). Tidak diperlukan OPENAI_API_KEY. API key Nexabot dimasukkan hanya di panel Nexabot aplikasi Windows.
+Petunjuk lengkap, perbaikan prasyarat dan build installer ada di [docs/WINDOWS-START.md](./docs/WINDOWS-START.md). Tidak perlu API key untuk menyunting draf atau konfigurasi. Penyimpanan key dan executor API generik menyusul.
 
 ## Pemeriksaan tersedia
 

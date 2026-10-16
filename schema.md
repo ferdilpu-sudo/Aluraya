@@ -9,12 +9,12 @@ SQLite milik host, foreign keys aktif, migration versioned. UUID string untuk ID
 | ENT-001 | Project(id, title:text, aspect:9:16/16:9, targetSeconds:int?, language:text, adaptation:preserve/adapt/expand, createdAt, updatedAt) | targetSeconds > 0 jika diisi |
 | ENT-002 | ScriptRevision(id, projectId, revision:int, sourceText:text, productionText:text, sourceKind:idea/full/excerpt, contentHash, createdAt) | unique(projectId, revision); immutable |
 | ENT-003 | Asset(id, projectId, kind:character/location/prop, name:text, acceptedRevisionId?) | accepted revision harus milik asset |
-| ENT-004 | AssetRevision(id, assetId, revision:int, description:text, mediaId?, source:upload/flow, parentRevisionId?, contentHash) | immutable; referensi sumber eksplisit |
+| ENT-004 | AssetRevision(id, assetId, revision:int, description:text, mediaId?, source:upload/provider, parentRevisionId?, contentHash) | immutable; referensi sumber eksplisit |
 | ENT-005 | ShotRevision(id, projectId, stableShotId, revision:int, sceneOrder:int, shotOrder:int, scriptRevisionId, prompt:text, dialogue:JSON, sfx:JSON, camera:JSON, durationSeconds:int, aspect, references:JSON, contentHash) | durasi/model diverifikasi saat produksi |
 | ENT-006 | Dependency(id, projectId, sourceRevisionId, targetShotRevisionId, kind:reference/last_frame/continuity) | graph produksi harus acyclic; tidak self-edge |
 | ENT-007 | CanvasNode(id, projectId, entityType, entityId, x:real, y:real, width:real, height:real, groupId?) | referensi entity valid; ukuran > 0 |
 | ENT-008 | CanvasEdge(id, projectId, sourceNodeId, targetNodeId, kind:reference/sequence/continuity) | tidak semua edge visual adalah dependensi job |
-| ENT-009 | ProviderAccount(id, provider:nexabot/chatgpt, label:text, profileRef:text, state:ready/needs_login/disabled/rate_limited, creditPoolId?, capabilities:JSON, checkedAt?) | profileRef opaque; bukan token |
+| ENT-009 | ProviderAccount(id, providerProfileId?, connectionMode:api/chatgpt, label:text, profileRef:text, state:ready/needs_login/disabled/rate_limited, creditPoolId?, capabilities:JSON, checkedAt?) | profileRef opaque; bukan token |
 | ENT-010 | CreditObservation(id, accountId, poolId?, balance:decimal?, observedAt, source:provider_api, freshness:known/unknown/stale) | balance >= 0; null != 0 |
 | ENT-011 | Approval(id, projectId, stage:script/assets/storyboard/generation, snapshotHash, accountPoolIds:JSON, maxCredits:decimal?, maxAttempts:int, approvedAt, revokedAt?) | maxAttempts >= 1; generation perlu batas kredit terverifikasi |
 | ENT-012 | Job(id, projectId, inputRevisionId, approvalId, status, priority:int, createdAt, leaseOwner?, leaseUntil?) | satu dispatcher aktif per job |
@@ -81,13 +81,8 @@ Approval snapshot generasi diperluas dengan promptDocumentId/hash dan manifest h
 `flow_action` kini native-only: inspect/create/open(profileId UUID canonical)/observe/close/profiles(page 0..100000), semua field asing ditolak. create tidak menerima nama browser lagi. Snapshot schemaVersion=2, runtime=webview2, profiles berupa id UUID saja, profileCount/profilePage, activeProfileId nullable, browserOpen, observation nullable {checkedAtMs, page, origin}, generationReady=false, error kode terbatas. page hanya klasifikasi URL dan tidak berarti login sukses. origin tidak memuat path/query/fragment. Kontrak TS di src/contracts/flow.ts dan Rust di src-tauri/src/flow_contracts.rs. flow.action pada stdio sidecar tidak lagi didukung.
 
 
-## DTO dan jurnal Nexabot M-001 — 15 Oktober 2026
-
-Sumber executable: src/contracts/nexabot.ts dan src-tauri/src/nexabot_contracts.rs. Command inspect/save_key/remove_key/credit/prepare/submit/resume/pause/history. prepare menerima input img(prompt,aspect) atau t2v(prompt,ratio,resolution), tanpa field model/duration/media yang belum dibuat. submit hanya menerima approvalId, bukan input baru atau boolean approved.
-
-Snapshot: activity, configured, credit(balance/cost/checkedAt), quote(id,input,cost,expiresAt), jobs (3 per halaman), jobCount/page, activeId, error allowlist. Job: UUID, providerId nullable, immutable input/cost, chargedCost nullable, createdAt, state, error, media nullable. State submitting → queued/uncertain/failed; queued/processing → done/failed; done → ready hanya setelah file lokal tersimpan. Restart submitting → uncertain. Error unduhan mempertahankan done dan ID, tidak membuat attempt baru. Tidak ada endpoint publik terdokumentasi untuk rekonsiliasi job tanpa ID; uncertain menahan generasi dan perlu bukti dari provider sebelum resolusi.
-
-Jurnal SQLite khusus integrasi (user_version1), sidecar single owner, kolom sequence/id/fingerprint/body tervalidasi. Banyak hasil tersimpan, pagination3 untuk batas IPC64KiB. Key DPAPI terpisah, approval tidak dipersist. Tidak ada data login/browser lama dimigrasikan atau dihapus.
-
 ## Schema draf frontend v1
 `StudioProject`: version=1, id UUID, name, updatedAt, ratio 16:9/9:16, targetSeconds, adaptation preserve/adapt/expand, script, assets, shots. Asset: id, name, kind character/location/prop, description, image data URI lokal/null. Shot: id, title, scene, action, dialogue, sound, camera, seconds (rencana), references UUID aset, review draft/reviewed, position x/y. Review tidak mencakup approval provider. Edit struktur shot, referensi, naskah, rasio atau mode adaptasi membatalkan peninjauan relevan. Parser menolak extra fields, ID duplikat, dangling references, URL media remote dan versi asing. Impor membuat project ID baru agar tidak menimpa sumber. JSON tidak menyertakan kredensial atau media provider.
+
+## Profil API v1 — ADR-016
+Kontrak executable: `src/contracts/providers.ts`; panduan dan contoh: [API-PROVIDERS](docs/API-PROVIDERS.md). Routing terpisah llm/image/video, profile UUID, protocol, base URL/endpoint/model, auth secretRef, mapping JSON Pointer/polling, declaredCapabilities dan cost. localStorage hanya konfigurasi nonrahasia. Tidak ada DTO submit aktif untuk API generik. Jangan menerima status verified dari impor config; validasi struktur tidak memberi izin eksekusi. Jurnal Nexabot dan command terkait sudah dihapus dari runtime. Data lama di mesin pengguna tidak dihapus otomatis.

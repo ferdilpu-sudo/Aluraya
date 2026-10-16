@@ -185,7 +185,7 @@ export function ShotInspector({
         </button>
         <small>Peninjauan ini tidak menyetujui biaya atau mengirim generasi.</small>
       </div>
-      <div className="nexa-actions">
+      <div className="inline-actions">
         <button className="button secondary" disabled={index === 0} onClick={() => move(-1)}>
           ↑ Urutan
         </button>

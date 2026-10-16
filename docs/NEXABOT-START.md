@@ -1,3 +1,5 @@
+> ARSIP: integrasi ini dihapus pada ADR-016 (16 Oktober 2026). Bukan panduan runtime aktif; lihat [plan terbaru](../plan.md).
+
 # Memulai Nexabot di Aluraya
 
 [Unduh installer Nexabot](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876/artifacts/11964370081) — commit `d31890d`, [CI Windows PASS](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876). Login GitHub bila diperlukan, ekstrak ZIP, jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Jika tautan langsung tidak mengunduh, buka halaman CI lalu pilih Artifacts → aluraya-native-lock-and-executable. Installer WebView2 lama tidak mendukung API key ini.

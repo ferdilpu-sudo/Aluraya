@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "name": "API LLM",
+      "role": "llm",
+      "protocol": "chat-completions",
+      "baseUrl": "https://api.example.com",
+      "endpoint": "/v1/chat/completions",
+      "model": "YOUR_MODEL_ID",
+      "auth": {
+        "type": "bearer",
+        "secretRef": "providers/llm/main"
+      },
+      "apiVersion": "",
+      "timeoutSeconds": 60,
+      "customMapping": null,
+      "declaredCapabilities": {
+        "referenceImages": false,
+        "referenceVideo": false,
+        "streaming": false,
+        "structuredOutput": false
+      },
+      "cost": {
+        "unit": "unknown",
+        "currency": "",
+        "amount": null
+      }
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000002",
+      "name": "API IMAGE",
+      "role": "image",
+      "protocol": "custom-http",
+      "baseUrl": "https://api.example.com",
+      "endpoint": "/REPLACE_WITH_DOCUMENTED_ENDPOINT",
+      "model": "YOUR_MODEL_ID",
+      "auth": {
+        "type": "bearer",
+        "secretRef": "providers/image/main"
+      },
+      "apiVersion": "",
+      "timeoutSeconds": 60,
+      "customMapping": {
+        "inputs": [
+          {
+            "source": "prompt",
+            "target": "/prompt"
+          },
+          {
+            "source": "model",
+            "target": "/model"
+          }
+        ],
+        "output": {
+          "text": null,
+          "mediaUrl": "/REPLACE_WITH_MEDIA_POINTER",
+          "jobId": null
+        },
+        "polling": null
+      },
+      "declaredCapabilities": {
+        "referenceImages": false,
+        "referenceVideo": false,
+        "streaming": false,
+        "structuredOutput": false
+      },
+      "cost": {
+        "unit": "unknown",
+        "currency": "",
+        "amount": null
+      }
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "name": "API VIDEO",
+      "role": "video",
+      "protocol": "custom-http",
+      "baseUrl": "https://api.example.com",
+      "endpoint": "/REPLACE_WITH_DOCUMENTED_ENDPOINT",
+      "model": "YOUR_MODEL_ID",
+      "auth": {
+        "type": "bearer",
+        "secretRef": "providers/video/main"
+      },
+      "apiVersion": "",
+      "timeoutSeconds": 60,
+      "customMapping": {
+        "inputs": [
+          {
+            "source": "prompt",
+            "target": "/prompt"
+          },
+          {
+            "source": "model",
+            "target": "/model"
+          }
+        ],
+        "output": {
+          "text": null,
+          "mediaUrl": "/REPLACE_WITH_MEDIA_POINTER",
+          "jobId": null
+        },
+        "polling": null
+      },
+      "declaredCapabilities": {
+        "referenceImages": false,
+        "referenceVideo": false,
+        "streaming": false,
+        "structuredOutput": false
+      },
+      "cost": {
+        "unit": "unknown",
+        "currency": "",
+        "amount": null
+      }
+    }
+  ],
+  "routing": {
+    "llm": "00000000-0000-4000-8000-000000000001",
+    "image": "00000000-0000-4000-8000-000000000002",
+    "video": "00000000-0000-4000-8000-000000000003"
+  }
+}

@@ -108,7 +108,7 @@ export function ScriptEditor({
       <div className="view-footer">
         <span>Perencanaan lokal. Belum mengirim apa pun ke AI.</span>
         <button className="button primary" onClick={next}>
-          Lanjut ke aset →
+          Buka Copilot →
         </button>
       </div>
     </section>

@@ -116,3 +116,6 @@ CI Windows final57685d5/run38666298634:79JavaScript+12RustPASS, NSIS+install/run
 `npm run check` PASS: 83 tes lokal + 2 Windows-only SKIP, 14 files; format/lint/type/build PASS. Enam tes domain/import baru di tests/studio.test.ts. Interaksi browser dan GUI Windows NOT RUN karena runtime browser gagal tersedia. Lihat evidence/FRONTEND-STUDIO-REPORT.md. Live provider belum diuji.
 
 Pembaruan 16 Oktober 2026: CI Windows d31890d/run 38717052876 PASS — 85 JS, 12 Rust dan delapan pemeriksaan installer/runtime/uninstall. Report: evidence/FRONTEND-INSTALLER.json. Tidak mengubah status NOT RUN uji visual/GUI/live provider.
+
+## Reset provider — 16 Oktober 2026 (aktif)
+Nexabot runtime/test suite dihapus bersama implementasi. Bukti Nexabot/installer terdahulu historis. `tests/providers.test.ts` menguji role/routing, penolakan key/verified fields, URL/endpoint, mapping async dan graph aset→shot→slot hasil. `tests/protocol.test.ts` menolak command Nexabot yang dihapus. Tes draf lama tetap berjalan. Hasil aktual pada [PROVIDER-RESET-REPORT](evidence/PROVIDER-RESET-REPORT.md); GUI dan API live tidak disimpulkan dari unit/build.

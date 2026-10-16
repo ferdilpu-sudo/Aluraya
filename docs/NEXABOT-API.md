@@ -1,3 +1,5 @@
+> ARSIP: integrasi ini dihapus pada ADR-016 (16 Oktober 2026). Bukan panduan runtime aktif; lihat [plan terbaru](../plan.md).
+
 # Kontrak reseller Nexabot
 
 Sumber: dokumentasi API yang ditempel pengguna pada 15 Oktober 2026, 08:19 WIB. Origin `https://nexabot.id`. Dokumen login https://nexabot.id/api-docs tidak dapat dibaca tanpa sesi saat riset. Kontrak ini supersedes contoh landing page api.nexabot.id/api/v1/generate.
