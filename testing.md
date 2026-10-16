@@ -114,3 +114,5 @@ CI Windows final57685d5/run38666298634:79JavaScript+12RustPASS, NSIS+install/run
 
 ## Frontend draf — 15 Oktober 2026
 `npm run check` PASS: 83 tes lokal + 2 Windows-only SKIP, 14 files; format/lint/type/build PASS. Enam tes domain/import baru di tests/studio.test.ts. Interaksi browser dan GUI Windows NOT RUN karena runtime browser gagal tersedia. Lihat evidence/FRONTEND-STUDIO-REPORT.md. Live provider belum diuji.
+
+Pembaruan 16 Oktober 2026: CI Windows d31890d/run 38717052876 PASS — 85 JS, 12 Rust dan delapan pemeriksaan installer/runtime/uninstall. Report: evidence/FRONTEND-INSTALLER.json. Tidak mengubah status NOT RUN uji visual/GUI/live provider.

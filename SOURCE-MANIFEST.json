@@ -29,7 +29,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "9098ab7a78ed31caef98d6c985215c2dae9388b9dde6d8d36344a1a0efe44ce6"
+      "sha256": "79fcbfabc1762b13b92794ac14bf5855bfea9351944c2156ddc5e30172ae1dd6"
     },
     {
       "path": "architecture.md",
@@ -57,7 +57,7 @@
     },
     {
       "path": "docs/FRONTEND-STUDIO.md",
-      "sha256": "dc90a840815b3e64a6e975144e9206abb25a14277b8c112dadc488b9d0788c9a"
+      "sha256": "e7007c037f51eae46d7b9ee33c625642f6f109476c9c743589dc74a444c7006c"
     },
     {
       "path": "docs/IPC.md",
@@ -69,11 +69,11 @@
     },
     {
       "path": "docs/NEXABOT-START.md",
-      "sha256": "7e7af8fe46985e95ca01ec5ca83b3ae715d3efc605178c5daebe11060e279420"
+      "sha256": "4216cb3bba4e7f819a379a43fe6586449ba785b7063299c728c7f182cf22d53a"
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "d10b4f0ebfdf02ca3acf63985577d229fe92e1513fa8a0087b07740424439236"
+      "sha256": "36aebf25b1ef77dfa439035d8e3552f072797c8ac7af3e56ea9d694cb34c0365"
     },
     {
       "path": "eslint.config.js",
@@ -92,8 +92,12 @@
       "sha256": "75ce3685a36ba7c0e371c607865d71745ed9b929b41e93cdbab16f3f3772f53a"
     },
     {
+      "path": "evidence/FRONTEND-INSTALLER.json",
+      "sha256": "fec203b72d3afdfb40f3c78ef60a3db1fd1cd8a41078ec298f6dadf426087d0c"
+    },
+    {
       "path": "evidence/FRONTEND-STUDIO-REPORT.md",
-      "sha256": "241c2f4049b846165103029d5fc968164b62a0c7451e7c1b528084a845a38af7"
+      "sha256": "1ed17bcea583e66f47e58b46b7357e0011d603b87f66e0535f62a3a62d0c04df"
     },
     {
       "path": "evidence/M001-REPORT.md",
@@ -137,7 +141,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "380fadbdcbf835eb1ff9708740b2b3ed1ab837709158b03588e2b77fe5218657"
+      "sha256": "891383ae3ef203d52c88a52ca0f64fe9ce57e55249c29e6a300940b65489f57b"
     },
     {
       "path": "prd.md",
@@ -609,7 +613,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "c9a23b7ccaa2d139a9f7f640deb4e3c00ed3b7f756b97d9e6c73b51af3ed9f2c"
+      "sha256": "832b562af335ce3caed7aaa02a2aca23219b0c05a428e394c3c224d896ac8c93"
     },
     {
       "path": "tests/browser-boundary.test.ts",

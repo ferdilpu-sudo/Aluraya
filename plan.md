@@ -1,5 +1,7 @@
 # Rencana implementasi — Aluraya
 
+**Prioritas terbaru 16 Oktober 2026:** frontend draf sudah dipush (`d31890d`) dan installer Windows PASS. Pengguna memilih frontend dahulu, sinkronisasi backend/API key berikutnya (ADR-015). Panduan/unduh: [Frontend Studio](docs/FRONTEND-STUDIO.md). Catatan milestone lama di bawah tetap sejarah; M-002/M-003 kini FRONTEND PARTIAL, bukan native/backend selesai.
+
 **Checkpoint aktif 15 Oktober 2026:** pengguna melaporkan WebView2 diblokir dan memilih API reseller Nexabot. TASK-004/005 kini memakai Nexabot; catatan Flow di bawah merupakan riwayat. Implementasi img/t2v, cek saldo, approval, jurnal dan impor hasil tersedia. Live provider belum dijalankan. Lihat [panduan Nexabot](docs/NEXABOT-START.md).
 
 Strategi: buktikan integrasi mahal/berisiko terlebih dahulu, baru perluas studio. **M-001 In progress: fondasi TASK-002 tersedia, gate integrasi belum lulus. M-002–M-006 Not started.** ChatGPT sudah menghasilkan respons nyata di aplikasi Windows; integrasi Nexabot belum terbukti live; installer sebelumnya sudah PASS. Stack rekomendasi Tauri dapat ditinjau jika M-001 membuktikan hambatan signifikan.
@@ -144,3 +146,6 @@ Commit57685d5, run38666298634 SUCCESS:79tesJS/12Rust, installer/runtime/uninstal
 
 ## Checkpoint aktif — frontend dahulu (15 Oktober 2026)
 Keputusan pengguna terbaru mengizinkan penyelesaian frontend sebelum sinkronisasi API key. Implementasi editor draf REQ-001/003/004/011/012/015: proyek, naskah, aset lokal, canvas/daftar shot, detail dan review rencana, cadangan JSON; panel ChatGPT dan Nexabot dipertahankan. Peninjauan dan draf tidak mengirim generasi. M-002/M-003 FRONTEND PARTIAL; backend/native dan live gates belum lulus. Pemeriksaan lokal: 83 PASS + 2 Windows-only SKIP; format/lint/type/build PASS. Visual/browser runtime tidak tersedia, GUI Windows dan JSON download WebView NOT RUN. Detail evidence/FRONTEND-STUDIO-REPORT.md. Langkah berikut: verifikasi frontend Windows, kemudian hubungkan draft project/shot → backend/API dengan approval biaya konkret.
+
+### Frontend siap diserahkan — 16 Oktober 2026
+CI Windows run 38717052876 SUCCESS: 85 JS, 12 Rust, installer/runtime/uninstall 8 checks. Artifact installer 11964370081 sudah diverifikasi tersedia. Tidak ada perubahan backend atau pengeluaran provider. Implementasi frontend draf dan handoff installer selesai; GUI Windows/DPI/download JSON tetap NOT RUN. Langkah berikut: gunakan editor draf pada Windows, lalu sinkronkan project/shot/reference/job ke backend Nexabot sesuai prioritas pengguna.

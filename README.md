@@ -12,7 +12,7 @@ Sudah tersedia: diagnostik host/sidecar dan adapter ChatGPT dengan login browser
 
 ## Jalankan
 
-Installer integrasi Nexabot **sebelum pembaruan frontend** [siap diunduh](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38666298634/artifacts/11942940371). Ekstrak ZIP, lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. CI Windows 57685d5 PASS: 79 tes JavaScript, 12 tes Rust dan delapan pemeriksaan install/runtime/uninstall. Mulai dari **Nexabot → Simpan key → Cek saldo**. Generasi memerlukan persetujuan input/biaya di aplikasi. Live Nexabot dan preview GUI belum diverifikasi.
+**[Unduh installer frontend terbaru](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876/artifacts/11964370081)** — commit `d31890d`. Ekstrak ZIP, lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. [CI Windows PASS](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876): 85 tes JavaScript, 12 tes Rust dan delapan pemeriksaan install/runtime/uninstall. Mulai dari **Naskah → Aset → Storyboard → Klip & review**; API key tidak diperlukan untuk editor draf. GUI Windows dan sinkronisasi proyek ke backend belum diverifikasi. Lihat [panduan frontend](docs/FRONTEND-STUDIO.md).
 
 Preview UI (Node.js 24 LTS):
 

@@ -1,6 +1,10 @@
 # Frontend studio — draf lokal
 
-Jalankan source terbaru melalui `npm ci` lalu `npm run dev` untuk preview browser, atau `npm run tauri dev` di Windows. Installer 57685d5 sebelumnya belum memuat frontend ini.
+**[Unduh installer frontend terbaru](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876/artifacts/11964370081)** — commit `d31890d`, [CI Windows PASS](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876). Login GitHub bila diperlukan, ekstrak ZIP, lalu jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Jika tautan langsung tidak mengunduh, buka halaman CI → Artifacts → `aluraya-native-lock-and-executable`.
+
+Installer memuat editor draf frontend. API key tidak diperlukan untuk menulis naskah, mengelola aset lokal, dan menyusun storyboard. Sinkronisasi proyek/shot ke Nexabot menyusul.
+
+Untuk pengembangan: `npm ci` lalu `npm run dev` untuk preview browser, atau `npm run tauri dev` di Windows.
 
 1. Klik nama proyek → buat proyek atau buka draf yang sudah ada.
 2. Naskah: tulis ide/cerita, pilih rasio, target durasi dan mode pengembangan.
