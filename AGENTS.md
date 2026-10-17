@@ -1,7 +1,7 @@
 # Instruksi coding agent — Aluraya
 
 ## Tujuan
-Implementasikan MVP Windows pribadi sesuai [prd.md](./prd.md). Paket saat ini berisi spesifikasi dan scaffold M-001/TASK-002. Lanjutkan checkpoint dalam [plan.md](./plan.md), jangan mulai ulang atau menganggap scaffold sebagai integrasi selesai. Jangan melakukan generasi berbayar hanya karena dokumen menyebutnya; UI pengguna harus menyetujui batch konkret.
+Implementasikan MVP Windows pribadi sesuai [prd.md](./prd.md). Acuan produk adalah spesifikasi v1.1 dari ZIP pengguna, salinan persis di docs/spec-v1.1/. Source aktif dipulihkan dari baseline a8f9e2e pada 17 Oktober 2026. Lanjutkan checkpoint M-001 dalam [plan.md](./plan.md), jangan mulai scaffold baru atau memperluas studio sebelum exit gate integrasi lulus. Jangan melakukan generasi berbayar hanya karena dokumen menyebutnya; UI pengguna harus menyetujui batch konkret.
 
 ## Urutan baca
 README.md -> prd.md -> plan.md -> architecture.md -> schema.md -> design.md -> rules.md -> testing.md -> decisions.md. Semua file tersebut ada di paket ini. PRD memiliki scope; schema memiliki field/state; design memiliki UX; architecture memiliki boundary; decisions memiliki alasan; rules memiliki engineering; testing memiliki bukti; plan memiliki urutan.
@@ -29,3 +29,6 @@ Perubahan dan alasan; file/modul; TASK serta REQ terkait; PASS/FAIL/NOT RUN deng
 
 ## Tambahan v1.1
 Nama produk Aluraya sudah dipilih pengguna; jangan kembali memakai nama kerja DramaCanvas untuk UI/branding. Penuhi REQ-016 melalui compiler prompt empat tipe dan manifest referensi; jangan menyalin prompt contoh sebagai aturan universal proyek. Jangan menyatukan board akhir pelarian dengan video awal kedatangan hanya karena keduanya diberikan dalam pesan yang sama. Baca aturan lint dan peran plan-only vs start-frame sebelum menghubungkan generator. Prompt contoh belum diuji pada Flow.
+
+## Pemulihan baseline — 17 Oktober 2026
+Pengguna membatalkan arah implementasi setelah baseline a8f9e2e. Branch arsip bukan sumber requirement atau kode untuk diambil kembali otomatis. Jangan mengembalikan Nexabot, profil API LLM berbayar/generik, planner draf renderer atau Flow WebView tertanam dari arsip. Fokus berikut tetap TASK-004 sesuai spesifikasi: buktikan jalur Flow yang didukung; jika tetap ditolak, pertahankan BLOCKED dan laporkan. Jangan mengubah kebutuhan untuk mengatasi blocker. Source runtime/script/test/config harus tetap baseline hingga ada task M-001 konkret. Lihat evidence/BASELINE-RESTORE-REPORT.md untuk identitas ZIP/source dan batas bukti.

@@ -65,7 +65,7 @@ cargo test --manifest-path src-tauri/Cargo.toml
 npm.cmd run tauri build
 ```
 
-Build executable Windows sudah lulus CI pada commit 0f163ae; build dan pemeriksaan installer memiliki gate terpisah. Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
+Baseline a8f9e2e sudah lulus build dan pemeriksaan installer pada run 38399230862. Cargo.lock dari ZIP yang sama sekarang dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
 
 Pada run GitHub Actions yang lulus, unduh artifact **aluraya-native-lock-and-executable**. Artifact berisi `*-setup.exe`, executable hasil build dan Cargo.lock. Untuk menjalankan aplikasi terpasang gunakan installer, bukan hanya menyalin aluraya.exe yang memerlukan resource pendamping. Artifact **aluraya-installer-check** berisi JSON dengan source commit, hash/ukuran installer dan hasil pemeriksaan.
 
@@ -74,8 +74,8 @@ Pemeriksaan CI memasang installer ke folder sementara dengan spasi, mencocokkan 
 ## Langkah pembuktian berikutnya
 
 1. Buktikan startup desktop dan round-trip diagnostik.
-2. Implementasikan OAuth resmi dengan penyimpanan token terlindungi OS; verifikasi izin plan usage, discovery model, dan satu respons. Login sendiri, jangan kirim token/password ke chat.
-3. Implementasikan adapter Flow pada profil khusus; observasi capability dan biaya aktual.
+2. ChatGPT login/model/response sudah pernah dibuktikan pada baseline. Ulangi hanya jika ada masalah aktual setelah pemasangan; jangan kirim token/password ke chat.
+3. Flow masih BLOCKED pada login profil khusus. Pembuktian jalur akses yang didukung harus mendahului capability/biaya dan generasi. Jangan mengulang login ditolak atau mengurangi proteksi browser.
 4. Tampilkan batch satu gambar lengkap dengan model/ref/biaya untuk persetujuan, baru jalankan. Video menyusul dengan persetujuan sendiri.
 
 Mengukur satu sampel process tree (ganti angka dengan PID Aluraya, bukan terminal):
@@ -89,3 +89,16 @@ Ini bukan pengukuran peak atau p95 dan belum membuktikan performa RAM 8 GB.
 ## Koneksi ChatGPT
 
 Ikuti [CHATGPT-START.md](./CHATGPT-START.md) untuk login, model dan pesan pertama. Jangan mengirim token atau URL callback ke chat dukungan.
+
+## Baseline yang dipulihkan
+Gunakan ZIP installer yang diberikan pengguna, identik dengan [artifact baseline a8f9e2e](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862/artifacts/11815215304). Ekstrak, lalu jalankan `target/release/bundle/nsis/Aluraya Studio_0.1.0_x64-setup.exe`. Tidak perlu membangun ulang untuk memakai ZIP tersebut. Installer bukan bukti seluruh M-001 selesai. Jangan menggunakan installer planner/Nexabot/WebView dari branch arsip sebagai baseline ini.
+
+Riwayat main telah dikembalikan ke baseline. Untuk pengembangan pada komputer yang memiliki checkout versi sesudahnya, pertahankan folder lama dan clone main ke folder baru agar pekerjaan lokal tidak terhapus atau perubahan lama ikut merge:
+
+```powershell
+git clone https://github.com/ferdilpu-sudo/Aluraya.git Aluraya-baseline
+cd Aluraya-baseline
+npm.cmd ci
+npm.cmd run tauri dev
+```
+Pemulihan Git tidak menghapus data proyek, login, profil browser atau file media pada komputer pengguna. Downgrade/upgrade instalasi lama belum diuji.

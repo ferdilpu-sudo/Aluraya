@@ -25,19 +25,23 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "897a60cae4bb1c4f156adb707ff7f7eeb198361001340b9ef019d00e697ae8fc"
+      "sha256": "65bfc5267bd28f58e11a19f36f14f11c08e1728c4ab8254b968f057ef5f53de6"
+    },
+    {
+      "path": "BASELINE.json",
+      "sha256": "8eebf74f2e8e84c1e37ebcffb0458fb8b58d4cd38eedc4db456da9c097970f16"
     },
     {
       "path": "README.md",
-      "sha256": "30c6380b6f389fe7a70f4540c85b822734ba748f8750d10ae9c2da790e4b127b"
+      "sha256": "254b1c635e5ad80e96569674074d01ed8201e0dc3de17ec0009251de7f802e07"
     },
     {
       "path": "architecture.md",
-      "sha256": "1b9e60241e19f0f2fc854e6defda916cceadba479270fd638fef23e0c5df13cb"
+      "sha256": "fecc939bbb670952d4a51f5629994856ec290b33fc2865c4a3e7f071530eca24"
     },
     {
       "path": "decisions.md",
-      "sha256": "c1c25ad4856ef0983d39be79d94abad7f92b3718a1aa113b501613788cfc68d5"
+      "sha256": "fe4cfbe65d840ad4da8ffdffa8e1717d4a1a6fe0ad9d1fda40dcf3db1d8d99e1"
     },
     {
       "path": "design.md",
@@ -61,11 +65,55 @@
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "c138b8c2be0841af8a08aedb6977f319cd8068d83f4b044e1fbc33a1a72085a1"
+      "sha256": "6472b438951d69fa94c074e88187a5214c598f66600c33558e94914c1bc35634"
+    },
+    {
+      "path": "docs/spec-v1.1/AGENTS.md",
+      "sha256": "2f7cecbee8c4b93c9eb3c88f3279a09413ce24845b38a7ad25d0699651cd8bab"
+    },
+    {
+      "path": "docs/spec-v1.1/README.md",
+      "sha256": "b01f7a9fb90d757f54fc58356aba4e479dc44879d832827695000db62cc27fe9"
+    },
+    {
+      "path": "docs/spec-v1.1/architecture.md",
+      "sha256": "2fbd69ece5de40757250ad1c9b82ee17ac48e1bb9568e94cbb0275b32c96d566"
+    },
+    {
+      "path": "docs/spec-v1.1/decisions.md",
+      "sha256": "5fe147f6de23108e0f27584af747947348a64985ebd9b24cdef503ae865e7f12"
+    },
+    {
+      "path": "docs/spec-v1.1/design.md",
+      "sha256": "ea045fb2f4a25d3edc0ba438a7e7c3486d348859383b69294eea7ddeadaa9059"
+    },
+    {
+      "path": "docs/spec-v1.1/plan.md",
+      "sha256": "b01df1c1895777686696ad00e66f97ce07104a54440d83642b53fb7e6ca80be0"
+    },
+    {
+      "path": "docs/spec-v1.1/prd.md",
+      "sha256": "8f3d5ee7730321f5753a76c09f3ea0a18a2683f9b2ed9b3ec90b29e7ff876c6a"
+    },
+    {
+      "path": "docs/spec-v1.1/rules.md",
+      "sha256": "7782668c4f0c61ee710642cbbddb0354a544c6f14375ebeca42b923f1c79cc4c"
+    },
+    {
+      "path": "docs/spec-v1.1/schema.md",
+      "sha256": "dc066b801ab005eafcf75ea7b158eb5c137f7791c85d4a28e638fdd7e3bdf827"
+    },
+    {
+      "path": "docs/spec-v1.1/testing.md",
+      "sha256": "3e8ad78732ad083a11b6fe776990dbe558eb2c6dcc547ffd718b5f5f469c80bf"
     },
     {
       "path": "eslint.config.js",
       "sha256": "4fac204ebe304111d12269d9822df4dcdfbf0ecbd071f944e16f93b31e08f447"
+    },
+    {
+      "path": "evidence/BASELINE-RESTORE-REPORT.md",
+      "sha256": "762476e26a8abd8f20fdc10c82fbecea9db742798eb22f48c7318fd014c7c4b7"
     },
     {
       "path": "evidence/CHATGPT-ADAPTER-REPORT.md",
@@ -85,7 +133,7 @@
     },
     {
       "path": "evidence/WINDOWS-INSTALLER-REPORT.md",
-      "sha256": "39ccd4169508cecd2c659d194022363c055339690174782ee76badc0039151b6"
+      "sha256": "b54e8f9596fd757dd0792c067f4d257e74e42f98376bb6c31464f02a1e382cb7"
     },
     {
       "path": "evidence/WINDOWS-STARTUP-REPORT.md",
@@ -109,11 +157,11 @@
     },
     {
       "path": "plan.md",
-      "sha256": "5015e7cbda61874506bc95c6e396c3a2933d965ac4fea394b5da5d910e06c4e0"
+      "sha256": "bfca0691f13385f9485cc91702afc17ef2c22534ad144193f4d1f29d384b6bd3"
     },
     {
       "path": "prd.md",
-      "sha256": "55b9c98b60dcb8a62fdb1ac0b38117d1f9f942e0f28004483472e7d8515e34de"
+      "sha256": "e01d4c0b6155f13c785fba719c9b7b91a53ddd5ddca8470a1d992ff70d062f5e"
     },
     {
       "path": "public/THIRD-PARTY-NOTICES.txt",
@@ -129,7 +177,7 @@
     },
     {
       "path": "schema.md",
-      "sha256": "39ddabedb8e539016f93131172677a764a2938b5bde50d265d13da43054a37c3"
+      "sha256": "dc066b801ab005eafcf75ea7b158eb5c137f7791c85d4a28e638fdd7e3bdf827"
     },
     {
       "path": "scripts/Measure-Aluraya.ps1",
@@ -242,6 +290,10 @@
     {
       "path": "sidecar/src/transport/frames.ts",
       "sha256": "7bfae373cba8cb3b126beb9163000a84072ab5aa77459410eea37bc5ee0b060b"
+    },
+    {
+      "path": "src-tauri/Cargo.lock",
+      "sha256": "79a86b155cd3c3f9acfbfabb1c116e77a0f99d01b1d87e7bb8aa624b33a63642"
     },
     {
       "path": "src-tauri/Cargo.toml",
@@ -445,7 +497,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "b38fabb21f30551c9c3a4f09c975982e8b8d9089674343b6fe7c78f0bdc1e2ad"
+      "sha256": "66749e35242b6aae6302da8ab1aec22a4858c95f2ecd12927a7fad540533b193"
     },
     {
       "path": "tests/browser-boundary.test.ts",
@@ -508,5 +560,5 @@
       "sha256": "2c0b58d683675f3236cc461184d77bd2210cd628762bb5ade7594f6596757c8d"
     }
   ],
-  "checkpoint": "TASK-003 live PASS; TASK-004 Google login BLOCKED, sandbox and contract fixes"
+  "checkpoint": "Original specification v1.1 restored; source a8f9e2e; M-001 Flow blocked"
 }

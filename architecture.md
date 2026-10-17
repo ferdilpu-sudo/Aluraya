@@ -31,7 +31,7 @@ WebView aplikasi hanya merender UI lokal. Google login/Flow memakai browser khus
 | chatgpt-adapter | OAuth, model discovery, streaming | ChatAgentPort |
 | flow-adapter | Interaksi UI provider dan hasil | GenerationPort |
 
-Susunan yang direncanakan: `src/features/<feature>/` untuk UI; `src/contracts/` untuk DTO tervalidasi; `src-tauri/src/application/`, `domain/`, `infrastructure/` untuk host; `sidecar/src/chatgpt/`, `flow/`, `transport/` untuk integrasi. Path ini belum berupa source yang telah dibuat. Registry hanya wiring, bukan semua logika dalam satu file.
+Susunan yang direncanakan: `src/features/<feature>/` untuk UI; `src/contracts/` untuk DTO tervalidasi; `src-tauri/src/application/`, `domain/`, `infrastructure/` untuk host; `sidecar/src/chatgpt/`, `flow/`, `transport/` untuk integrasi. Source baseline sudah berisi sebagian path untuk shell, ChatGPT dan setup Flow. Modul produksi/SQLite/planner tetap target, bukan klaim implementasi. Registry hanya wiring, bukan semua logika dalam satu file.
 
 Host adalah satu-satunya penulis database. Sidecar mengirim event tervalidasi melalui stdio JSON berframing; tidak membuka port kontrol publik. Host menyimpan event dan state secara atomik sebelum memberi tahu UI. Format transport dan ukuran maksimum pesan dibatasi; media lewat referensi file yang divalidasi, bukan base64 besar dalam event.
 
@@ -70,7 +70,7 @@ Target Windows x64. Installer mengemas Tauri, UI, sidecar, runtime sidecar dan b
 - https://developers.openai.com/cookbook/articles/sign-in-with-chatgpt — integrasi proyek pribadi lokal.
 - https://developers.openai.com/siwc/token-sharing-open-source/preview-limitations — batas jalur plan usage.
 - https://support.google.com/flow/answer/16526234?hl=en — saldo dan biaya; tidak membuktikan API automation publik.
-Semua referensi diperiksa 11 Oktober 2026; revalidasi saat implementasi. Tidak ada live integrasi yang sudah diuji.
+Semua referensi diperiksa 11 Oktober 2026; revalidasi saat implementasi. Catatan ini berasal dari spesifikasi 11 Oktober. Pada baseline, thin slice ChatGPT pernah dibuktikan pengguna 13 Oktober; Flow tetap BLOCKED. Status aktif berada di plan.md dan laporan baseline.
 
 ## Pipeline compiler prompt (REQ-016)
 Planner menghasilkan struktur, bukan hanya satu string panjang. Application service `PromptCompiler` menggabungkan versi Script/Shot/Style/ReferenceManifest dan capability snapshot menjadi empat dokumen sesuai jenis tugas. Modul `PromptLint` memvalidasi struktur dan konflik sebelum review. Compiler pure dan dapat diuji tanpa provider; adapter provider menerjemahkan label reference ke input UI yang benar-benar didukung.
@@ -81,19 +81,3 @@ ReferenceN bersifat lokal per invocation. Karakter yang Reference4 pada board da
 Style profile dipisah menjadi rendering/warna/tekstur bersama, pencahayaan per task, dan kamera per shot. Character Card mengutamakan wajah/wardrobe terbaca; scene plate keterbacaan ruang; storyboard ritme shot; video gerak/waktu/audio. Hindari menempel seluruh kalimat style identik ke semua tugas jika menghasilkan konflik. Preferensi ilustrasi/animasi lama tidak mengalahkan gaya live-action yang dipilih proyek ini.
 
 Tidak mengasumsikan Gemini/Flow menerima token `@Reference1` secara literal. Adapter merender label yang sesuai dan memverifikasi attachment order/capacity. Capability model yang tidak mendukung jumlah referensi menahan batch dan menawarkan rencana baru untuk disetujui; jangan membuang referensi diam-diam.
-
-
-## Status kode checkpoint M-001
-
-Sudah ada `src/features/canvas`, `copilot`, `diagnostics`, `src/application`, `src/contracts`, `src-tauri/src/application`, `src-tauri/src/infrastructure`, dan `sidecar/src/transport`. Saat ini host hanya menjalankan diagnostik read-only. Semua modul produksi pada tabel di atas tetap target arsitektur; belum ada DB, OAuth, Flow adapter, approval atau scheduler. Kontrak terbatas saat ini: [docs/IPC.md](./docs/IPC.md).
-
-## Checkpoint TASK-003
-
-Adapter `sidecar/src/chatgpt` memisahkan OAuth, token/identity, protected store, HTTP/SSE dan session coordinator. Kredensial bukan database proyek: disimpan lokal terenkripsi DPAPI, hanya sidecar yang menggunakannya, dan host memegang lock OS eksklusif. Snapshot publik melewati DTO Rust/TypeScript; tidak memuat rahasia. Percakapan sementara in-memory, satu operasi aktif, polling UI selama aktivitas. Batas sementara dan bukti live yang belum dijalankan tercatat di docs/CHATGPT-START.md. Modul produksi/SQLite masih menunggu gate M-001.
-
-
-## Checkpoint TASK-004 — profil Flow
-
-`sidecar/src/flow` memisahkan daftar profil lokal, browser, pembacaan label dan coordinator. Host mengirim root app-local/flow melalui environment tepercaya; React hanya boleh mengirim UUID profil dan pilihan chrome/msedge. Satu persistent browser context aktif, pipe Playwright standar, tanpa port kontrol TCP, tanpa default profile import, stealth atau endpoint Google privat. Registry profil merupakan metadata koneksi di sidecar, bukan database proyek. Browser melindungi sesi profil menurut fasilitas OS; profil tidak diekspor.
-
-Observasi hanya pada origin/path Flow yang diizinkan, tidak pada Google login; URL query dan isi kredensial tidak diteruskan. Teks model/kredit hanya kandidat dengan batas ukuran, tidak pernah otorisasi produksi. Penutupan host memberi EOF dan menunggu sampai dua detik sebelum fallback kill sidecar; penutupan browser Windows aktual setelah crash tetap perlu bukti. Playwright disertakan utuh sebagai dependensi eksternal agar file runtime dinamis tersedia.

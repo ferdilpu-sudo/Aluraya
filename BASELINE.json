@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "restoredAt": "2026-10-17",
+  "sourceCommit": "a8f9e2ef1a1377282a0004dc6bebfb23bcdf8455",
+  "sourceTree": "8f9c1864283bbf7653a6781b6903bcca546486b1",
+  "archivedHead": "bcc3826923fcaf968ead4a17ebf370ee716a3097",
+  "archiveBranch": "archive/2026-10-17-before-original-baseline",
+  "artifact": {
+    "runId": 38399230862,
+    "artifactId": 11815215304,
+    "file": "aluraya-native-lock-and-executable.zip",
+    "bytes": 30225647,
+    "sha256": "acc002137c3726f42c68cb1b3e1aac3067f0767adb21c34510ffc430e74de44c",
+    "installerSha256": "916b557df34fdd916d0f64a438ecd4719bca985baadc96aff839e36098d3e4ff",
+    "rawExeSha256": "21ccbfc8681ea5ba7b56752d651fc335350fb1894ebc5c8bb7caf594c525c8cf",
+    "cargoLockSha256": "79a86b155cd3c3f9acfbfabb1c116e77a0f99d01b1d87e7bb8aa624b33a63642"
+  },
+  "specification": {
+    "file": "Aluraya-Windows-Spec-v1.1(2).zip",
+    "sha256": "7d95e70b7f3e3f2fef7e073884b785ed6c9d3f3c5652a45a144cf223f2277ed5",
+    "documents": [
+      {
+        "path": "docs/spec-v1.1/AGENTS.md",
+        "sha256": "2f7cecbee8c4b93c9eb3c88f3279a09413ce24845b38a7ad25d0699651cd8bab"
+      },
+      {
+        "path": "docs/spec-v1.1/README.md",
+        "sha256": "b01f7a9fb90d757f54fc58356aba4e479dc44879d832827695000db62cc27fe9"
+      },
+      {
+        "path": "docs/spec-v1.1/architecture.md",
+        "sha256": "2fbd69ece5de40757250ad1c9b82ee17ac48e1bb9568e94cbb0275b32c96d566"
+      },
+      {
+        "path": "docs/spec-v1.1/decisions.md",
+        "sha256": "5fe147f6de23108e0f27584af747947348a64985ebd9b24cdef503ae865e7f12"
+      },
+      {
+        "path": "docs/spec-v1.1/design.md",
+        "sha256": "ea045fb2f4a25d3edc0ba438a7e7c3486d348859383b69294eea7ddeadaa9059"
+      },
+      {
+        "path": "docs/spec-v1.1/plan.md",
+        "sha256": "b01df1c1895777686696ad00e66f97ce07104a54440d83642b53fb7e6ca80be0"
+      },
+      {
+        "path": "docs/spec-v1.1/prd.md",
+        "sha256": "8f3d5ee7730321f5753a76c09f3ea0a18a2683f9b2ed9b3ec90b29e7ff876c6a"
+      },
+      {
+        "path": "docs/spec-v1.1/rules.md",
+        "sha256": "7782668c4f0c61ee710642cbbddb0354a544c6f14375ebeca42b923f1c79cc4c"
+      },
+      {
+        "path": "docs/spec-v1.1/schema.md",
+        "sha256": "dc066b801ab005eafcf75ea7b158eb5c137f7791c85d4a28e638fdd7e3bdf827"
+      },
+      {
+        "path": "docs/spec-v1.1/testing.md",
+        "sha256": "3e8ad78732ad083a11b6fe776990dbe558eb2c6dcc547ffd718b5f5f469c80bf"
+      }
+    ]
+  },
+  "checkpoint": "M-001 partial; TASK-004 Flow access blocked; later milestones pending"
+}

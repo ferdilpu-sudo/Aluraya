@@ -69,8 +69,3 @@ Video structuredContent: `{durationSeconds, beats:[{startSeconds,endSeconds,sour
 Character card: `{identityTraits,wardrobe,pose,framing,lighting,background,views}`. Multi-view opsional; dilarang mewariskan timeline/camera movement video ke gambar identitas tanpa tujuan jelas.
 Scene plate: `{locationGeometry,landmarks,props,timeOfDay,lighting,palette,occupancy:empty,excludedHumanEvidence:[people,shadows,reflections],cameraView}`.
 Approval snapshot generasi diperluas dengan promptDocumentId/hash dan manifest hash. Enqueue memerlukan validasi terbaru terhadap capability yang relevan. Validasi prompt tidak membuktikan hasil generator patuh; ResultSelection tetap human review.
-
-
-## Kontrak scaffold diagnostik (M-001/TASK-002)
-
-`health.inspect` adalah pemeriksaan instalasi tanpa project scope, token, atau side effect provider. `inspect_runtime` merupakan command Tauri lokal; response berisi runtime/platform/nodeVersion/checks. Detail, batas frame dan UUID ada di [docs/IPC.md](./docs/IPC.md); DTO TS ada di `src/contracts/`, mirror Rust di `src-tauri/src/contracts.rs`. Tidak mengubah kontrak produksi yang belum diimplementasikan di atas.

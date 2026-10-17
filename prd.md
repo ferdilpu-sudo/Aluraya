@@ -1,7 +1,7 @@
 # PRD — Aluraya
 
 ## Status dan tujuan
-Kebutuhan dikonfirmasi 11 Oktober 2026; implementasi fondasi M-001 dimulai, diperbarui 12 Oktober 2026. Belum ada AC yang diklaim terpenuhi penuh. Pemilik produk: pengguna. Target satu pengguna pribadi di Windows, tanpa server/cloud hosting milik aplikasi. Mengurangi perpindahan manual antara chat, referensi, storyboard, dan Flow.
+Kebutuhan dikonfirmasi 11 Oktober 2026 dan dipulihkan dari ZIP pengguna pada 17 Oktober 2026. Implementasi aktif kembali ke fondasi M-001 a8f9e2e; M-001 belum lulus karena Flow masih terblokir. Pemilik produk: pengguna. Target satu pengguna pribadi di Windows, tanpa server/cloud hosting milik aplikasi. Mengurangi perpindahan manual antara chat, referensi, storyboard, dan Flow.
 
 ## Lingkup
 MVP mencakup seluruh kebutuhan Must dalam tabel. Hasil akhir klip per shot dengan dialog/SFX, bukan episode yang sudah diedit. Tidak termasuk musik, subtitle, editor timeline lengkap, publikasi, marketplace, pembayaran, kolaborasi, aplikasi mobile, maupun generasi AI lokal. Akun Flow campuran didukung sesuai kemampuan aktual masing-masing.

@@ -1,61 +1,37 @@
-# Aluraya Studio
+# Aluraya Studio — baseline rencana awal
 
-**Dari naskah menjadi adegan.** Fondasi Windows pribadi, source v0.1.0 berdasarkan spesifikasi v1.1. Checkpoint 13 Oktober 2026: **M-001 in progress, integrasi belum lulus**.
+**17 Oktober 2026: main dipulihkan ke baseline stabil `a8f9e2e` (13 Oktober), sesuai ZIP pengguna.** Arah produk kembali ke [spesifikasi asli v1.1](docs/spec-v1.1/README.md): studio Windows pribadi dari ide/naskah, aset, storyboard hingga klip per shot, dengan hasil otomatis pada canvas.
 
-Sudah tersedia: canvas satu kartu, diagnostik host/sidecar dan adapter ChatGPT dengan login browser, penyimpanan kredensial Windows, model discovery serta panel chat streaming. Fondasi runtime Windows dan CI native sudah PASS. Respons ChatGPT nyata sudah PASS berdasarkan screenshot pengguna; lihat [panduan ChatGPT](./docs/CHATGPT-START.md).
+- Copilot di dalam aplikasi memakai paket ChatGPT; tidak ada fallback API berbayar.
+- Gambar/video melalui akun dan kredit Google Flow pada browser pendamping khusus.
+- Canvas: aset di atas, storyboard di tengah, hasil di bawah, Copilot di kanan.
+- Persetujuan per tahap/input/biaya, default satu profil dan satu job aktif.
+- Output klip per shot dengan dialog/SFX; musik, subtitle dan editing episode di luar aplikasi.
 
-**Koneksi Flow awal:** profil Chrome/Edge khusus dan pemeriksaan halaman read-only tersedia melalui tab Flow; lihat [panduan Flow](./docs/FLOW-START.md). Percobaan login pengguna ditolak Google pada 13 Oktober 2026; TASK-004 BLOCKED. Patch mengaktifkan sandbox browser dan mengenali halaman penolakan; keberhasilan login belum terbukti.
+Source aplikasi, tests, scripts dan konfigurasi runtime kembali persis ke baseline. Cargo.lock dipulihkan dari ZIP. Nexabot, API LLM generik, WebView Flow tertanam dan planner draf sesudah baseline tidak ada di main. Versi tersebut disimpan hanya untuk pemulihan di branch [archive/2026-10-17-before-original-baseline](https://github.com/ferdilpu-sudo/Aluraya/tree/archive/2026-10-17-before-original-baseline), bukan acuan kelanjutan.
 
-**Belum tersedia:** generasi Flow otomatis, penyimpanan proyek, media import, approval produksi, scheduler, dan installer tervalidasi. Chat aktif setelah akun, izin paket, model dan konfirmasi penggunaan tersedia. Tidak ada hasil AI sintetis yang dilabeli sebagai hasil provider. Posisi kartu dan riwayat chat hanya bertahan pada sesi aplikasi.
+## Status sebenarnya
+**M-001 belum lulus.** Baseline stabil berarti build/installer terverifikasi; bukan otomatisasi Flow selesai. Thin slice ChatGPT pernah menghasilkan jawaban nyata. Login Flow pada profil aplikasi masih terblokir; generasi, pengambilan hasil otomatis, produksi dan seluruh studio belum terbukti. Tidak membangun milestone lanjutan di atas blocker ini.
 
-## Jalankan
+Langkah berikut: **TASK-004 — buktikan jalur akses Flow yang didukung**, lalu capability/biaya dan persetujuan satu gambar. Jika akses tetap terblokir, laporkan blocker; jangan mengganti kebutuhan atau membuat fallback diam-diam. Lihat [plan aktif](plan.md).
 
-Preview UI (Node.js 24 LTS):
+## Baseline dan menjalankan
+ZIP pengguna cocok SHA-256 dengan [artifact a8f9e2e](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38399230862/artifacts/11815215304). Ekstrak dan jalankan `target/release/bundle/nsis/Aluraya Studio_0.1.0_x64-setup.exe`. Tidak perlu API key atau memasang Node/Rust untuk menggunakan installer.
 
-```sh
-npm ci
-npm run dev
-```
-
-Buka http://127.0.0.1:1420. Browser melaporkan host desktop tidak tersedia, sesuai keadaan sebenarnya.
-
-Desktop Windows memerlukan Rust stable MSVC, C++ Build Tools, WebView2, dan Node 24 x64 dengan lisensi distribusinya:
+Untuk source di folder checkout baru:
 
 ```powershell
+git clone https://github.com/ferdilpu-sudo/Aluraya.git Aluraya-baseline
+cd Aluraya-baseline
 npm.cmd ci
 npm.cmd run tauri dev
 ```
 
-Petunjuk lengkap, perbaikan prasyarat dan build installer ada di [docs/WINDOWS-START.md](./docs/WINDOWS-START.md). Tidak diperlukan OPENAI_API_KEY. Belum ada config kredensial yang harus diisi.
+Development Windows memerlukan Node 24 x64, Rust/MSVC, C++ Build Tools dan WebView2. [Panduan Windows](docs/WINDOWS-START.md). Riwayat main dipulihkan: jangan merge kembali perubahan versi menyimpang melalui pull biasa dari checkout lama. Data dan file pengguna pada komputer tidak dihapus oleh pemulihan Git.
 
-## Pemeriksaan tersedia
+## Dokumen dan verifikasi
+[PRD](prd.md) · [Plan](plan.md) · [Architecture](architecture.md) · [Schema](schema.md) · [Design](design.md) · [Rules](rules.md) · [Testing](testing.md) · [Decisions](decisions.md).
 
-```sh
-npm run check
-npm run doctor
-npm run build
-```
+Sepuluh dokumen ZIP asli disimpan tanpa perubahan di `docs/spec-v1.1/`. Dokumen root memakai requirement yang sama dengan checkpoint faktual. [Laporan pemulihan](evidence/BASELINE-RESTORE-REPORT.md) mencatat hash ZIP, source, scope pembersihan dan PASS/NOT RUN. Manifest provenance: [BASELINE.json](BASELINE.json).
 
-`check`: format, lint, tes, typecheck dan build UI/sidecar. `doctor`: pemeriksaan prasyarat lokal; exit 2 berarti ada blocker. `build` **tidak** membangun executable Windows. `npm run tauri build` menjalankan build native pada Windows. Sidecar terpaket bersama runtime Node; installer final tetap perlu dibuktikan.
-
-## Struktur
-
-| Path | Tanggung jawab |
-|---|---|
-| src/features/ | Canvas, copilot shell, diagnostik |
-| src/application/ | Bridge typed antara UI dan host |
-| src/contracts/ | DTO Zod untuk input/output |
-| src-tauri/ | Host native, proses sidecar, capability lokal |
-| sidecar/src/ | Diagnostik, adapter ChatGPT dan framing terbatas |
-| scripts/ | Build, packaging, prasyarat, sampel RAM |
-| tests/ | Batas protokol dan proses sidecar nyata |
-| docs/ | Menjalankan Windows dan protokol IPC |
-| evidence/ | Bukti pemeriksaan dan keterbatasan checkpoint |
-
-Target perangkat: HP Pavilion x360 14-dy0xxx, i7-1165G7, RAM 8 GB, Windows 11 Enterprise LTSC 24H2 x64. Belum ada benchmark. Banyak akun tetap rencana produk; default produksi satu profil/job aktif. Studio penuh, SQLite, FFmpeg dan adapter provider menunggu milestone terkait.
-
-## Kontrak proyek
-
-[PRD](./prd.md) · [Plan](./plan.md) · [Architecture](./architecture.md) · [Schema](./schema.md) · [Design](./design.md) · [Rules](./rules.md) · [Testing](./testing.md) · [Decisions](./decisions.md) · [AGENTS](./AGENTS.md)
-
-Baca [evidence/M001-REPORT.md](./evidence/M001-REPORT.md) sebelum melanjutkan. Sumber asli spesifikasi tetap dalam ZIP unggahan pengguna; paket ini deliverable source baru. Source dipelihara di repository GitHub pengguna. Tidak ada generasi Flow atau pengeluaran provider dari pekerjaan coding ini.
+`npm run check` memeriksa format, lint, tes, typecheck dan build UI/sidecar. Build native: `npm run desktop:prepare`, `cargo test --locked --manifest-path src-tauri/Cargo.toml`, `npm run tauri build -- --bundles nsis`. Tidak ada provider live atau generasi berbayar yang dijalankan oleh pemulihan ini.
