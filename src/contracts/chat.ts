@@ -10,6 +10,8 @@ export const chatActionSchema = z.discriminatedUnion('action', [
   z.object({ action: z.literal('models') }).strict(),
   z.object({ action: z.literal('confirm_plan') }).strict(),
   z.object({ action: z.literal('clear') }).strict(),
+  z.object({ action: z.literal('bridge_enable') }).strict(),
+  z.object({ action: z.literal('bridge_disable') }).strict(),
   z.object({ action: z.literal('accounts'), page: z.number().int().min(0).max(100000) }).strict(),
   z.object({ action: z.literal('select'), accountId: z.uuid() }).strict(),
   z
@@ -58,6 +60,8 @@ export const chatSnapshotSchema = z
     planConfirmed: z.boolean(),
     welcomePending: z.boolean(),
     usagePaused: z.boolean(),
+    bridgeActive: z.boolean().optional(),
+    bridgeCode: z.string().regex(/^[A-Za-z0-9_-]{43}$/).nullable().optional(),
     accounts: z.array(z.object({ id: z.uuid(), label: z.string().max(380) }).strict()).max(10),
     accountCount: z.number().int().nonnegative(),
     accountPage: z.number().int().nonnegative(),
