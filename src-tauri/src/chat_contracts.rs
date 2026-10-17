@@ -11,6 +11,8 @@ pub enum ChatAction {
     #[serde(rename = "models")] Models,
     #[serde(rename = "confirm_plan")] ConfirmPlan,
     #[serde(rename = "clear")] Clear,
+    #[serde(rename = "bridge_enable")] BridgeEnable,
+    #[serde(rename = "bridge_disable")] BridgeDisable,
     #[serde(rename = "accounts")] Accounts { page: u32 },
     #[serde(rename = "select")] Select { #[serde(rename = "accountId")] account_id: String },
     #[serde(rename = "send")] Send { model: String, text: String },
@@ -64,7 +66,8 @@ impl ChatDiagnostic {
 pub struct ChatSnapshot {
     schema_version: u8, activity: String, account_id: Option<String>, email: Option<String>,
     signed_in: bool, plan_enabled: bool, plan_confirmed: bool, welcome_pending: bool,
-    usage_paused: bool, accounts: Vec<AccountSummary>, account_count: u32, account_page: u32,
+    usage_paused: bool, #[serde(default)] bridge_active: bool, #[serde(default)] bridge_code: Option<String>,
+    accounts: Vec<AccountSummary>, account_count: u32, account_page: u32,
     models: Vec<Model>, reply: Option<Reply>, error: Option<String>, diagnostic: Option<ChatDiagnostic>,
 }
 impl ChatSnapshot {
@@ -74,6 +77,8 @@ impl ChatSnapshot {
             && ["idle", "loading", "login", "models", "reply", "logout"].contains(&self.activity.as_str())
             && self.account_id.as_ref().map_or(true, |id| uuid::Uuid::parse_str(id).is_ok())
             && self.email.as_ref().map_or(true, |email| email.len() <= 1280)
+            && self.bridge_code.as_ref().map_or(true, |code| code.len() == 43
+                && code.bytes().all(|c| c.is_ascii_alphanumeric() || c == b'-' || c == b'_'))
             && self.accounts.len() <= 10 && self.models.len() <= 100
             && self.accounts.iter().all(|a| uuid::Uuid::parse_str(&a.id).is_ok() && a.label.len() <= 1520)
             && self.models.iter().all(|m| !m.id.is_empty() && m.id.len() <= 800 && !m.name.is_empty() && m.name.len() <= 800)
