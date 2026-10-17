@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useChat } from './useChat';
 import { ChatConnection } from './ChatConnection';
 import { ChatFailure } from './ChatFailure';
+import { BridgeConnection } from './BridgeConnection';
 import type { ChatAction, ChatSnapshot } from '../../contracts/chat';
 
 function Conversation({
@@ -171,6 +172,7 @@ export function CopilotPanel() {
             execute={execute}
           />
           <ChatFailure state={state} />
+          <BridgeConnection state={state} busy={busy} execute={execute} />
           <Conversation
             key={`${state.accountId ?? 'new'}:${state.signedIn}`}
             state={state}
