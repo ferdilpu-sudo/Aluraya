@@ -33,6 +33,8 @@ export class ChatSession {
     diagnostic: null,
   };
   private history: Message[] = [];
+  private bridgeBusy = false;
+  private bridgeAbort: AbortController | null = null;
   private abort: AbortController | null = null;
   private running: Promise<void> = Promise.resolve();
   private closed = false;
@@ -130,6 +132,9 @@ export class ChatSession {
   act(action: ChatAction): ChatSnapshot {
     if (this.closed) throw new ChatError('LOGIN_REQUIRED');
     if (action.action === 'inspect') return this.snapshot();
+    if (this.bridgeBusy && action.action !== 'cancel')
+      return { ...this.snapshot(), error: 'BUSY' };
+
     if (action.action === 'cancel') {
       this.abort?.abort();
       return this.snapshot();
@@ -270,9 +275,49 @@ export class ChatSession {
     }
     return this.snapshot();
   }
+  /**
+   * One-shot model inference for an explicitly paired local creative client.
+   * Uses the existing authorized account but does not modify Aluraya chat
+   * history or disclose account credentials to the caller.
+   */
+  async replyOnce(model: string, text: string): Promise<string> {
+    if (this.closed || this.bridgeBusy || this.state.activity !== 'idle')
+      throw new ChatError('BUSY');
+    if (!this.state.planConfirmed || this.state.usagePaused)
+      throw new ChatError('PLAN_CONFIRMATION_REQUIRED');
+    if (!this.state.models.some((item) => item.id === model))
+      throw new ChatError('INVALID_MODEL');
+    if (!text.trim() || text.length > 4000)
+      throw new ChatError('CONTEXT_LIMIT');
+    this.bridgeBusy = true;
+    const controller = new AbortController();
+    this.bridgeAbort = controller;
+    let reply = '';
+    try {
+      await this.deps.streamReply(
+        await this.access(controller.signal),
+        model,
+        [{ role: 'user', content: text }],
+        controller.signal,
+        (delta) => { reply += delta; },
+      );
+      controller.signal.throwIfAborted();
+      if (!reply.trim()) throw new ChatError('RESPONSE_INCOMPLETE');
+      return reply;
+    } finally {
+      this.bridgeAbort = null;
+      this.bridgeBusy = false;
+    }
+  }
+
+  cancelBridge(): void {
+    this.bridgeAbort?.abort();
+  }
+
   async close() {
     this.closed = true;
     this.abort?.abort();
+    this.cancelBridge();
     await this.running;
     await this.store.close();
   }
