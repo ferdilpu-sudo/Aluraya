@@ -4,9 +4,11 @@ import { ChatSession } from './chatgpt/session';
 import { WindowsStore } from './chatgpt/store';
 import { FlowSession } from './flow/session';
 import { FlowProfiles } from './flow/profiles';
+import { SwitchlyBridgeServer } from './switchly-bridge';
 let flow: FlowSession | null = null;
 
 let chat: ChatSession | null = null;
+const switchlyBridge = new SwitchlyBridgeServer();
 export function dispatch(frame: string): string {
   const request = requestSchema.parse(JSON.parse(frame) as unknown);
   if (request.type === 'flow.action') {
@@ -26,11 +28,18 @@ export function dispatch(frame: string): string {
     const directory = process.env.ALURAYA_AUTH_DIR;
     if (!directory) throw new Error('AUTH_DIRECTORY_MISSING');
     chat ??= new ChatSession(new WindowsStore(directory));
+    const action = request.payload;
+    if (action.action === 'bridge_enable') switchlyBridge.enable(chat);
+    if (action.action === 'bridge_disable') switchlyBridge.disable();
+    if (action.action === 'logout' || action.action === 'select')
+      switchlyBridge.disable();
+    const snapshot = action.action === 'bridge_enable' || action.action === 'bridge_disable'
+      ? chat.snapshot() : chat.act(action);
     const response = JSON.stringify({
       schemaVersion: 1,
       requestId: request.requestId,
       ok: true,
-      payload: chat.act(request.payload),
+      payload: { ...snapshot, ...switchlyBridge.status() },
     });
     if (Buffer.byteLength(response) > MAX_FRAME_BYTES) throw new Error('FRAME_TOO_LARGE');
     return response;
@@ -56,5 +65,6 @@ export function dispatch(frame: string): string {
   );
 }
 export async function closeChat() {
+  switchlyBridge.disable();
   await Promise.allSettled([chat?.close(), flow?.close()]);
 }
