@@ -30,7 +30,10 @@ function fakeChat() {
 
 async function listeningHost() {
   const root = await mkdtemp(join(tmpdir(), 'aluraya-bridge-'));
-  const path = join(root, 'bridge.sock');
+  const path =
+    process.platform === 'win32'
+      ? String.raw`\\.\pipe\Aluraya.Switchly.Test.` + randomUUID()
+      : join(root, 'bridge.sock');
   const server = new SwitchlyBridgeServer(path, true);
   const chat = fakeChat();
   const status = server.enable(chat);
