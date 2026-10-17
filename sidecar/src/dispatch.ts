@@ -29,7 +29,14 @@ export function dispatch(frame: string): string {
     if (!directory) throw new Error('AUTH_DIRECTORY_MISSING');
     chat ??= new ChatSession(new WindowsStore(directory));
     const action = request.payload;
-    if (action.action === 'bridge_enable') switchlyBridge.enable(chat);
+    let bridgeError: string | null = null;
+    if (action.action === 'bridge_enable') {
+      try { switchlyBridge.enable(chat); }
+      catch (error) {
+        bridgeError = error instanceof Error && error.message === 'WINDOWS_REQUIRED'
+          ? 'WINDOWS_REQUIRED' : 'PLAN_CONFIRMATION_REQUIRED';
+      }
+    }
     if (action.action === 'bridge_disable') switchlyBridge.disable();
     if (action.action === 'logout' || action.action === 'select')
       switchlyBridge.disable();
@@ -39,7 +46,7 @@ export function dispatch(frame: string): string {
       schemaVersion: 1,
       requestId: request.requestId,
       ok: true,
-      payload: { ...snapshot, ...switchlyBridge.status() },
+      payload: { ...snapshot, ...switchlyBridge.status(), error: bridgeError ?? snapshot.error },
     });
     if (Buffer.byteLength(response) > MAX_FRAME_BYTES) throw new Error('FRAME_TOO_LARGE');
     return response;
