@@ -1,0 +1,31 @@
+name: Bridge format (one-time)
+on:
+  push:
+    branches:
+      - feat/switchly-copilot-bridge-ca00-20261017
+permissions:
+  contents: write
+jobs:
+  format:
+    if: github.event.head_commit.message == 'chore(bridge): run formatter'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          ref: feat/switchly-copilot-bridge-ca00-20261017
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm exec -- prettier --write src/contracts/chat.ts src/features/copilot/BridgeConnection.tsx src/features/copilot/CopilotPanel.tsx sidecar/src/chatgpt/session.ts sidecar/src/dispatch.ts sidecar/src/switchly-bridge.ts tests/switchly-bridge.test.ts
+      - name: Commit formatted files
+        run: |
+          git diff --check
+          git add src/contracts/chat.ts src/features/copilot/BridgeConnection.tsx src/features/copilot/CopilotPanel.tsx sidecar/src/chatgpt/session.ts sidecar/src/dispatch.ts sidecar/src/switchly-bridge.ts tests/switchly-bridge.test.ts
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "style(bridge): format source with repository Prettier"
+          git push origin HEAD:feat/switchly-copilot-bridge-ca00-20261017
