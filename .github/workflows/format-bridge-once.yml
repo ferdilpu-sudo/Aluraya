@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   format:
-    if: github.event.head_commit.message == 'chore(bridge): run formatter'
+    if: "github.event.head_commit.message == 'chore(bridge): run formatter'"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
