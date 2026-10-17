@@ -122,3 +122,7 @@ Nexabot runtime/test suite dihapus bersama implementasi. Bukti Nexabot/installer
 
 ## API-002 — Chat Completions
 Tests llm-session/http/secrets/sidecar menguji approval sekali pakai/kedaluwarsa, tarif wajib, invalidasi key/tujuan, request ambigu/cancel, redaksi, redirect, response malformed/oversized, real HTTP loopback dan pipeline sidecar terpaket. DPAPI roundtrip hanya Windows; semua key dan server adalah fixture. Rust llm_contracts menolak privilege/secret fields, tarif belum dicek dan URL tidak aman. Bukti aktual di [LLM-ADAPTER-REPORT](evidence/LLM-ADAPTER-REPORT.md).
+
+
+## PLAN-001 — proposal → review → append draf
+`tests/planning.test.ts` memeriksa sumber eksplisit dan tidak terpotong, JSON tidak valid/privilege field/ref duplikat ditolak, append tanpa menimpa isi lama, ID/ref buatan aplikasi, stale pada edit/pindah proyek, double click/replay, preserve-dialogue, request correlation, respons terpotong, kompatibilitas backup v1 lama dan receipt lintas reload/import. LLM session menguji reply.requestId berasal dari approval, Rust menolak correlation hilang/tidak valid. [Bukti](evidence/PLANNER-REPORT.md). Fixture bukan hasil provider live. GUI Windows, kualitas usulan nyata dan biaya live tetap NOT RUN.

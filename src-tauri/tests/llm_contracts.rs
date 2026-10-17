@@ -17,3 +17,13 @@ fn rejects_unsafe_connections_and_accepts_explicit_loopback() {
     input["connection"]["baseUrl"] = serde_json::json!("https://example.com"); input["connection"]["endpoint"] = serde_json::json!("//other.example.com");
     assert!(serde_json::from_value::<LlmAction>(input).unwrap().validate().is_err());
 }
+
+#[test]
+fn reply_requires_valid_request_correlation() {
+    let mut snapshot = serde_json::json!({"schemaVersion":1,"activity":"idle","connection":null,"keyPresent":false,"quote":null,"reply":{"requestId":"af2b3712-2778-4e75-905c-392fa1a74eed","text":"Usulan","state":"completed","inputTokens":null,"outputTokens":null},"error":null});
+    assert!(serde_json::from_value::<LlmSnapshot>(snapshot.clone()).unwrap().validate().is_ok());
+    snapshot["reply"]["requestId"] = serde_json::json!("wrong");
+    assert!(serde_json::from_value::<LlmSnapshot>(snapshot.clone()).unwrap().validate().is_err());
+    snapshot["reply"].as_object_mut().unwrap().remove("requestId");
+    assert!(serde_json::from_value::<LlmSnapshot>(snapshot).is_err());
+}

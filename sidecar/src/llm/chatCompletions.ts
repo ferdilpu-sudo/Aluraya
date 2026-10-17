@@ -44,7 +44,7 @@ export async function chatCompletion(
   maxTokens: number,
   signal: AbortSignal,
   fetcher: typeof fetch = fetch,
-): Promise<NonNullable<LlmSnapshot['reply']>> {
+): Promise<Omit<NonNullable<LlmSnapshot['reply']>, 'requestId'>> {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     Accept: 'application/json',

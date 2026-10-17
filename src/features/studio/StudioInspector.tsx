@@ -42,6 +42,7 @@ export function StudioInspector({
       <div hidden={tab !== 'copilot'}>
         <PlanningCopilot
           project={project}
+          update={update}
           config={providers.config}
           configure={() => setTab('provider')}
         />

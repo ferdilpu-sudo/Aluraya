@@ -97,6 +97,7 @@ export const llmSnapshotSchema = z
       .nullable(),
     reply: z
       .object({
+        requestId: z.uuid(),
         text: z.string().max(6000),
         state: z.enum(['completed', 'incomplete']),
         inputTokens: z.number().int().nonnegative().nullable(),

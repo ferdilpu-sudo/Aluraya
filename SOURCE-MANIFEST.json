@@ -29,23 +29,23 @@
     },
     {
       "path": "README.md",
-      "sha256": "63df1ad8914d8a8971b6e529a441a7db06e745c4e8757761a35e1d61b5251f0f"
+      "sha256": "8d25c2c0851d659ff783cb5875a56080e31299f7bceacc334a70df336b103902"
     },
     {
       "path": "architecture.md",
-      "sha256": "b88d2884f91159b715facc535f29748e6b766dfe1b4e2586f5fd3a4a04e274a7"
+      "sha256": "c883314d534de85012766eec747d6315e502954c5906e21dce6a2adf7e2b5154"
     },
     {
       "path": "decisions.md",
-      "sha256": "ad7909d07e877f09fae5a4d4b7bdbdf94628edec26fdc379e9855c6c2afd0c30"
+      "sha256": "0dc48661dfcd8124522d5ad9ce4bec6816c1a9f984c0cb2b25d320f5d03d55ce"
     },
     {
       "path": "design.md",
-      "sha256": "0e0d64f3aa5fd7261858fbe34a7e51be7267ead86ffffb32626bd47ea80f08aa"
+      "sha256": "ae459801b7e631be62956d7a52e8b888d797dcefd4e30301bf96dfc129b78293"
     },
     {
       "path": "docs/API-LLM-START.md",
-      "sha256": "00d4dc1d1d87919cd42171038ddaa09a404209c58d8014ac726f81e44c54d46a"
+      "sha256": "fc5c30da138709b08ef4b9a86efcb2626dc0abc20033ef94feabf72a638ae315"
     },
     {
       "path": "docs/API-PROVIDERS.md",
@@ -80,6 +80,10 @@
       "sha256": "54db17e2efbe2dee035d7f8291ca47eba8ab14fb7c9136f7b3b47297465fa9f0"
     },
     {
+      "path": "docs/PLANNER-START.md",
+      "sha256": "827dcbdba7d57282274abf07233e6eb5a66334d679dcfa24d2ceb2d5512f1dea"
+    },
+    {
       "path": "docs/WINDOWS-START.md",
       "sha256": "a502292cefafcb18c920ae6b65824a1645a15be20c749978604c16eb744f5a3a"
     },
@@ -109,7 +113,7 @@
     },
     {
       "path": "evidence/LLM-ADAPTER-REPORT.md",
-      "sha256": "db0b3a0a2b1888662a9c0b4c02ba81de1aa2d6b976052198b781d6d88881497f"
+      "sha256": "409a950ea734dc2491ab8000e0ded0457a7f880cdc5087c29694bf450e6ebffe"
     },
     {
       "path": "evidence/M001-REPORT.md",
@@ -126,6 +130,10 @@
     {
       "path": "evidence/NODE-LICENSE-REPORT.md",
       "sha256": "3c68ae2e0d7f81d48bcb877a637d129ea6b3e1b9dcc4d61395a137ce01626946"
+    },
+    {
+      "path": "evidence/PLANNER-REPORT.md",
+      "sha256": "0728e1866db65d582f8a9a2cbd50a0bc0562ace0b97ec1fcdbe72ce18afad42a"
     },
     {
       "path": "evidence/PROVIDER-RESET-REPORT.md",
@@ -161,7 +169,7 @@
     },
     {
       "path": "plan.md",
-      "sha256": "6353b4617b04b4e9ab7707e4d61164df8de1475dd9e07793941fb0a7452adea4"
+      "sha256": "4b94aff75d4f7fba0b2005209c38d2dcaf4a0cd347d9b65b27d649c547f197a2"
     },
     {
       "path": "prd.md",
@@ -181,7 +189,7 @@
     },
     {
       "path": "schema.md",
-      "sha256": "d3a9bd9926de709fbc2cea8748583f79e412646f89f0cb3f6fa23ad9b348764f"
+      "sha256": "16e688c1a81ca3d2cce6e746f1714923f0a23bc68b015239bc253dfcbb033aa3"
     },
     {
       "path": "scripts/Measure-Aluraya.ps1",
@@ -273,7 +281,7 @@
     },
     {
       "path": "sidecar/src/llm/chatCompletions.ts",
-      "sha256": "bc8689ca1a45738f792f93cffcfff629514d7525d150415395289e6877a9c31f"
+      "sha256": "f7e998035cb84e462606b1680293ad8014d08d4b4d717c270e68a7a0e299a3e9"
     },
     {
       "path": "sidecar/src/llm/secretStore.ts",
@@ -281,7 +289,7 @@
     },
     {
       "path": "sidecar/src/llm/session.ts",
-      "sha256": "ad3338fc9c41e0997b0bb59d6d5c7f50914dcdbf302bb3f852dc43184016372b"
+      "sha256": "dcc26b2a4ade96c281dec7c8eaf98e43ae9345fbc1ef1b289bce9a11da1d4898"
     },
     {
       "path": "sidecar/src/main.ts",
@@ -393,7 +401,7 @@
     },
     {
       "path": "src-tauri/src/llm_contracts.rs",
-      "sha256": "428fbb2bc8d69e83913c8c9924c7e23c816fd2d46808e004fb5f7494d335d36c"
+      "sha256": "f81eb4f10beed571fc91485cfdb06b9c28a46d94f975db578831fd5072ae7da2"
     },
     {
       "path": "src-tauri/src/main.rs",
@@ -417,7 +425,7 @@
     },
     {
       "path": "src-tauri/tests/llm_contracts.rs",
-      "sha256": "6ce5f4b9a769e3afa429fb719a0540ad79cba74cacbac9bbce068975839196ee"
+      "sha256": "51d2aa02626aaf5b6b178df6c3115ed5a298bc0457a1c72bab6c33a811196645"
     },
     {
       "path": "src/App.tsx",
@@ -457,7 +465,11 @@
     },
     {
       "path": "src/contracts/llm.ts",
-      "sha256": "e1c84c5fd3056014cd431b777d34c599123aeea8b94fa7cf9442b4339b16b069"
+      "sha256": "e1f2ace8941dba91c2db191b7015327d42e559d3fde0ee17e3e9d0f41f087058"
+    },
+    {
+      "path": "src/contracts/proposal.ts",
+      "sha256": "34ef031166d1e8db838f6787febe95b8be27978eabe1b6a2f3ad418e2c6f21f9"
     },
     {
       "path": "src/contracts/providers.ts",
@@ -468,8 +480,20 @@
       "sha256": "93d68b4777b22807a2843763e44c576a6ad3c6b6c863e3ece0bcb53d9fb3cfc0"
     },
     {
+      "path": "src/domain/planReply.ts",
+      "sha256": "62cb2896b9b9e443a8c224491c3b1927a0e9e488157e7a837403aeaa6e9f3798"
+    },
+    {
+      "path": "src/domain/planning.ts",
+      "sha256": "c318722e672161e513c83793401cb0c4c6b8014d099f34f7e74b40e427fa8385"
+    },
+    {
+      "path": "src/domain/projectUpdate.ts",
+      "sha256": "7d7c88f65bdbcf0d8797b58b88f27be8642f14cc9b0f14e5630fcc7cf6a1b532"
+    },
+    {
       "path": "src/domain/studio.ts",
-      "sha256": "96cd0fe51e438e1fb086047e0dd5771d672eab78536943644c3a048040ca2bb8"
+      "sha256": "a65ada6c2060073cec556abed86221c8098ecc6811ec139da354c66401ff371b"
     },
     {
       "path": "src/features/canvas/ProductionCanvas.tsx",
@@ -505,7 +529,7 @@
     },
     {
       "path": "src/features/copilot/PlanningCopilot.tsx",
-      "sha256": "5dbb7a3ceecd04b9d660cae0b3aeda90bb73e400f7c34471dc928ecb1c17d2e1"
+      "sha256": "67916958bbb9ea5d0dd03c4f785bf1343edf84519812a1640e9bb5acde334a6f"
     },
     {
       "path": "src/features/copilot/chatErrors.ts",
@@ -537,7 +561,7 @@
     },
     {
       "path": "src/features/llm/ApiCopilot.tsx",
-      "sha256": "469f2d42f52f8f9eca91e3420964b1f6cfb010e12b23f8a25d5c4688f4187959"
+      "sha256": "987a02d0b947d7dc50fa5fd9046cc5ff2e39ac23410ce0ca6791c3b53e02be33"
     },
     {
       "path": "src/features/llm/LlmKeyControls.tsx",
@@ -553,7 +577,19 @@
     },
     {
       "path": "src/features/llm/useLlm.ts",
-      "sha256": "bfd1a4a1cdf4c69c7b3b02bdb4602ff16a21bbbaea95485a24fc8c4cda875177"
+      "sha256": "02cff668a72b4dbd788f9c6799cd1a94f8f103128bb4892f836a0e166d5c85fa"
+    },
+    {
+      "path": "src/features/planning/PlannerControls.tsx",
+      "sha256": "6f32ae228d94478f3320c3ded729d0d4ccabb962bb11beebf959afce96017b82"
+    },
+    {
+      "path": "src/features/planning/ProposalReview.tsx",
+      "sha256": "630758c8d79c70df71d3cc9f7a0b032a8ae89d2ba4f7e574a0f24d2ed7131efd"
+    },
+    {
+      "path": "src/features/planning/usePlanWorkflow.ts",
+      "sha256": "ad85b6b7d28bbfa3fdf10cdd7c256791ab8e777c0e5f4bf1a6ac07af42e61ffc"
     },
     {
       "path": "src/features/providers/ProviderSettings.tsx",
@@ -585,11 +621,11 @@
     },
     {
       "path": "src/features/studio/StudioInspector.tsx",
-      "sha256": "a888456798b1d5acdd96ba61f0fde39af332b29c2e7cd1dac9df423399a59c5c"
+      "sha256": "fadd8c4827f99d630b89ed8afba0d0b152467b6633fb27db9a9f5961c6503530"
     },
     {
       "path": "src/features/studio/useStudio.ts",
-      "sha256": "825dc81710c69f1b9a836f9a7a5d7a7ad4f5486862880954cab3584099470f04"
+      "sha256": "12d26f4ee4339dc471b073108790ad52b17c6ee7b53cc76b98e57a38fcb48316"
     },
     {
       "path": "src/infrastructure/studioStorage.ts",
@@ -609,7 +645,7 @@
     },
     {
       "path": "src/styles/production.css",
-      "sha256": "b807fed96f44e3e8c2553cfa9a5bf9b85523af84b0ab7163c6192c4dcc7f0428"
+      "sha256": "0bcde9f71dbb6809c11b8f44782999f1d5470b901ea5c00987ed7eced4ca9a5a"
     },
     {
       "path": "src/styles/studio.css",
@@ -625,7 +661,7 @@
     },
     {
       "path": "testing.md",
-      "sha256": "d979e2ab7298a7a4ad367bdd125c8ea8f823d227762fce0ea5ae07620553f6c7"
+      "sha256": "8456c840e85de90eba1fe1c18eceb0a349850e26ffda3b333a86bb5f204c8d90"
     },
     {
       "path": "tests/browser-boundary.test.ts",
@@ -665,7 +701,7 @@
     },
     {
       "path": "tests/llm-session.test.ts",
-      "sha256": "3e56311acff455be282343cfa2bfa63c1874c2528653cc0af25de0bc86b18e69"
+      "sha256": "dd69e5a3ffdb321904fd44819bd0c1d99b42202f5e7ff93d0ebca29d2a533fb2"
     },
     {
       "path": "tests/llm-sidecar.test.ts",
@@ -678,6 +714,10 @@
     {
       "path": "tests/nsis-integrity.test.js",
       "sha256": "a81783102bc51eb858c10d35c52346a3216f0624dac3f174ab843db755e84742"
+    },
+    {
+      "path": "tests/planning.test.ts",
+      "sha256": "49a45e6e9da650a71f1e8390734f376aa26d5f57a4ed5f4e28c0f789042ab4d4"
     },
     {
       "path": "tests/protocol.test.ts",
@@ -704,5 +744,5 @@
       "sha256": "2c0b58d683675f3236cc461184d77bd2210cd628762bb5ade7594f6596757c8d"
     }
   ],
-  "checkpoint": "API-002 Chat Completions text adapter; DPAPI key and one-request review; live provider pending"
+  "checkpoint": "PLAN-001 partial: explicit LLM proposal review and revision-bound canvas draft append; live provider pending"
 }

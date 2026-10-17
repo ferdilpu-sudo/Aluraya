@@ -68,6 +68,8 @@ describe('LLM request lifecycle', () => {
     session.act({ action: 'submit', approvalId: quote.id });
     await idle(session);
     expect(session.snapshot().reply?.text).toBe('Usulan');
+    expect(session.snapshot().reply?.requestId).toBe(quote.id);
+    expect(llmSnapshotSchema.safeParse(session.snapshot()).success).toBe(true);
     expect(complete).toHaveBeenCalledTimes(1);
     expect(session.act({ action: 'submit', approvalId: quote.id }).error).toBe('INVALID_APPROVAL');
     expect(JSON.stringify(session.snapshot())).not.toContain('fixture-secret');

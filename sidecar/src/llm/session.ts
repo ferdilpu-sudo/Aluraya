@@ -78,13 +78,14 @@ export class LlmSession {
         const controller = this.controller;
         const connection = this.state.connection;
         this.run('request', async () => {
-          this.state.reply = await this.complete(
+          const result = await this.complete(
             connection,
             this.key,
             quote.text,
             quote.maxTokens,
             controller.signal,
           );
+          this.state.reply = { ...result, requestId: quote.id };
         });
       }
     }

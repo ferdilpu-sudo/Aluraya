@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { newProject, type ProjectUpdate, type StudioProject } from '../../domain/studio';
+import { commitProjectUpdate } from '../../domain/projectUpdate';
 import { loadProjects, saveProject } from '../../infrastructure/studioStorage';
 
 export function useStudio() {
@@ -68,14 +69,7 @@ export function useStudio() {
   const update: ProjectUpdate = (next) => {
     const current = latest.current.find((p) => p.id === activeId);
     if (!current) return;
-    const value = { ...(typeof next === 'function' ? next(current) : next), updatedAt: Date.now() };
-    if (
-      value.script !== current.script ||
-      value.ratio !== current.ratio ||
-      value.adaptation !== current.adaptation
-    ) {
-      value.shots = value.shots.map((shot) => ({ ...shot, review: 'draft' }));
-    }
+    const value = commitProjectUpdate(current, next);
     latest.current = latest.current.map((p) => (p.id === value.id ? value : p));
     setProjects(latest.current);
     persist(value);

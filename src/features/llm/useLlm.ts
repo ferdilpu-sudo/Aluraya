@@ -17,7 +17,7 @@ export function useLlm() {
         const result = await llmAction(action);
         if (mounted.current) {
           setState(result);
-          setError('');
+          if (action.action !== 'inspect') setError('');
         }
         return result;
       } catch {

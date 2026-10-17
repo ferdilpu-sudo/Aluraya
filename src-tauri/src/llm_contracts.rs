@@ -61,7 +61,7 @@ impl LlmAction {
 pub struct LlmQuote { id: String, expires_at: u64, text: String, max_tokens: u32, tariff: LlmTariff }
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
-pub struct LlmReply { text: String, state: String, input_tokens: Option<u64>, output_tokens: Option<u64> }
+pub struct LlmReply { request_id: String, text: String, state: String, input_tokens: Option<u64>, output_tokens: Option<u64> }
 #[derive(Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct LlmSnapshot { schema_version: u8, activity: String, connection: Option<LlmConnection>, key_present: bool, quote: Option<LlmQuote>, reply: Option<LlmReply>, error: Option<String> }
@@ -70,7 +70,7 @@ impl LlmSnapshot {
         let valid = self.schema_version == 1 && ["idle","storage","request"].contains(&self.activity.as_str())
             && self.connection.as_ref().map_or(true, |c| c.valid())
             && self.quote.as_ref().map_or(true, |q| uuid::Uuid::parse_str(&q.id).is_ok() && !q.text.trim().is_empty() && q.text.len() <= 24000 && q.expires_at > 0 && (1..=4096).contains(&q.max_tokens) && q.tariff.valid())
-            && self.reply.as_ref().map_or(true, |r| r.text.len() <= 24000 && ["completed","incomplete"].contains(&r.state.as_str()))
+            && self.reply.as_ref().map_or(true, |r| uuid::Uuid::parse_str(&r.request_id).is_ok() && r.text.len() <= 24000 && ["completed","incomplete"].contains(&r.state.as_str()))
             && self.error.as_ref().map_or(true, |e| ["BUSY","CONFIG_REQUIRED","KEY_REQUIRED","STORAGE_ERROR","INVALID_APPROVAL","AUTH_REJECTED","RATE_LIMIT","PROVIDER_ERROR","INVALID_RESPONSE","OUTPUT_LIMIT","REQUEST_UNCERTAIN","CANCELLED_UNCERTAIN"].contains(&e.as_str()));
         if valid { Ok(()) } else { Err("SIDECAR_PROTOCOL_ERROR".into()) }
     }

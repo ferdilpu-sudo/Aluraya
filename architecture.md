@@ -117,3 +117,9 @@ Observasi awal hanya URL-classification; tidak membaca DOM login, token atau coo
 
 ## API-002 — adapter LLM teks aktif
 `sidecar/src/llm/` memisahkan secret store, transport Chat Completions dan lifecycle review/request. Native memvalidasi action dan snapshot, root key dipercaya dari host di bawah lock OS. `src/features/llm/` memisahkan controller IPC, key controls, review dan composer. Respons tidak mengubah proyek. Secure key terikat profil/tujuan/auth dan tidak berada pada config renderer; tarif dikonfirmasi pengguna pada setiap review, bukan quote otomatis provider. State chat/review sesi saja; restart tidak mengirim ulang. [Detail](docs/API-LLM-START.md).
+
+
+## PLAN-001 — penambahan draf hasil Copilot
+`src/domain/planning.ts` membuat konteks teks eksplisit, memvalidasi proposal strict dan menerapkan tambahan tanpa I/O. `planReply.ts` menjaga korelasi request dan kelengkapan respons. `src/features/planning/` memisahkan pilihan sumber, lifecycle binding dan review. `commitProjectUpdate` menjadi gerbang revision untuk semua edit draf; updater fungsional membaca draf terbaru sehingga stale/double click tidak menimpa perubahan. `useStudio` menyimpan hasil ke IndexedDB melalui antrean yang sudah ada dan tetap menampilkan error simpan.
+
+Review/apply draf masih boundary renderer lokal, bukan otorisasi eksekusi provider. Tidak ada model tool call. Produksi media kelak wajib memakai approval native tersendiri. Pending proposal/chat sesi saja; receipt hasil apply ikut persistence draf. Compiler REQ-016, native project store dan transaksi produksi belum diimplementasikan.

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { planReceiptSchema } from '../contracts/proposal';
 
 export const assetKinds = { character: 'Karakter', location: 'Lokasi', prop: 'Properti' } as const;
 export const stageNames = {
@@ -40,6 +41,8 @@ const shotSchema = z
 export const projectSchema = z
   .object({
     version: z.literal(1),
+    revision: z.number().int().nonnegative().default(0),
+    planReceipts: z.array(planReceiptSchema).max(1000).default([]),
     id: z.uuid(),
     name: z.string().trim().min(1).max(120),
     updatedAt: z.number().int().nonnegative(),
@@ -54,6 +57,8 @@ export const projectSchema = z
   .superRefine((p, ctx) => {
     const ids = [...p.assets, ...p.shots].map((x) => x.id);
     if (new Set(ids).size !== ids.length) ctx.addIssue({ code: 'custom', message: 'ID duplikat' });
+    if (new Set(p.planReceipts.map((r) => r.requestId)).size !== p.planReceipts.length)
+      ctx.addIssue({ code: 'custom', message: 'Riwayat usulan duplikat' });
     const assets = new Set(p.assets.map((a) => a.id));
     if (p.shots.some((s) => s.references.some((id) => !assets.has(id))))
       ctx.addIssue({ code: 'custom', message: 'Referensi tidak ditemukan' });
@@ -64,6 +69,8 @@ export type StudioShot = z.infer<typeof shotSchema>;
 export function newProject(name = 'Cerita tanpa judul'): StudioProject {
   return {
     version: 1,
+    revision: 0,
+    planReceipts: [],
     id: crypto.randomUUID(),
     name,
     updatedAt: Date.now(),

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import type { ProviderProfile } from '../../contracts/providers';
-import type { StudioProject } from '../../domain/studio';
+import type { ProjectUpdate, StudioProject } from '../../domain/studio';
 import { llmConnection, type LlmConnection } from '../../contracts/llm';
+import { PlannerControls } from '../planning/PlannerControls';
+import { ProposalReview } from '../planning/ProposalReview';
+import { usePlanWorkflow } from '../planning/usePlanWorkflow';
 import { useLlm } from './useLlm';
 import { LlmKeyControls } from './LlmKeyControls';
 import { LlmRequestReview } from './LlmRequestReview';
@@ -9,9 +12,11 @@ import { llmErrors } from './errors';
 export function ApiCopilot({
   profile,
   project,
+  update,
 }: {
   profile: ProviderProfile | undefined;
   project: StudioProject;
+  update: ProjectUpdate;
 }) {
   const controller = useLlm();
   const { state, pending, error, execute } = controller;
@@ -30,6 +35,7 @@ export function ApiCopilot({
   } catch {
     /* Unsupported profiles remain configuration only. */
   }
+  const planner = usePlanWorkflow(project, connection, state?.reply ?? null);
   const busy = pending || Boolean(state && state.activity !== 'idle');
   const active = Boolean(
     connection && JSON.stringify(connection) === JSON.stringify(state?.connection),
@@ -56,6 +62,7 @@ export function ApiCopilot({
       : null;
   function editText(value: string) {
     setText(value);
+    planner.edit();
     if (state?.quote) void execute({ action: 'cancel' });
   }
   return (
@@ -105,6 +112,29 @@ export function ApiCopilot({
           controller={controller}
           disabled={busy}
         />
+      )}
+      <PlannerControls
+        key={project.id}
+        project={project}
+        disabled={busy || !active}
+        build={(source, kind) => {
+          const plan = planner.build(source, kind);
+          if (plan) {
+            setText(plan.prompt);
+            setMaxTokens(4096);
+            if (state?.quote) void execute({ action: 'cancel' });
+          }
+        }}
+      />
+      {planner.error && (
+        <p role="alert" className="error">
+          {planner.error}
+        </p>
+      )}
+      {planner.stale && (
+        <p role="alert" className="error">
+          Proyek atau profil berubah. Siapkan ulang usulan sebelum mengirim request.
+        </p>
       )}
       <label>
         Pesan untuk Copilot
@@ -197,6 +227,7 @@ export function ApiCopilot({
           className="button secondary"
           disabled={
             !ready ||
+            planner.stale ||
             !validRates ||
             !text.trim() ||
             !Number.isInteger(maxTokens) ||
@@ -234,8 +265,11 @@ export function ApiCopilot({
           key={currentQuote.id}
           quote={currentQuote}
           connection={state.connection}
-          disabled={busy}
-          submit={() => void execute({ action: 'submit', approvalId: currentQuote.id })}
+          disabled={busy || planner.stale}
+          submit={() => {
+            if (planner.bind(currentQuote.id, currentQuote.text))
+              void execute({ action: 'submit', approvalId: currentQuote.id });
+          }}
         />
       )}
       <p role="status">
@@ -260,9 +294,23 @@ export function ApiCopilot({
           <pre>{state.reply.text}</pre>
           <small>
             Token dilaporkan provider: input {state.reply.inputTokens ?? 'tidak tersedia'} · output{' '}
-            {state.reply.outputTokens ?? 'tidak tersedia'}. Respons belum diterapkan ke canvas.
+            {state.reply.outputTokens ?? 'tidak tersedia'}. Penerapan ke canvas melalui review
+            usulan.
           </small>
         </div>
+      )}
+      {planner.responseError && (
+        <p role="alert" className="error">
+          {planner.responseError}
+        </p>
+      )}
+      {planner.proposal && (
+        <ProposalReview
+          key={planner.proposal.requestId}
+          project={project}
+          proposal={planner.proposal}
+          update={update}
+        />
       )}
     </div>
   );
