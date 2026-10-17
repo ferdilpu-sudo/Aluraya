@@ -132,8 +132,7 @@ export class ChatSession {
   act(action: ChatAction): ChatSnapshot {
     if (this.closed) throw new ChatError('LOGIN_REQUIRED');
     if (action.action === 'inspect') return this.snapshot();
-    if (this.bridgeBusy && action.action !== 'cancel')
-      return { ...this.snapshot(), error: 'BUSY' };
+    if (this.bridgeBusy && action.action !== 'cancel') return { ...this.snapshot(), error: 'BUSY' };
 
     if (action.action === 'cancel') {
       this.abort?.abort();
@@ -285,10 +284,8 @@ export class ChatSession {
       throw new ChatError('BUSY');
     if (!this.state.planConfirmed || this.state.usagePaused)
       throw new ChatError('PLAN_CONFIRMATION_REQUIRED');
-    if (!this.state.models.some((item) => item.id === model))
-      throw new ChatError('INVALID_MODEL');
-    if (!text.trim() || text.length > 4000)
-      throw new ChatError('CONTEXT_LIMIT');
+    if (!this.state.models.some((item) => item.id === model)) throw new ChatError('INVALID_MODEL');
+    if (!text.trim() || text.length > 4000) throw new ChatError('CONTEXT_LIMIT');
     this.bridgeBusy = true;
     const controller = new AbortController();
     this.bridgeAbort = controller;
@@ -299,7 +296,9 @@ export class ChatSession {
         model,
         [{ role: 'user', content: text }],
         controller.signal,
-        (delta) => { reply += delta; },
+        (delta) => {
+          reply += delta;
+        },
       );
       controller.signal.throwIfAborted();
       if (!reply.trim()) throw new ChatError('RESPONSE_INCOMPLETE');

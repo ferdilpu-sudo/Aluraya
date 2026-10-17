@@ -61,7 +61,11 @@ export const chatSnapshotSchema = z
     welcomePending: z.boolean(),
     usagePaused: z.boolean(),
     bridgeActive: z.boolean().optional(),
-    bridgeCode: z.string().regex(/^[A-Za-z0-9_-]{43}$/).nullable().optional(),
+    bridgeCode: z
+      .string()
+      .regex(/^[A-Za-z0-9_-]{43}$/)
+      .nullable()
+      .optional(),
     accounts: z.array(z.object({ id: z.uuid(), label: z.string().max(380) }).strict()).max(10),
     accountCount: z.number().int().nonnegative(),
     accountPage: z.number().int().nonnegative(),

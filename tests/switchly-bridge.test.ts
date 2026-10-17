@@ -50,7 +50,9 @@ async function send(path: string, body: unknown): Promise<unknown> {
     socket.setEncoding('utf8');
     socket.on('error', reject);
     socket.on('connect', () => socket.write(JSON.stringify(body) + '\n'));
-    socket.on('data', (chunk: string) => { data += chunk; });
+    socket.on('data', (chunk: string) => {
+      data += chunk;
+    });
     socket.on('end', () => resolve(JSON.parse(data)));
   });
 }
@@ -58,9 +60,12 @@ async function send(path: string, body: unknown): Promise<unknown> {
 describe('Switchly paired local bridge', () => {
   it('requires an explicit user-enable and never returns tokens or account data', async () => {
     const { path, code } = await listeningHost();
-    const result = await send(path, {
-      schemaVersion: 1, requestId: randomUUID(), pairingCode: code, operation: 'inspect',
-    }) as Record<string, unknown>;
+    const result = (await send(path, {
+      schemaVersion: 1,
+      requestId: randomUUID(),
+      pairingCode: code,
+      operation: 'inspect',
+    })) as Record<string, unknown>;
     expect(result.ok).toBe(true);
     expect(result.models).toEqual([{ id: 'example-model', name: 'Example Model' }]);
     expect(JSON.stringify(result)).not.toContain('accessToken');
@@ -69,22 +74,28 @@ describe('Switchly paired local bridge', () => {
 
   it('refuses incorrect pairs without sending model requests', async () => {
     const { path, chat } = await listeningHost();
-    const result = await send(path, {
-      schemaVersion: 1, requestId: randomUUID(),
-      pairingCode: 'A'.repeat(43), operation: 'send',
-      model: 'example-model', text: 'Write a drama',
-    }) as Record<string, unknown>;
+    const result = (await send(path, {
+      schemaVersion: 1,
+      requestId: randomUUID(),
+      pairingCode: 'A'.repeat(43),
+      operation: 'send',
+      model: 'example-model',
+      text: 'Write a drama',
+    })) as Record<string, unknown>;
     expect(result.error).toBe('BRIDGE_ACCESS_DENIED');
     expect(chat.replyOnce).not.toHaveBeenCalled();
   });
 
   it('accepts a bounded one-shot reply and does not expose provider credentials', async () => {
     const { path, code, chat } = await listeningHost();
-    const result = await send(path, {
-      schemaVersion: 1, requestId: randomUUID(),
-      pairingCode: code, operation: 'send',
-      model: 'example-model', text: 'Write two scenes',
-    }) as Record<string, unknown>;
+    const result = (await send(path, {
+      schemaVersion: 1,
+      requestId: randomUUID(),
+      pairingCode: code,
+      operation: 'send',
+      model: 'example-model',
+      text: 'Write two scenes',
+    })) as Record<string, unknown>;
     expect(result.ok).toBe(true);
     expect(result.reply).toBe('Approved story proposal');
     expect(chat.replyOnce).toHaveBeenCalledWith('example-model', 'Write two scenes');
@@ -92,11 +103,14 @@ describe('Switchly paired local bridge', () => {
 
   it('blocks malformed, unpaired and disabled connections', async () => {
     const { path, code, server } = await listeningHost();
-    const result = await send(path, {
-      schemaVersion: 1, requestId: randomUUID(),
-      pairingCode: code, operation: 'send',
-      model: 'unsupported', text: 'Not allowed',
-    }) as Record<string, unknown>;
+    const result = (await send(path, {
+      schemaVersion: 1,
+      requestId: randomUUID(),
+      pairingCode: code,
+      operation: 'send',
+      model: 'unsupported',
+      text: 'Not allowed',
+    })) as Record<string, unknown>;
     expect(result.error).toBe('BRIDGE_INVALID_MODEL');
     expect(server.disable().bridgeCode).toBe(null);
   });

@@ -7,20 +7,24 @@ import type { ChatSession } from './chatgpt/session';
 export const SWITCHLY_PIPE_PATH = String.raw`\\.\pipe\Aluraya.Switchly.Copilot.v1`;
 const pairingPattern = /^[A-Za-z0-9_-]{43}$/;
 const requestSchema = z.discriminatedUnion('operation', [
-  z.object({
-    schemaVersion: z.literal(1),
-    requestId: z.uuid(),
-    pairingCode: z.string().length(43).regex(pairingPattern),
-    operation: z.literal('inspect'),
-  }).strict(),
-  z.object({
-    schemaVersion: z.literal(1),
-    requestId: z.uuid(),
-    pairingCode: z.string().length(43).regex(pairingPattern),
-    operation: z.literal('send'),
-    model: z.string().min(1).max(200),
-    text: z.string().trim().min(1).max(4000),
-  }).strict(),
+  z
+    .object({
+      schemaVersion: z.literal(1),
+      requestId: z.uuid(),
+      pairingCode: z.string().length(43).regex(pairingPattern),
+      operation: z.literal('inspect'),
+    })
+    .strict(),
+  z
+    .object({
+      schemaVersion: z.literal(1),
+      requestId: z.uuid(),
+      pairingCode: z.string().length(43).regex(pairingPattern),
+      operation: z.literal('send'),
+      model: z.string().min(1).max(200),
+      text: z.string().trim().min(1).max(4000),
+    })
+    .strict(),
 ]);
 
 export type BridgeControlAction = 'bridge_enable' | 'bridge_disable';
@@ -57,15 +61,22 @@ export class SwitchlyBridgeServer {
     if (process.platform !== 'win32' && !this.allowUnixSocketForTests)
       throw new Error('WINDOWS_REQUIRED');
     const snap = session.snapshot();
-    if (!snap.signedIn || !snap.planEnabled || !snap.planConfirmed ||
-        snap.usagePaused || snap.models.length === 0)
+    if (
+      !snap.signedIn ||
+      !snap.planEnabled ||
+      !snap.planConfirmed ||
+      snap.usagePaused ||
+      snap.models.length === 0
+    )
       throw new Error('BRIDGE_PLAN_NOT_CONFIRMED');
     if (this.server) return this.status();
     this.code = randomBytes(32).toString('base64url');
     this.session = session;
     const server = createServer((socket) => this.accept(socket));
     this.server = server;
-    server.on('listening', () => { if (this.server === server) this.listening = true; });
+    server.on('listening', () => {
+      if (this.server === server) this.listening = true;
+    });
     server.on('error', () => {
       if (this.server === server) this.disable();
     });
@@ -83,7 +94,11 @@ export class SwitchlyBridgeServer {
     this.server = null;
     for (const socket of this.sockets) socket.destroy();
     this.sockets.clear();
-    try { server?.close(); } catch { /* listener may not have started */ }
+    try {
+      server?.close();
+    } catch {
+      /* listener may not have started */
+    }
     return this.status();
   }
 
@@ -96,10 +111,17 @@ export class SwitchlyBridgeServer {
     const decoder = new FrameDecoder();
     let received = false;
     socket.setTimeout(195_000, () => socket.destroy());
-    socket.on('close', () => { this.sockets.delete(socket); });
-    socket.on('error', () => { socket.destroy(); });
+    socket.on('close', () => {
+      this.sockets.delete(socket);
+    });
+    socket.on('error', () => {
+      socket.destroy();
+    });
     socket.on('data', (chunk: Buffer) => {
-      if (received) { socket.destroy(); return; }
+      if (received) {
+        socket.destroy();
+        return;
+      }
       try {
         const frames = decoder.push(chunk);
         if (frames.length !== 1) {
@@ -127,31 +149,46 @@ export class SwitchlyBridgeServer {
       const request = requestSchema.parse(JSON.parse(input) as unknown);
       requestId = request.requestId;
       if (!this.authorized(request.pairingCode)) {
-        this.respond(socket, { schemaVersion: 1, requestId, ok: false,
-          error: 'BRIDGE_ACCESS_DENIED' });
+        this.respond(socket, {
+          schemaVersion: 1,
+          requestId,
+          ok: false,
+          error: 'BRIDGE_ACCESS_DENIED',
+        });
         return;
       }
       const session = this.session;
       if (!session) throw new Error('BRIDGE_DISABLED');
       const snapshot = session.snapshot();
       if (!snapshot.signedIn || !snapshot.planConfirmed || snapshot.usagePaused) {
-        this.respond(socket, { schemaVersion: 1, requestId, ok: false,
-          error: 'BRIDGE_PLAN_NOT_CONFIRMED' });
+        this.respond(socket, {
+          schemaVersion: 1,
+          requestId,
+          ok: false,
+          error: 'BRIDGE_PLAN_NOT_CONFIRMED',
+        });
         return;
       }
       if (request.operation === 'inspect') {
-        this.respond(socket, { schemaVersion: 1, requestId, ok: true,
-          models: snapshot.models.map(({ id, name }) => ({ id, name })) });
+        this.respond(socket, {
+          schemaVersion: 1,
+          requestId,
+          ok: true,
+          models: snapshot.models.map(({ id, name }) => ({ id, name })),
+        });
         return;
       }
       if (this.busy) {
-        this.respond(socket, { schemaVersion: 1, requestId, ok: false,
-          error: 'BRIDGE_BUSY' });
+        this.respond(socket, { schemaVersion: 1, requestId, ok: false, error: 'BRIDGE_BUSY' });
         return;
       }
       if (!snapshot.models.some((model) => model.id === request.model)) {
-        this.respond(socket, { schemaVersion: 1, requestId, ok: false,
-          error: 'BRIDGE_INVALID_MODEL' });
+        this.respond(socket, {
+          schemaVersion: 1,
+          requestId,
+          ok: false,
+          error: 'BRIDGE_INVALID_MODEL',
+        });
         return;
       }
       this.busy = true;
@@ -165,8 +202,12 @@ export class SwitchlyBridgeServer {
       }
     } catch {
       if (!socket.destroyed) {
-        this.respond(socket, { schemaVersion: 1, requestId, ok: false,
-          error: 'BRIDGE_REQUEST_FAILED' });
+        this.respond(socket, {
+          schemaVersion: 1,
+          requestId,
+          ok: false,
+          error: 'BRIDGE_REQUEST_FAILED',
+        });
       }
     }
   }

@@ -31,17 +31,21 @@ export function dispatch(frame: string): string {
     const action = request.payload;
     let bridgeError: string | null = null;
     if (action.action === 'bridge_enable') {
-      try { switchlyBridge.enable(chat); }
-      catch (error) {
-        bridgeError = error instanceof Error && error.message === 'WINDOWS_REQUIRED'
-          ? 'WINDOWS_REQUIRED' : 'PLAN_CONFIRMATION_REQUIRED';
+      try {
+        switchlyBridge.enable(chat);
+      } catch (error) {
+        bridgeError =
+          error instanceof Error && error.message === 'WINDOWS_REQUIRED'
+            ? 'WINDOWS_REQUIRED'
+            : 'PLAN_CONFIRMATION_REQUIRED';
       }
     }
     if (action.action === 'bridge_disable') switchlyBridge.disable();
-    if (action.action === 'logout' || action.action === 'select')
-      switchlyBridge.disable();
-    const snapshot = action.action === 'bridge_enable' || action.action === 'bridge_disable'
-      ? chat.snapshot() : chat.act(action);
+    if (action.action === 'logout' || action.action === 'select') switchlyBridge.disable();
+    const snapshot =
+      action.action === 'bridge_enable' || action.action === 'bridge_disable'
+        ? chat.snapshot()
+        : chat.act(action);
     const response = JSON.stringify({
       schemaVersion: 1,
       requestId: request.requestId,

@@ -9,15 +9,18 @@ type Props = {
 /** Pairing must be initiated by the user inside Aluraya. */
 export function BridgeConnection({ state, busy, execute }: Props) {
   const available =
-    state.signedIn && state.planEnabled && state.planConfirmed &&
-    !state.usagePaused && state.models.length > 0;
+    state.signedIn &&
+    state.planEnabled &&
+    state.planConfirmed &&
+    !state.usagePaused &&
+    state.models.length > 0;
   return (
     <div className="connection-note" aria-label="Koneksi lokal Switchly">
       <strong>Hubungkan ke Switchly Copilot</strong>
       <p>
-        Aktifkan hanya ketika Anda ingin menggunakan akun ChatGPT ini di Switchly.
-        Koneksi memakai Windows Named Pipe lokal dan kode sementara. Kata sandi,
-        cookie dan token ChatGPT tidak dikirim ke Switchly.
+        Aktifkan hanya ketika Anda ingin menggunakan akun ChatGPT ini di Switchly. Koneksi memakai
+        Windows Named Pipe lokal dan kode sementara. Kata sandi, cookie dan token ChatGPT tidak
+        dikirim ke Switchly.
       </p>
       {state.bridgeCode ? (
         <>
