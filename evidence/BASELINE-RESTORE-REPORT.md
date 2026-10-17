@@ -28,7 +28,7 @@ Cargo.lock ZIP disalin persis ke `src-tauri/Cargo.lock`. Sepuluh dokumen ZIP dis
 - PASS `npm run check`: format, lint, 74 tes PASS + 1 DPAPI Windows SKIP (75 total, 13 file), typecheck, Vite dan sidecar build.
 - PASS `git diff --check`.
 - PASS historis CI baseline: 75 tes JavaScript Windows, 8 tes Rust, NSIS, runtime/IPC terpasang dan uninstall. [Laporan installer](WINDOWS-INSTALLER-REPORT.md).
-- Native build ulang setelah pemulihan: belum dijalankan lokal (Linux). Workflow Windows berjalan pada push main; hasilnya tidak menggantikan identitas ZIP pengguna. Tidak mengklaim rebuild byte-identik dengan ZIP.
+- PASS rebuild Windows setelah pemulihan: [CI 39000461353](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/39000461353), source `f631eb8339db9e0a495cb71b616b6076fba74d95`. Seluruh tahap TypeScript, persiapan sidecar, tes Rust, build NSIS, installed runtime/IPC dan uninstall berhasil. Ini pemeriksaan source yang dipulihkan; identitas baseline tetap ZIP pengguna, tanpa klaim rebuild byte-identik.
 - NOT RUN GUI/laptop pengguna, upgrade/downgrade, login ChatGPT ulang, login/generasi Flow, media playback, RAM, billing nyata.
 
 ## Checkpoint yang berlaku
