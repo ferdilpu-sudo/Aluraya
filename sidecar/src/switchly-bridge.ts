@@ -129,7 +129,7 @@ export class SwitchlyBridgeServer {
           return;
         }
         received = true;
-        void this.handle(socket, frames[0]);
+        void this.handle(socket, frames[0]!);
       } catch {
         socket.destroy();
       }
