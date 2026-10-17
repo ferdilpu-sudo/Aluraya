@@ -41,7 +41,7 @@ Alternatif setelah prasyarat tersedia:
 
 Ikuti kebijakan eksekusi PowerShell perangkat; tidak perlu mengubahnya karena perintah npm di atas setara. Build awal Rust dapat mengunduh dependensi dan memerlukan waktu. Aplikasi tidak meminta `OPENAI_API_KEY`.
 
-Panel **Koneksi API** sekarang menyimpan skema provider, bukan diagnostik koneksi. Pilih protokol dan model sesuai dokumentasi provider; eksekutor belum tersambung. Diagnostik host/sidecar tetap diperiksa melalui test packaging. Jangan menilai provider siap dari PASS host.
+Panel **Koneksi API** sekarang menyimpan skema provider, bukan diagnostik koneksi. Pilih protokol dan model sesuai dokumentasi provider; Chat Completions teks tersedia melalui Copilot API. Protokol lain dan media belum memiliki executor. Diagnostik host/sidecar tetap diperiksa melalui test packaging. Jangan menilai provider siap dari PASS host.
 
 Vite mengabaikan `src-tauri` agar tidak memantau DLL/EXE/PDB yang dikunci compiler atau aplikasi Windows. Tauri tetap memantau perubahan source Rust. Setelah menarik perbaikan konfigurasi ini, tutup aplikasi dan hentikan proses dev lama dengan Ctrl+C, lalu jalankan kembali `npm.cmd run tauri dev`.
 
@@ -54,7 +54,7 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
-Buka `http://127.0.0.1:1420`. Preview browser sengaja melaporkan bahwa host desktop tidak tersedia. Kartu dapat dipilih, digeser dan di-zoom; layout belum disimpan setelah restart. Login/chat hanya tersedia di aplikasi Windows; produksi tetap nonaktif.
+Buka `http://127.0.0.1:1420`. Preview browser sengaja melaporkan bahwa host desktop tidak tersedia. Kartu dapat dipilih, digeser dan di-zoom; layout disimpan bersama draf di IndexedDB pada origin yang sama. Login/chat hanya tersedia di aplikasi Windows; produksi tetap nonaktif.
 
 ## Verifikasi dan paket native
 
@@ -65,18 +65,18 @@ cargo test --manifest-path src-tauri/Cargo.toml
 npm.cmd run tauri build
 ```
 
-Build NSIS dan pemeriksaan installer sudah PASS pada commit d31890d, [run 38717052876](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876). Rinciannya ada di [laporan installer historis](../evidence/FRONTEND-STUDIO-REPORT.md). Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
+Build planner NSIS dan pemeriksaan installer PASS pada commit aplikasi `2ab6cd9`, [run 38992510402](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38992510402). Rinciannya ada pada [laporan planner](../evidence/PLANNER-REPORT.md). Cargo.lock hasil build ikut artifact CI; file itu belum dipin di source repository. NSIS memakai WebView2 download bootstrapper jika runtime belum tersedia. Instalasi pada Windows LTSC tanpa WebView2 dan pengoperasian offline belum dibuktikan.
 
-Unduh [artifact **aluraya-native-lock-and-executable** yang lulus](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38717052876/artifacts/11964370081) (login GitHub mungkin diperlukan), lalu ekstrak ZIP dan jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Artifact berisi `*-setup.exe`, executable hasil build dan Cargo.lock. Untuk menjalankan aplikasi terpasang gunakan installer, bukan hanya menyalin aluraya.exe yang memerlukan resource pendamping. Artifact **aluraya-installer-check** berisi JSON dengan source commit, hash/ukuran installer dan hasil pemeriksaan.
+Unduh [installer planner — **aluraya-native-lock-and-executable**](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38992510402/artifacts/12085394958) (login GitHub mungkin diperlukan), lalu ekstrak ZIP dan jalankan `Aluraya Studio_0.1.0_x64-setup.exe`. Artifact berisi `*-setup.exe`, executable hasil build dan Cargo.lock. Gunakan installer, bukan hanya menyalin aluraya.exe yang memerlukan resource pendamping. Artifact **aluraya-installer-check** pada run yang sama berisi JSON dengan source commit, hash/ukuran installer dan hasil pemeriksaan. Installer lama sebelum reset provider masih memuat Nexabot; gunakan tautan planner ini.
 
 Pemeriksaan CI memasang installer ke folder sementara dengan spasi, mencocokkan aplikasi/Node/sidecar/lisensi serta memastikan runtime Playwright lama tidak ikut paket, menjalankan round-trip diagnostik dari Node terpasang, lalu uninstall. Ini tidak membuktikan GUI, login, upgrade dari versi sebelumnya atau performa laptop pengguna. Skrip `check-windows-installer.mjs` hanya untuk runner Windows CI sementara; jangan menjalankannya pada instalasi pribadi. Tidak ada penandatanganan installer yang dikonfigurasi.
 
 ## Langkah pembuktian berikutnya
 
 1. Tutup aplikasi dev lama, pasang installer di atas, lalu buka Aluraya Studio hasil instalasi.
-2. Buka **Koneksi → Periksa sekarang**. Catat hasil host/sidecar dan kirim rincian bila gagal. Ini menguji jalur GUI dari paket terpasang yang belum tercakup CI.
+2. Buka proyek, ubah naskah/posisi node, lalu periksa status simpan. Buka ulang untuk memeriksa draf. GUI paket terpasang belum tercakup pemeriksaan CI.
 3. ChatGPT akun tetap opsi terpisah di Copilot. Tidak perlu mengulang login Flow yang sudah diblokir.
-4. Langkah integrasi berikutnya: satu adapter LLM pilihan pengguna, lalu adapter media setelah capability/biaya dan approval tersedia.
+4. Untuk Chat Completions, ikuti [panduan LLM](API-LLM-START.md) dan [review usulan canvas](PLANNER-START.md). Request memakai key/model serta tarif Anda dan hanya dikirim setelah persetujuan. Media tetap belum aktif.
 
 Mengukur satu sampel process tree (ganti angka dengan PID Aluraya, bukan terminal):
 
@@ -90,4 +90,4 @@ Ini bukan pengukuran peak atau p95 dan belum membuktikan performa RAM 8 GB.
 
 Ikuti [CHATGPT-START.md](./CHATGPT-START.md) untuk login, model dan pesan pertama. Jangan mengirim token atau URL callback ke chat dukungan.
 
-Paket aktif tidak memuat Nexabot. Gunakan [skema API](API-PROVIDERS.md); belum ada input API key generik.
+Paket aktif tidak memuat Nexabot. Gunakan [skema API](API-PROVIDERS.md); input key Chat Completions ada di Copilot API, khusus Windows.

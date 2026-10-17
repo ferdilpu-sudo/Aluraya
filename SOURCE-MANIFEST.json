@@ -29,7 +29,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "8d25c2c0851d659ff783cb5875a56080e31299f7bceacc334a70df336b103902"
+      "sha256": "46549fdd0603269f2ce96a556b2ccca07dd6ef9d33552b8cc323e823d6bd1ca9"
     },
     {
       "path": "architecture.md",
@@ -49,7 +49,7 @@
     },
     {
       "path": "docs/API-PROVIDERS.md",
-      "sha256": "613212e9e412c03bbb2f23f8d96fc6e4db7e724e159c1a29c795839d27a0b3a2"
+      "sha256": "16b026e5dd80c99d0668005e2f372c44e4adac55715c253e5aec2278ec2d0300"
     },
     {
       "path": "docs/CHATGPT-START.md",
@@ -65,7 +65,7 @@
     },
     {
       "path": "docs/FRONTEND-STUDIO.md",
-      "sha256": "a175efe07635a8b4a5d887b481253bb437b5afb4c73424efff0f913dfb9c1170"
+      "sha256": "efe789b40f52aedb2d740a6c011752b42b5317c90c73c913e6a02dd8216f0540"
     },
     {
       "path": "docs/IPC.md",
@@ -85,7 +85,7 @@
     },
     {
       "path": "docs/WINDOWS-START.md",
-      "sha256": "a502292cefafcb18c920ae6b65824a1645a15be20c749978604c16eb744f5a3a"
+      "sha256": "884bb9f110a9ef06a55ae24a33912e418c11d51a56d5c4ab33e450cade423ad8"
     },
     {
       "path": "eslint.config.js",
@@ -133,7 +133,7 @@
     },
     {
       "path": "evidence/PLANNER-REPORT.md",
-      "sha256": "0728e1866db65d582f8a9a2cbd50a0bc0562ace0b97ec1fcdbe72ce18afad42a"
+      "sha256": "52e03013f7ace688c20ceee55f901cf95673e3923eb5ddd0f915dec1f382a8f8"
     },
     {
       "path": "evidence/PROVIDER-RESET-REPORT.md",

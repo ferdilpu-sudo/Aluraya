@@ -38,7 +38,7 @@ npm run doctor
 npm run build
 ```
 
-`check`: format, lint, tes, typecheck dan build UI/sidecar. `doctor`: pemeriksaan prasyarat lokal; exit 2 berarti ada blocker. `build` **tidak** membangun executable Windows. `npm run tauri build` menjalankan build native pada Windows. Sidecar terpaket bersama runtime Node. Build NSIS, instalasi, resource, diagnostik sidecar terpasang dan uninstall sudah PASS di CI; GUI pada laptop pengguna belum diuji dari installer. Lihat [bukti installer](./evidence/WINDOWS-INSTALLER-REPORT.md).
+`check`: format, lint, tes, typecheck dan build UI/sidecar. `doctor`: pemeriksaan prasyarat lokal; exit 2 berarti ada blocker. `build` **tidak** membangun executable Windows. `npm run tauri build` menjalankan build native pada Windows. Sidecar terpaket bersama runtime Node. Build NSIS, instalasi, resource, diagnostik sidecar terpasang dan uninstall sudah PASS di CI; GUI pada laptop pengguna belum diuji dari installer. Lihat [bukti planner/installer](./evidence/PLANNER-REPORT.md) dan [unduh installer planner](https://github.com/ferdilpu-sudo/Aluraya/actions/runs/38992510402/artifacts/12085394958).
 
 ## Struktur
 
