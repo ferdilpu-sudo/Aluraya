@@ -10,13 +10,13 @@ const requestSchema = z.discriminatedUnion('operation', [
   z.object({
     schemaVersion: z.literal(1),
     requestId: z.uuid(),
-    pairingCode: z.string().regex(pairingPattern),
+    pairingCode: z.string().length(43).regex(pairingPattern),
     operation: z.literal('inspect'),
   }).strict(),
   z.object({
     schemaVersion: z.literal(1),
     requestId: z.uuid(),
-    pairingCode: z.string().regex(pairingPattern),
+    pairingCode: z.string().length(43).regex(pairingPattern),
     operation: z.literal('send'),
     model: z.string().min(1).max(200),
     text: z.string().trim().min(1).max(4000),
@@ -83,7 +83,7 @@ export class SwitchlyBridgeServer {
     this.server = null;
     for (const socket of this.sockets) socket.destroy();
     this.sockets.clear();
-    server?.close();
+    try { server?.close(); } catch { /* listener may not have started */ }
     return this.status();
   }
 
