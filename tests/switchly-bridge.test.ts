@@ -13,7 +13,9 @@ afterEach(async () => {
 });
 
 function fakeChat() {
-  const replyOnce = vi.fn(async (_model: string, _prompt: string) => 'Approved story proposal');
+  const replyOnce = vi.fn(async (...args: [string, string]) =>
+    args.length === 2 ? 'Approved story proposal' : '',
+  );
   const cancelBridge = vi.fn();
   const snapshot = () =>
     ({
